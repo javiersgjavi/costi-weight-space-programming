@@ -1,0 +1,33 @@
+{
+  "objective": "Improve both MAE and MSE of PhysioNet Challenge 2019 point-missing version_0 by direct weight-space programming; no training, optimizers, backpropagation or gradient information.",
+  "scope": [
+    "mimic-iii-challenge_point"
+  ],
+  "replicates": [
+    0
+  ],
+  "checkpoint_choice": "ctimba_mimic-iii-challenge_point/version_0/epoch=49-val_loss=612.00507.ckpt; selected explicitly by the user after comparison with earlier exploratory results.",
+  "source_checkpoint_sha256": "a012e3bcb5ade901bfa51405f30c4c0ef3b336a07da9203f6930e23ebaa7f1c2",
+  "original_weights": "../weights",
+  "completed_previous_task": "METR-LA point version_0; evidence and edited checkpoints preserved.",
+  "selection": "Analyze weights and calibration patients from the original validation split; confirm on disjoint validation patients. Freeze every proposed edit before test. Expand the preliminary 128-patient evidence and repeat fixed inference seeds.",
+  "test_policy": "Use complete 4033-patient test with 100 imputations and paired original/edited randomness. Do not use test examples to derive edits. Retain every benchmark result, including regressions.",
+  "test_history": "No clinical test evaluation has been performed in this study yet. If further candidates are tested after the first assessment, disclose benchmark reuse.",
+  "required_success": "Both MAE and MSE must decrease versus the original checkpoint. Report absolute scores, percent changes, and uncertainty; never call a MAE-only gain successful.",
+  "paired_randomness": "Same missing masks, per-patient seeds and noise schedule for all comparisons.",
+  "metrics": [
+    "MAE",
+    "MSE",
+    "MRE"
+  ],
+  "noise_schedule": [
+    80,
+    20.92
+  ],
+  "seeds": [
+    20261103,
+    20261104
+  ],
+  "bootstrap_unit": "Patient: one 48-hour window per patient. No temporal-day grouping across distinct patients.",
+  "artifacts": "Original checkpoint immutable. Save all edit recipes, hashes, measurements, tensor diffs, and an inference checkpoint only after a complete paired test supports joint improvement."
+}

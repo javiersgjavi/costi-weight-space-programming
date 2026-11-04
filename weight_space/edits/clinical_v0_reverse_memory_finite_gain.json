@@ -1,0 +1,103 @@
+{
+  "name": "clinical_v0_reverse_memory_finite_gain",
+  "rationale": "Composed final-layer weights identify units 198 and 38 as positive readout paths that activate for high normalized values. In 128 calibration patients, their active cases remain underestimated after the original affine correction; almost all are measured variables rather than static/administrative channels. Increase only these two effective output coefficients by 1%, a fixed conservative expansion of the existing learned paths. Negative GELU-tail contributions change in the opposite direction, also consistent with the common positive offset in the low/middle range. No fitting, gradients, optimizer or test data. Actual conditioning forward passes on 32 calibration patients show a much shorter reverse memory (median slowest-state half-life about 3.9 hours) than forward memory (about 96 hours). A previous uncorrected reverse-memory extension traded MAE for MSE on a smaller exploratory cohort. Halve decay rates only for reverse states 0-3, and reduce their B-projection input drive to separate memory duration from amplitude. For each learned channel/state recurrence, compute its constant-input gain averaged over prefixes 1..48 using calibration-input mean delta. Its old/new gain ratio gives the compensating input scale; a median across channels supplies one scale per shared B state. This is an analytic, finite-horizon correction, not a target fit or parameter sweep. The shared B projection cannot exactly preserve every channel's gain; this is a forward-tested hypothesis. Only calibration inputs determine these factors; no clinical test outcome determines coefficients.",
+  "operations": [
+    {
+      "key": "out_proj.1.weight",
+      "kind": "multiply",
+      "value": 1.005
+    },
+    {
+      "key": "out_proj.1.bias",
+      "kind": "multiply",
+      "value": 1.005
+    },
+    {
+      "key": "out_proj.1.bias",
+      "kind": "add",
+      "value": -0.012
+    },
+    {
+      "kind": "scale_effective_columns",
+      "key": "out_proj.0.mlp.3.weight",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        198,
+        38
+      ],
+      "value": 1.01
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.A_b_log",
+      "kind": "add_columns",
+      "start": 0,
+      "stop": 4,
+      "value": -0.6931471805599453
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 4,
+      "stop": 5,
+      "value": 0.6080334007606067
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 5,
+      "stop": 6,
+      "value": 0.6157253748717114
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 6,
+      "stop": 7,
+      "value": 0.639626496939914
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 7,
+      "stop": 8,
+      "value": 0.643720179456876
+    }
+  ],
+  "diagnostic": [
+    {
+      "unit": 198,
+      "effective_coefficient": 1.479494333267212,
+      "positive_activation_cases": 1026,
+      "patients": 119,
+      "mean_normalized_residual_after_affine": -0.09102041274309158,
+      "median_normalized_residual_after_affine": -0.030137624591588974,
+      "static_variable_fraction": 0.009746588693957114
+    },
+    {
+      "unit": 38,
+      "effective_coefficient": 1.3712589740753174,
+      "positive_activation_cases": 307,
+      "patients": 90,
+      "mean_normalized_residual_after_affine": -0.06557084619998932,
+      "median_normalized_residual_after_affine": -0.04983218386769295,
+      "static_variable_fraction": 0.02280130293159609
+    }
+  ],
+  "construction": {
+    "diagnostic": "artifacts/audit/clinical_v1_conditioning_memory_cal32.json",
+    "diagnostic_sha256": "49ab794971ef074f25688a430b47c2268535fdeb2b958794e8f16848c9d4ead1",
+    "horizon_hours": 48,
+    "states": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "input_drive_scales": [
+      0.6080334007606067,
+      0.6157253748717114,
+      0.639626496939914,
+      0.643720179456876
+    ]
+  }
+}

@@ -218,3 +218,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Publication excludes data, weights and local evaluation arrays
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/
+weights/
+*.ckpt
+*.npz
+*.npy
+.env*
+artifacts/results/

@@ -1,0 +1,7 @@
+{
+  "name": "metr_point_v0_decoder_query_noise_090",
+  "rationale": "The final temporal decoder concatenates 64 deep features and 64 features from the noisy-state skip, then uses them as cross-attention queries against conditioning features. The query projection norms for these halves are 91.18 and 85.66: the noisy skip strongly influences temporal source selection. Reduce only the query projection columns corresponding to that noisy half by 10%. Preserve the deep query, all keys and values, the conditioning stream and the output readout. This tests whether stochastic attention-selection jitter contributes to median-imputation error, without the global feature-mean drift caused by scaling the scalar input projection.",
+  "operations": [
+    {"key": "up_t.attn.attn.attn.in_proj_weight", "kind": "multiply_rectangle", "row_start": 0, "row_stop": 128, "column_start": 64, "column_stop": 128, "value": 0.9}
+  ]
+}

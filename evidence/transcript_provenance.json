@@ -1,0 +1,14 @@
+{
+  "sources": [
+    {
+      "file": "rollout-2026-11-03T11-14-38-01a1a0e7-59be-74d1-a3c9-d422c5edb29e.jsonl",
+      "sha256": "c4fcd910e01725e35d1aac645b892755d1fb59d823025e76c7eb1e211e507465"
+    },
+    {
+      "file": "rollout-2026-11-03T11-23-11-01a1a0ef-2d95-7242-a9a5-48f06c294c03.jsonl",
+      "sha256": "f9f98e4d9cc4b9d6468a6024e1195f2a598c8475ea239a3c354d2626a48deeee"
+    }
+  ],
+  "messages": 411,
+  "scope": "User/assistant message records only; public redaction; tools and reasoning excluded."
+}

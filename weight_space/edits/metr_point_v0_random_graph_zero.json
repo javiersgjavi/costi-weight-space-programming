@@ -1,0 +1,13 @@
+{
+  "name": "metr_point_v0_random_graph_zero",
+  "rationale": "Remove the two GCN channel groups driven exclusively by unregistered random graph factors. Halving these groups already reduced calibration MAE by 0.01875%, while slightly increasing MSE. Zeroing them also makes predictions independent of graph factors that are absent from the checkpoint. This is a full removal test of the same diagnosed dependency, not a runtime graph change.",
+  "operations": [
+    {
+      "key": "input_sfe.gcn.mlp.weight",
+      "kind": "multiply_columns",
+      "start": 320,
+      "stop": 448,
+      "value": 0
+    }
+  ]
+}

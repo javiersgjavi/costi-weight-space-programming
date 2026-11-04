@@ -1,0 +1,27 @@
+CoSTI · PhysioNet Challenge 2019 · point missing · version_0
+
+Esta auditoría verifica evaluaciones ya guardadas; no ejecuta un test nuevo.
+Test completo: 4033 pacientes, 100 imputaciones, semillas 20261103 y 20261104.
+Media de dos semillas del mismo checkpoint; no es una media de cinco checkpoints.
+El benchmark ya se había evaluado con V1. Esta evaluación reutiliza el benchmark; no representa un test intacto nuevo.
+
+Frente a CoSTI original:
+MAE: 2,480960 -> 2,417163; cambio -2,571433%.
+IC95% de la diferencia por paciente: [-0.06681236071679501, -0.06082727079410419].
+MSE: 350,120368 -> 347,977979; cambio -0,611901%.
+IC95% de la diferencia por paciente: [-4.672208458605959, -0.5962786646266782].
+
+Frente al checkpoint retenido V1:
+MAE: 2,424104 -> 2,417163; cambio -0,286300%.
+IC95% de la diferencia por paciente: [-0.0075522678347552654, -0.0062993445046411285].
+MSE: 348,309750 -> 347,977979; cambio -0,095252%.
+IC95% de la diferencia por paciente: [-0.5211063801640168, -0.17460406827006053].
+
+Valores modificados: 965, en 5 tensores.
+El estado completo y los factores del grafo exportados coinciden exactamente con el candidato congelado.
+La carga real desde la CLI reproduce todas las predicciones de la comprobación en CPU.
+No se usaron entrenamiento, optimizadores, backpropagation ni información de gradientes.
+Las métricas por variable y grupo son descriptivas. La mejora agregada no implica mejora en todas las variables.
+El bootstrap por paciente promedia primero las semillas y no cubre toda la variación entre semillas.
+Checkpoint: /home/javier/Projects/CoSTI-weight-space/artifacts/edited_weights/clinical_v4/ctimba_mimic-iii-challenge_point/version_0/weights.ckpt
+SHA256: 0007dc7d57dc2639a314a6add07350c03e5de4bfe475c80c9c4cba22e4dccdc3

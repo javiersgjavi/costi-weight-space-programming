@@ -1,0 +1,63 @@
+{
+  "name": "metr_point_v0_graphhalf_head202_head9s05",
+  "rationale": "Combine half-strength random graph mixing, sharper neuron-202 gating, and wider neuron-9 gating at factor 0.5. The latter follows the same mechanism that improved both metrics at factors 0.9 and 0.75; selection still uses calibration only.",
+  "components": [
+    "metr_point_v0_graphhalf_head202",
+    "metr_point_v0_head9_soft05"
+  ],
+  "operations": [
+    {
+      "key": "input_sfe.gcn.mlp.weight",
+      "kind": "multiply_columns",
+      "start": 320,
+      "stop": 448,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        202
+      ],
+      "value": 0.25
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        9
+      ],
+      "value": 2.0
+    }
+  ]
+}

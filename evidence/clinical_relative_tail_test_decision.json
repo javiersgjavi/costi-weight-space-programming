@@ -1,0 +1,69 @@
+{
+  "time_unix": 1793741039.2333705,
+  "candidate": "clinical_v0_relative_tail",
+  "decision": "export_frozen_candidate",
+  "benchmark_reuse": true,
+  "both_means_lower_vs_original_and_retained": true,
+  "both_metrics_lower_each_seed_vs_original_and_retained": true,
+  "metrics_vs_original": {
+    "mae": {
+      "original": 2.4809595154478252,
+      "edited": 2.417163301798656,
+      "change_percent": -2.5714330786914874,
+      "delta_ci95_patient_bootstrap": [
+        -0.06681236071679501,
+        -0.06082727079410419
+      ],
+      "improved_windows_on_seed_mean": 3229
+    },
+    "mse": {
+      "original": 350.120367634481,
+      "edited": 347.97797933873596,
+      "change_percent": -0.6119005044521231,
+      "delta_ci95_patient_bootstrap": [
+        -4.672208458605959,
+        -0.5962786646266782
+      ],
+      "improved_windows_on_seed_mean": 2332
+    },
+    "mre": {
+      "original": 0.04710773262004038,
+      "edited": 0.04589638880082711,
+      "change_percent": -2.5714330786915096
+    }
+  },
+  "metrics_vs_retained": {
+    "mae": {
+      "original": 2.4241035118046135,
+      "edited": 2.417163301798656,
+      "change_percent": -0.2863000681349259,
+      "delta_ci95_patient_bootstrap": [
+        -0.0075522678347552654,
+        -0.0062993445046411285
+      ],
+      "improved_windows_on_seed_mean": 2681
+    },
+    "mse": {
+      "original": 348.3097500304002,
+      "edited": 347.97797933873596,
+      "change_percent": -0.09525162348607008,
+      "delta_ci95_patient_bootstrap": [
+        -0.5211063801640168,
+        -0.17460406827006053
+      ],
+      "improved_windows_on_seed_mean": 2106
+    },
+    "mre": {
+      "original": 0.04602816747567122,
+      "edited": 0.04589638880082711,
+      "change_percent": -0.286300068134937
+    }
+  },
+  "plan": "artifacts/plans/clinical_v4_export_after_test.json",
+  "plan_sha256": "1e9e98b478936caf4597e37fa26b2b455365e1a461d9522beeac40c2d2f9321b",
+  "evidence_sha256": {
+    "artifacts/clinical_relative_tail_test_original_report.json": "8bbe629e6773582bf92895eef3698d97592431fd56f67ff2a1530d55318db6ae",
+    "artifacts/clinical_relative_tail_test_v1_report.json": "87672bfa0afce66444f15498fbec0ccaa3f3f1a3cedc81f8406127c798d74481"
+  },
+  "export_not_verified_yet": true
+}

@@ -1,0 +1,445 @@
+{
+  "timestamp": "04/11/2026 00:14 CET",
+  "reference": "clinical_v0_composed_gate255_translate",
+  "reference_result": "artifacts/results/clinical_point_v0_gate255_control_cal512x100_seed1_chunk20.json",
+  "reference_result_sha256": "9252fee012033ff1dacd3e70001ca0ee032f4717afc41caadce02e000b0564a5",
+  "reference_metrics": {
+    "n": 51979,
+    "mae": 2.522218288209208,
+    "mse": 1115.5937255314911,
+    "mre": 0.04847626752310596,
+    "mean_error": -0.23428309311800985,
+    "negative_prediction_fraction": 0.1516958771811693
+  },
+  "split": "calibration",
+  "patients": 512,
+  "samples": 100,
+  "seed": 20261103,
+  "trials": [
+    {
+      "label": "Contraste extremo (V4)",
+      "recipe": "clinical_v0_relative_tail",
+      "report": "artifacts/clinical_relative_tail_calibration512_report.json",
+      "status": "Test completo validado en dos semillas; checkpoint verificado",
+      "rejected": false,
+      "decision": "artifacts/clinical_relative_tail_test_decision.json",
+      "plot_label": "Contraste\nextremo\n(V4)",
+      "order": 1,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.5221869856889314,
+          "change_percent": -0.0012410710216070875,
+          "delta_ci95_patient_bootstrap": [
+            -0.00010788583076437696,
+            1.1107798961198437e-05
+          ],
+          "improved_patients_on_seed_mean": 207
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.1593454838364,
+          "change_percent": -0.03893711821010282,
+          "delta_ci95_patient_bootstrap": [
+            -1.338546200907596,
+            0.00039665399218726964
+          ],
+          "improved_patients_on_seed_mean": 242
+        }
+      },
+      "report_sha256": "49f6e8779e84b9f72a8d3671e3c71ab43765a7e5ca4dfd5a20b7d86b0e875bf9",
+      "decision_sha256": "acb912edfc698694436187c01a82cab7d585b97397fa9b265d167826d4f4eae6"
+    },
+    {
+      "label": "Cola de unidad167",
+      "recipe": "clinical_v0_gate167_tail",
+      "report": "artifacts/clinical_gate167_tail_calibration512_report.json",
+      "status": "Descartada: empeora MAE y MSE en confirmaci\u00f3n",
+      "rejected": true,
+      "decision": "artifacts/clinical_gate167_tail_confirmation_decision.json",
+      "plot_label": "Cola\n167",
+      "order": 2,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.5156709022228583,
+          "change_percent": -0.2595883955388567,
+          "delta_ci95_patient_bootstrap": [
+            -0.01257200785925874,
+            -0.0020874735127440094
+          ],
+          "improved_patients_on_seed_mean": 250
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.473356153522,
+          "change_percent": -0.010789714500392122,
+          "delta_ci95_patient_bootstrap": [
+            -0.21855509658639719,
+            -0.04493448189683592
+          ],
+          "improved_patients_on_seed_mean": 250
+        }
+      },
+      "report_sha256": "99019a77738435f04442ca45c68437b1427edcbcf2f249d88c204e76698d4f41",
+      "decision_sha256": "451bfff56d644608d6d90c70b5cdc2eefd70d2b7ffaf07f2470dbafae8328958"
+    },
+    {
+      "label": "Desplazamiento 12",
+      "recipe": "clinical_v0_gate12_translate",
+      "report": "artifacts/clinical_gate12_translate_calibration512_report.json",
+      "status": "Descartada: sube MSE en calibraci\u00f3n",
+      "rejected": true,
+      "freeze": "artifacts/clinical_candidate_freeze_v6_gate12.json",
+      "decision": "artifacts/clinical_gate12_translate_calibration_decision.json",
+      "plot_label": "Desplaz.\n12",
+      "order": 3,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.520324341982794,
+          "change_percent": -0.07509049614253804,
+          "delta_ci95_patient_bootstrap": [
+            -0.002177718220937896,
+            -0.0016134593434842545
+          ],
+          "improved_patients_on_seed_mean": 374
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.6238345492093,
+          "change_percent": 0.002698923185828761,
+          "delta_ci95_patient_bootstrap": [
+            -0.00042502147981035815,
+            0.08320301316328929
+          ],
+          "improved_patients_on_seed_mean": 265
+        }
+      },
+      "report_sha256": "9e267ffa964e344a339bbdc5d606dc194803b7c38d2257b70ab5a7ebb1a7e497",
+      "decision_sha256": "2239a4791a63af11ef4b3998075cb8f7ae84563c509e93e9b0404758e88b32ab"
+    },
+    {
+      "label": "Correcci\u00f3n local 212",
+      "recipe": "clinical_v0_gate212_shoulder",
+      "report": "artifacts/clinical_gate212_shoulder_calibration512_report.json",
+      "status": "Componente confirmado frente a V3; combinaci\u00f3n V14",
+      "rejected": false,
+      "freeze": "artifacts/clinical_candidate_freeze_v7_gate212.json",
+      "decision": "artifacts/clinical_gate212_shoulder_full_confirmation_decision.json",
+      "plot_label": "Correcc.\n212",
+      "order": 4,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.522088082333061,
+          "change_percent": -0.005162355564380938,
+          "delta_ci95_patient_bootstrap": [
+            -0.00023865008018671564,
+            -2.8305237015325797e-05
+          ],
+          "improved_patients_on_seed_mean": 301
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.5909465515215,
+          "change_percent": -0.0002491032269236193,
+          "delta_ci95_patient_bootstrap": [
+            -0.005662932218058248,
+            -0.0003729918606697622
+          ],
+          "improved_patients_on_seed_mean": 279
+        }
+      },
+      "report_sha256": "2ab6ae18bb6a2e6e448ee7074cbc91affd19e3441eb2f4177257a58af7a01b7d",
+      "decision_sha256": "5ccf14e0e3dfd4f49b538357a017fb14a7235bf0091bd6c90dc76cc2b2cf2c28"
+    },
+    {
+      "label": "Rango medio 21 (V8)",
+      "recipe": "clinical_v0_gate21_midrange",
+      "report": "artifacts/clinical_gate21_midrange_calibration512_v3_report.json",
+      "status": "Descartada: sube MSE frente a V4",
+      "rejected": true,
+      "freeze": "artifacts/clinical_candidate_freeze_v8_gate21.json",
+      "decision": "artifacts/clinical_gate21_midrange_calibration_decision.json",
+      "parent_report": "artifacts/clinical_gate21_midrange_calibration512_parent_report.json",
+      "plot_label": "Medio\n21\n(V8)",
+      "order": 5,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.5221165405810435,
+          "change_percent": -0.004034053223711531,
+          "delta_ci95_patient_bootstrap": [
+            -0.00022047888749557952,
+            9.733504187103493e-06
+          ],
+          "improved_patients_on_seed_mean": 319
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.2857500720079,
+          "change_percent": -0.02760641732154623,
+          "delta_ci95_patient_bootstrap": [
+            -0.9286165595551215,
+            0.0005628298787968191
+          ],
+          "improved_patients_on_seed_mean": 282
+        }
+      },
+      "report_sha256": "ef2c427723b41a7d4166f8e506b2805fd956b0eeebfc4b3cbab94baf58739d28",
+      "decision_sha256": "38be8fa72a778610840dee2eb5cb34c83aab1c9e49931a170598ca1bb858ca8f"
+    },
+    {
+      "label": "Rango medio 50 (V9)",
+      "recipe": "clinical_v0_gate50_midrange",
+      "report": "artifacts/clinical_gate50_midrange_calibration512_v3_report.json",
+      "status": "Confirmaci\u00f3n favorable; test aplazado por apagado",
+      "rejected": false,
+      "freeze": "artifacts/clinical_candidate_freeze_v9_gate50.json",
+      "decision": "artifacts/clinical_gate50_midrange_full_confirmation_decision.json",
+      "parent_report": "artifacts/clinical_gate50_midrange_calibration512_parent_report.json",
+      "plot_label": "Medio\n50\n(V9)",
+      "order": 6,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.521730886476102,
+          "change_percent": -0.019324327929293172,
+          "delta_ci95_patient_bootstrap": [
+            -0.0008287886023642947,
+            -0.00019638812439558287
+          ],
+          "improved_patients_on_seed_mean": 292
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.1477193199125,
+          "change_percent": -0.03997926856088574,
+          "delta_ci95_patient_bootstrap": [
+            -1.356859340708857,
+            0.0009521577436299168
+          ],
+          "improved_patients_on_seed_mean": 289
+        }
+      },
+      "report_sha256": "0ef157e6a140716fe8a46e9bfec389cbd92c8408b34434d136c6d55e84a17cbf",
+      "decision_sha256": "1c64e46a56d1e0bbb3b40ea0e567f4bd4be692233844dfe9e2b5e03ae6874eba"
+    },
+    {
+      "label": "Cola inactiva 145 (V10)",
+      "recipe": "clinical_v0_gate145_inactive_tail",
+      "report": "artifacts/clinical_gate145_inactive_tail_calibration512_v3_report.json",
+      "status": "Una semilla completa; segunda aplazada por apagado",
+      "rejected": false,
+      "freeze": "artifacts/clinical_candidate_freeze_v10_gate145.json",
+      "decision": "artifacts/clinical_gate145_inactive_tail_confirmation128_decision.json",
+      "parent_report": "artifacts/clinical_gate145_inactive_tail_calibration512_parent_report.json",
+      "plot_label": "Inactiva\n145\n(V10)",
+      "order": 7,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.521785979986256,
+          "change_percent": -0.0171400003311728,
+          "delta_ci95_patient_bootstrap": [
+            -0.0006521879616773183,
+            -0.0002305909331390416
+          ],
+          "improved_patients_on_seed_mean": 326
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.1263665797317,
+          "change_percent": -0.04189329332565661,
+          "delta_ci95_patient_bootstrap": [
+            -1.4273121352697644,
+            -0.001008796109111714
+          ],
+          "improved_patients_on_seed_mean": 281
+        }
+      },
+      "report_sha256": "aee912380707e984e46395895f887c8ede203476bff4f43eca31d34418678351",
+      "decision_sha256": "46449997e79419d6a6af0a83fcea299bd1881a0b71d24d37aa6f37d83db32680"
+    },
+    {
+      "label": "L\u00f3bulo 67 (V12)",
+      "plot_label": "L\u00f3bulo\n67\n(V12)",
+      "recipe": "clinical_v0_gate67_shoulder",
+      "report": "artifacts/clinical_gate67_shoulder_calibration512_v3_report.json",
+      "status": "Descartada: sube MSE en ambas semillas de confirmaci\u00f3n",
+      "rejected": true,
+      "freeze": "artifacts/clinical_candidate_freeze_v12_gate67.json",
+      "parent_report": "artifacts/clinical_gate67_shoulder_calibration512_parent_report.json",
+      "decision": "artifacts/clinical_gate67_shoulder_confirmation128_decision.json",
+      "order": 8,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.521807695828181,
+          "change_percent": -0.01627901847141011,
+          "delta_ci95_patient_bootstrap": [
+            -0.0005760885381371866,
+            -0.0002569176039166231
+          ],
+          "improved_patients_on_seed_mean": 319
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.1434679302536,
+          "change_percent": -0.0403603561881849,
+          "delta_ci95_patient_bootstrap": [
+            -1.3688856991142697,
+            -0.0022676590201566415
+          ],
+          "improved_patients_on_seed_mean": 310
+        }
+      },
+      "report_sha256": "dd82d98b00e1b4a0325495fd86666c966dc6ab5cf533e8252f504f9dd60fc03f",
+      "decision_sha256": "92d408ceacdc660881010d88c59970d363fa757c2e9366151b501d5a566efe85"
+    },
+    {
+      "label": "Compensaci\u00f3n 36 (V13)",
+      "plot_label": "Compens.\n36\n(V13)",
+      "recipe": "clinical_v0_gate36_near_zero",
+      "report": "artifacts/clinical_gate36_near_zero_calibration512_v3_report.json",
+      "status": "Descartada: sube MAE frente a V4 en calibraci\u00f3n",
+      "rejected": true,
+      "freeze": "artifacts/clinical_candidate_freeze_v13_gate36.json",
+      "parent_report": "artifacts/clinical_gate36_near_zero_calibration512_parent_report.json",
+      "decision": "artifacts/clinical_gate36_near_zero_calibration_decision.json",
+      "order": 9,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.5222286907577414,
+          "change_percent": 0.0004124364882285292,
+          "delta_ci95_patient_bootstrap": [
+            -8.206112157564591e-05,
+            7.27388754098528e-05
+          ],
+          "improved_patients_on_seed_mean": 249
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.1416806720774,
+          "change_percent": -0.04052056309283847,
+          "delta_ci95_patient_bootstrap": [
+            -1.3922657570438088,
+            0.0010082530225088743
+          ],
+          "improved_patients_on_seed_mean": 218
+        }
+      },
+      "report_sha256": "c69e0f81cda8c5999cf6c0ed8de595c60dfa42ab7f4f6b26a120d8b365a8d471",
+      "decision_sha256": "0b13bff094fbad19d59f78e0e2cc663569bc6da6b608d3f0b801e33df125f7f2"
+    },
+    {
+      "label": "Redistribuci\u00f3n del grafo (V15)",
+      "plot_label": "Grafo\n(V15)",
+      "recipe": "clinical_v0_graph_redirect_half",
+      "report": "artifacts/clinical_graph_redirect_half_calibration512_v3_report.json",
+      "status": "Descartada: sube MSE frente a V4 en calibraci\u00f3n",
+      "rejected": true,
+      "freeze": "artifacts/clinical_candidate_freeze_v15_graph_redirect.json",
+      "parent_report": "artifacts/clinical_graph_redirect_half_calibration512_parent_report.json",
+      "decision": "artifacts/clinical_graph_redirect_half_calibration_decision.json",
+      "order": 10,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.5219787114777814,
+          "change_percent": -0.009498651744244135,
+          "delta_ci95_patient_bootstrap": [
+            -0.0003896778521308368,
+            -8.714885689629276e-05
+          ],
+          "improved_patients_on_seed_mean": 293
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1116.0694316928195,
+          "change_percent": 0.042641523561970374,
+          "delta_ci95_patient_bootstrap": [
+            -0.007802515721811219,
+            1.3882305306851095
+          ],
+          "improved_patients_on_seed_mean": 269
+        }
+      },
+      "report_sha256": "6adf0c59c44877437339e7fa1c95d2394b781c6fc6589dc280899deca7677a15",
+      "decision_sha256": "cf8b877aec76a78ccba825d77d76ca9a699b36862b04c83610310a49c7d53dec"
+    },
+    {
+      "label": "Combinaci\u00f3n 50 + 212 (V14)",
+      "plot_label": "50 + 212\n(V14)",
+      "recipe": "clinical_v0_gate50_gate212_composed",
+      "report": "artifacts/clinical_gate50_gate212_composed_calibration512_v3_report.json",
+      "status": "Calibraci\u00f3n favorable; confirmaci\u00f3n aplazada",
+      "rejected": false,
+      "freeze": "artifacts/clinical_candidate_freeze_v14_gate50_gate212.json",
+      "parent_report": "artifacts/clinical_gate50_gate212_composed_calibration512_v9_report.json",
+      "decision": "artifacts/clinical_gate50_gate212_composed_calibration_decision.json",
+      "order": 11,
+      "metrics": {
+        "mae": {
+          "reference": 2.522218288209208,
+          "candidate": 2.521621005234766,
+          "change_percent": -0.023680859711239233,
+          "delta_ci95_patient_bootstrap": [
+            -0.0009842050516374026,
+            -0.0002645823656629226
+          ],
+          "improved_patients_on_seed_mean": 300
+        },
+        "mse": {
+          "reference": 1115.5937255314911,
+          "candidate": 1115.1457067972574,
+          "change_percent": -0.04015966780561708,
+          "delta_ci95_patient_bootstrap": [
+            -1.3598251614468309,
+            -0.0007619094974060506
+          ],
+          "improved_patients_on_seed_mean": 276
+        }
+      },
+      "report_sha256": "01fa7f5f34216ce46de03b29e2ad7dea6e0e732612f2f874688a44238fdf7bd9",
+      "decision_sha256": "96fce66c0b65826d8202398a9e478f975b6a6fd833ef3bbcb5b083a1149d56e4"
+    }
+  ],
+  "trials_config": "artifacts/clinical_wide_calibration_trials_v19.json",
+  "trials_config_sha256": "14feaf69380b7500f395b1b6b6a8acf94bf1da0413ed496032fffcc973029e31",
+  "retained_test_report": "artifacts/clinical_relative_tail_test_original_report.json",
+  "retained_test_report_sha256": "8bbe629e6773582bf92895eef3698d97592431fd56f67ff2a1530d55318db6ae",
+  "retained_label": "V4",
+  "retained_test_metrics": {
+    "mae": {
+      "original": 2.4809595154478252,
+      "edited": 2.417163301798656,
+      "change_percent": -2.5714330786914874,
+      "delta_ci95_patient_bootstrap": [
+        -0.06681236071679501,
+        -0.06082727079410419
+      ],
+      "improved_windows_on_seed_mean": 3229
+    },
+    "mse": {
+      "original": 350.120367634481,
+      "edited": 347.97797933873596,
+      "change_percent": -0.6119005044521231,
+      "delta_ci95_patient_bootstrap": [
+        -4.672208458605959,
+        -0.5962786646266782
+      ],
+      "improved_windows_on_seed_mean": 2332
+    },
+    "mre": {
+      "original": 0.04710773262004038,
+      "edited": 0.04589638880082711,
+      "change_percent": -2.5714330786915096
+    }
+  },
+  "retained_audit": "artifacts/audit/clinical_v4_verified_01/verification.json",
+  "benchmark_reuse": true,
+  "interpretation": "Separate512-patient calibration cohort. Percentages compare every candidate to the same V3 parent. Pending evaluations have no numerical point. Intervals are paired patient bootstrap intervals, not evidence of test generalization. A calibration improvement can be rejected on confirmation."
+}

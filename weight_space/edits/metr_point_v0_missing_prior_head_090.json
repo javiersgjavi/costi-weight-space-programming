@@ -1,0 +1,7 @@
+{
+  "name": "metr_point_v0_missing_prior_head_090",
+  "rationale": "In the final temporal decoder, head 3 assigns only 0.25% of its final-step attention to observed source positions for missing queries, although 73.9% of positions are observed in the diagnostic windows. Its role is therefore dominated by conditioning features at missing positions, which originate from interpolated inputs. These features already contain temporal/spatial context, so low observed-source mass alone is not proof of a defect. Test a conservative 10% reduction of this head's contribution to see whether the model overuses this missing-position prior. Other heads, query/key/value projections and all scalar output weights remain fixed.",
+  "operations": [
+    {"key": "up_t.attn.attn.attn.out_proj.weight", "kind": "multiply_columns", "start": 48, "stop": 64, "value": 0.9}
+  ]
+}

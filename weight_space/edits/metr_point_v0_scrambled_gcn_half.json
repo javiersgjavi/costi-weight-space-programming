@@ -1,0 +1,7 @@
+{
+  "name": "metr_point_v0_scrambled_gcn_half",
+  "rationale": "STFEM passes the graph branch flattened in (node,time) order and receives that same flattened order back, but reshapes it as (time,node) before adding the residual. Thus its graph output is spatially/temporally permuted relative to the other branches. The checkpoint was trained with this behavior, so changing the runtime reshape would invalidate the baseline. Instead halve only the graph branch GroupNorm gamma (64 existing parameters), retaining its beta and every other branch, to reduce the amplitude of this misaligned signal without introducing a new function or shifting its learned offset. The learned graph gamma is already small (mean about 0.204), consistent with downweighting, but an accuracy gain must be established empirically.",
+  "operations": [
+    {"key": "input_sfe.norm_spa_gnn.weight", "kind": "multiply", "value": 0.5}
+  ]
+}

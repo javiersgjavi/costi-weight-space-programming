@@ -1,0 +1,29 @@
+{
+  "name": "metr_point_v0_head9_soft05",
+  "rationale": "Neuron 9 has the largest effective readout coefficient (-3.412), with a rare negative GELU tail that contributes positively in a strongly underestimated calibration subset. Broaden this gate to GELU(0.5*x)/0.5 by scaling its incoming row and bias by 0.5 and its effective outgoing coefficient by 2. The zero threshold and positive linear asymptote remain unchanged. Factors 0.9 and 0.75 improved both calibration metrics; this tests whether that same localized mechanism continues to help at a wider gate. No gradient or optimizer is used.",
+  "operations": [
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        9
+      ],
+      "value": 2.0
+    }
+  ]
+}

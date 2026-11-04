@@ -1,0 +1,86 @@
+{
+  "split": "test",
+  "patients": 4033,
+  "seeds": [
+    20261103,
+    20261104
+  ],
+  "used_for_weight_selection": false,
+  "uncertainty": "Descriptive point estimates; no group-level confidence claim.",
+  "groups": {
+    "measured_physiological_variables": {
+      "variables": [
+        "HR",
+        "O2Sat",
+        "Temp",
+        "SBP",
+        "MAP",
+        "DBP",
+        "Resp",
+        "EtCO2",
+        "BaseExcess",
+        "HCO3",
+        "FiO2",
+        "pH",
+        "PaCO2",
+        "SaO2",
+        "AST",
+        "BUN",
+        "Alkalinephos",
+        "Calcium",
+        "Chloride",
+        "Creatinine",
+        "Bilirubin_direct",
+        "Glucose",
+        "Lactate",
+        "Magnesium",
+        "Phosphate",
+        "Potassium",
+        "Bilirubin_total",
+        "TroponinI",
+        "Hct",
+        "Hgb",
+        "PTT",
+        "WBC",
+        "Fibrinogen",
+        "Platelets"
+      ],
+      "scored_values_per_seed": 222850,
+      "mae": {
+        "original": 4.184829562188009,
+        "edited": 4.172789172349142,
+        "change_percent": -0.28771517835893823,
+        "share_of_total_error_reduction_percent": 10.256325902886255
+      },
+      "mse": {
+        "original": 636.0303616378427,
+        "edited": 633.0126458130591,
+        "change_percent": -0.4744609702298952,
+        "share_of_total_error_reduction_percent": 76.54667326917959
+      }
+    },
+    "static_administrative_and_time_variables": {
+      "variables": [
+        "Age",
+        "Gender",
+        "Unit1",
+        "Unit2",
+        "HospAdmTime",
+        "ICULOS"
+      ],
+      "scored_values_per_seed": 187228,
+      "mae": {
+        "original": 0.4529111470624887,
+        "edited": 0.327512046365836,
+        "change_percent": -27.687351373436442,
+        "share_of_total_error_reduction_percent": 89.74367409711402
+      },
+      "mse": {
+        "original": 9.813137072550226,
+        "edited": 8.712616124884846,
+        "change_percent": -11.214771989110496,
+        "share_of_total_error_reduction_percent": 23.453326730818425
+      }
+    }
+  }
+}

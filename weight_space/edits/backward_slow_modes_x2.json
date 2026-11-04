@@ -1,0 +1,13 @@
+{
+  "name": "backward_slow_modes_x2",
+  "rationale": "All 30 released checkpoints retain a strong forward/backward state-timescale asymmetry. The backward delta bias started near zero while the forward bias was initialized around -4.5. Test whether longer future context helps interpolation by doubling the memory of only the four slowest nominal backward state modes in the conditional feature extractor. Subtract log(2) from their log-decay weights, preserving the state input drive, local convolution, fast modes and all other layers. This is a structural hypothesis, not an established defect or improvement.",
+  "operations": [
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.A_b_log",
+      "kind": "add_columns",
+      "start": 0,
+      "stop": 4,
+      "value": -0.6931471805599453
+    }
+  ]
+}

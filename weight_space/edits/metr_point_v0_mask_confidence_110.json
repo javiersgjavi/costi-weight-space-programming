@@ -1,0 +1,7 @@
+{
+  "name": "metr_point_v0_mask_confidence_110",
+  "rationale": "The conditioning projection has distinct scalar-value and observed-mask columns (norms 14.44 and 12.66; cosine 0.121). Spatial attention diagnosis finds several heads barely distinguish observed sources from interpolated ones. Increase only the observed-mask column by 10% to strengthen this confidence distinction, retaining the value encoding, noisy-state branch and output head. Test whether excessive reliance on interpolated conditioning causes large calibration errors. This hypothesis is evaluated by frozen paired forward passes, without fitting or gradients.",
+  "operations": [
+    {"key": "cfem.input_proj.0.weight", "kind": "multiply_columns", "start": 1, "stop": 2, "value": 1.1}
+  ]
+}

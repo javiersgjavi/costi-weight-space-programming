@@ -1,0 +1,8 @@
+{
+  "name": "metr_point_v0_attention_confidence",
+  "rationale": "The conditioning spatial attention has two relatively sharp heads, 2 and 4, with normalized entropy 0.434 and 0.432. For missing queries, head 2 assigns 85.0% of attention to observed sources, versus 74.3% for head 4 (67.6% available). Reallocate a small amount of their readout strength: increase head 2's output-projection columns by 10% and decrease head 4's by 10%. Q/K/V parameters and all other heads remain fixed. Head selection comes from observed-source attention statistics on calibration inputs, not error gradients. Confirm any accuracy gain independently.",
+  "operations": [
+    {"key": "cfem.fe.attn_s.attn.attn.out_proj.weight", "kind": "multiply_columns", "start": 16, "stop": 24, "value": 1.1},
+    {"key": "cfem.fe.attn_s.attn.attn.out_proj.weight", "kind": "multiply_columns", "start": 32, "stop": 40, "value": 0.9}
+  ]
+}

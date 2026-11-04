@@ -1,0 +1,29 @@
+{
+  "name": "metr_point_v0_head9_soft075",
+  "rationale": "The largest effective head coefficient is neuron 9 (-3.412), but its median-selected activation is almost always zero. At the 49 calibration entries with a negative tail larger than 0.001, mean normalized residual is -0.083 and median -0.179. Its negative coefficient makes that tail a positive correction in these underestimated cases. Modestly widen it by scaling the incoming row and bias by 0.9 and dividing the effective coefficient by 0.9. This preserves its zero threshold and positive linear asymptote while strengthening the localized positive correction. It complements suppression of the harmful negative tail of neuron 202, but must be tested independently. The 0.9 factor improved calibration MAE by 0.00261% and MSE by 0.00649%, both with negative paired-window confidence intervals. Test a larger but still asymptote-preserving widening at factor 0.75 to assess whether the same localized mechanism continues to help.",
+  "operations": [
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.75
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.75
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        9
+      ],
+      "value": 1.3333333333333333
+    }
+  ]
+}

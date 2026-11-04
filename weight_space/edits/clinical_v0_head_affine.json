@@ -1,0 +1,9 @@
+{
+  "name": "clinical_v0_head_affine",
+  "rationale": "The 100-imputation calibration diagnostic exhibits positive median normalized residuals around 0.007-0.010 in the lower three prediction quintiles, decreasing to -0.007 in the highest quintile. The final two linear layers expose an affine scalar readout. A small expansion (0.5%) and -0.012 noise-prediction bias correct the observed compression and common offset; c_out is approximately 0.5. This is a single manually specified hypothesis. It must survive expanded calibration and independent confirmation, including MSE, before use.",
+  "operations": [
+    {"key": "out_proj.1.weight", "kind": "multiply", "value": 1.005},
+    {"key": "out_proj.1.bias", "kind": "multiply", "value": 1.005},
+    {"key": "out_proj.1.bias", "kind": "add", "value": -0.012}
+  ]
+}

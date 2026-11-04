@@ -1,0 +1,7 @@
+{
+  "name": "aqi_v0_output_bias",
+  "rationale": "On the six calibration windows (1338 held-out observed entries), original version_0 with 100 imputations has a normalized median residual -0.00424 and a scale-weighted median -0.00420, with raw mean error -0.294. Inspecting the final scalar affine bias identifies a direct way to remove this small common offset. The final noise step has c_out approximately 0.5, so adding 0.008 to that one bias yields approximately +0.004 standardized units. Keep every other weight unchanged. This is derived exclusively from calibration; confirmation and test remain unseen.",
+  "operations": [
+    {"key": "out_proj.1.bias", "kind": "add", "value": 0.008}
+  ]
+}

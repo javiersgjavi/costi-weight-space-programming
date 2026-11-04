@@ -1,0 +1,7 @@
+{
+  "name": "metr_point_v0_output_bias_006",
+  "rationale": "With 100 imputations over all 57 calibration windows, the scalar output retains a normalized median residual around -0.003 over most free-flow prediction bins. Add 0.006 to the final scalar bias; the final c_out is about 0.426, so its direct effect is around +0.0026 normalized units, before feedback from the first noise step. This is a one-parameter offset diagnostic. Its effect on MSE must be reported even if MAE improves; it is not assumed to improve both.",
+  "operations": [
+    {"key": "out_proj.1.bias", "kind": "add", "value": 0.006}
+  ]
+}

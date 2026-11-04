@@ -1,0 +1,40 @@
+{
+  "name": "metr_point_v0_graphhalf_head202",
+  "rationale": "Combine two independently inspected mechanisms: reduce unsupported random graph mixing and suppress the rare negative GELU tail of output neuron 202. The graph-half trial improved MAE with a small MSE tradeoff; sharpening neuron 202 improved MSE and slightly MAE. This paired calibration evaluation tests their interaction before any confirmation or test selection.",
+  "components": [
+    "random_graph_half",
+    "metr_point_v0_head202_sharp4"
+  ],
+  "operations": [
+    {
+      "key": "input_sfe.gcn.mlp.weight",
+      "kind": "multiply_columns",
+      "start": 320,
+      "stop": 448,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        202
+      ],
+      "value": 0.25
+    }
+  ]
+}

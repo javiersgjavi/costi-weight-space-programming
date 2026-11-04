@@ -1,0 +1,63 @@
+{
+  "name": "metr_point_v0_graphhalf_head202_head9",
+  "rationale": "Extend the independently confirmed graph-half and neuron-202 repair with the complementary rare positive-tail mechanism of neuron 9. This candidate is specified from calibration activation statistics; it does not alter the previously frozen candidate.",
+  "components": [
+    "metr_point_v0_graphhalf_head202",
+    "metr_point_v0_head9_soft09"
+  ],
+  "operations": [
+    {
+      "key": "input_sfe.gcn.mlp.weight",
+      "kind": "multiply_columns",
+      "start": 320,
+      "stop": 448,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        202
+      ],
+      "value": 0.25
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.9
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.9
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        9
+      ],
+      "value": 1.1111111111111112
+    }
+  ]
+}

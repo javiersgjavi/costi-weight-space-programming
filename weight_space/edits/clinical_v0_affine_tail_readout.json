@@ -1,0 +1,51 @@
+{
+  "name": "clinical_v0_affine_tail_readout",
+  "rationale": "Composed final-layer weights identify units 198 and 38 as positive readout paths that activate for high normalized values. In 128 calibration patients, their active cases remain underestimated after the original affine correction; almost all are measured variables rather than static/administrative channels. Increase only these two effective output coefficients by 1%, a fixed conservative expansion of the existing learned paths. Negative GELU-tail contributions change in the opposite direction, also consistent with the common positive offset in the low/middle range. No fitting, gradients, optimizer or test data.",
+  "operations": [
+    {
+      "key": "out_proj.1.weight",
+      "kind": "multiply",
+      "value": 1.005
+    },
+    {
+      "key": "out_proj.1.bias",
+      "kind": "multiply",
+      "value": 1.005
+    },
+    {
+      "key": "out_proj.1.bias",
+      "kind": "add",
+      "value": -0.012
+    },
+    {
+      "kind": "scale_effective_columns",
+      "key": "out_proj.0.mlp.3.weight",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        198,
+        38
+      ],
+      "value": 1.01
+    }
+  ],
+  "diagnostic": [
+    {
+      "unit": 198,
+      "effective_coefficient": 1.479494333267212,
+      "positive_activation_cases": 1026,
+      "patients": 119,
+      "mean_normalized_residual_after_affine": -0.09102041274309158,
+      "median_normalized_residual_after_affine": -0.030137624591588974,
+      "static_variable_fraction": 0.009746588693957114
+    },
+    {
+      "unit": 38,
+      "effective_coefficient": 1.3712589740753174,
+      "positive_activation_cases": 307,
+      "patients": 90,
+      "mean_normalized_residual_after_affine": -0.06557084619998932,
+      "median_normalized_residual_after_affine": -0.04983218386769295,
+      "static_variable_fraction": 0.02280130293159609
+    }
+  ]
+}

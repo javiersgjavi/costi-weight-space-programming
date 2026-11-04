@@ -1,0 +1,9 @@
+{
+  "name": "metr_point_v0_head202_sharp2",
+  "rationale": "The final MLP has an unusually large positive composed coefficient at neuron 202 (0.6184), but its median-selected activations are almost always dormant. Its negative GELU tail exceeds magnitude 0.01 at 215 calibration entries across 35 windows, where the median normalized residual is -0.080 and the mean -0.063. That tail therefore adds a downward contribution in an already underestimated subset. Sharpen this one gate by scaling its incoming row and bias by 2 and dividing its effective outgoing coefficient by 2: the contribution becomes c*GELU(2*x)/2. This suppresses the negative tail while preserving the zero threshold and positive linear asymptote, unlike deleting the feature. All other effective head coefficients remain fixed. Confirm on disjoint windows before interpreting this association as a useful repair.",
+  "operations": [
+    {"key": "out_proj.0.mlp.0.weight", "kind": "multiply_rows", "start": 202, "stop": 203, "value": 2.0},
+    {"key": "out_proj.0.mlp.0.bias", "kind": "multiply_rows", "start": 202, "stop": 203, "value": 2.0},
+    {"key": "out_proj.0.mlp.3.weight", "kind": "scale_effective_columns", "readout_key": "out_proj.1.weight", "columns": [202], "value": 0.5}
+  ]
+}

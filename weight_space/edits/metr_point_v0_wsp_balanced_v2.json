@@ -1,0 +1,36 @@
+{
+  "name": "metr_point_v0_wsp_balanced_v2",
+  "rationale": "Freeze the less aggressive weight-space candidate for the full benchmark. Halve the two adaptive GCN channel groups driven by random factors absent from the original checkpoint. Sharpen only final-MLP neuron 202 by multiplying its incoming affine row by 4 and dividing its effective outgoing coefficient by 4; this suppresses its negative GELU tail while preserving the positive linear asymptote. The additional widening of neuron 9 is excluded because its calibration gain did not yield a better MSE tradeoff in confirmation. No training, derivatives or optimizer updates are used. All selection precedes test evaluation.",
+  "operations": [
+    {
+      "key": "input_sfe.gcn.mlp.weight",
+      "kind": "multiply_columns",
+      "start": 320,
+      "stop": 448,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        202
+      ],
+      "value": 0.25
+    }
+  ]
+}

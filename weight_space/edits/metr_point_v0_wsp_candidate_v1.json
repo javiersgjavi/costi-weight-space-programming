@@ -1,0 +1,59 @@
+{
+  "name": "metr_point_v0_wsp_candidate_v1",
+  "rationale": "Direct weight-space repair for METR-LA point-missing version_0. Halve the GCN weights attached to the two unregistered random-graph powers. In the final MLP, suppress the spurious negative GELU tail of neuron 202 by scaling its affine input by 4 and its effective output coefficient by 1/4. Broaden the useful positive correction from the negative tail of neuron 9 by scaling its affine input by 0.75 and its effective output coefficient by 1/0.75. Both gate edits preserve the zero threshold and positive linear asymptote. All choices derive from checkpoint inspection and calibration forward passes. A stronger neuron-9 widening (0.5) regressed, so it was rejected. This recipe is frozen before independent confirmation of this final variant and before any test evaluation.",
+  "operations": [
+    {
+      "key": "input_sfe.gcn.mlp.weight",
+      "kind": "multiply_columns",
+      "start": 320,
+      "stop": 448,
+      "value": 0.5
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 202,
+      "stop": 203,
+      "value": 4
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        202
+      ],
+      "value": 0.25
+    },
+    {
+      "key": "out_proj.0.mlp.0.weight",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.75
+    },
+    {
+      "key": "out_proj.0.mlp.0.bias",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.75
+    },
+    {
+      "key": "out_proj.0.mlp.3.weight",
+      "kind": "scale_effective_columns",
+      "readout_key": "out_proj.1.weight",
+      "columns": [
+        9
+      ],
+      "value": 1.3333333333333333
+    }
+  ]
+}

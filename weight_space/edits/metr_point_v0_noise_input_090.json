@@ -1,0 +1,7 @@
+{
+  "name": "metr_point_v0_noise_input_090",
+  "rationale": "The scalar in_proj weight is the entry of the noisy-state branch, while conditioning values and their observation mask enter a separate CFEM projection. The 100-draw median still has a calibration error pattern with heavy opposite tails in congested and free-flow predictions. Reduce only the noisy scalar's 64 input weights by 10%, retaining every bias and the complete conditioning branch, to test whether excessive stochastic-state influence contributes to that error. This is an explicit structural hypothesis, not an assumed improvement or a change of the evaluation noise schedule.",
+  "operations": [
+    {"key": "in_proj.0.weight", "kind": "multiply", "value": 0.9}
+  ]
+}

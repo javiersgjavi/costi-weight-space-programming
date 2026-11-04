@@ -1,0 +1,7 @@
+{
+  "name": "aqi_v0_low_tail",
+  "rationale": "Calibration with 100 imputations shows a normalized median error near -0.009 in the lowest two prediction quintiles, versus approximately zero in the other three. Inspecting the actual median draw identifies final-MLP neuron 193 as a low-concentration feature: mean activations 1.23, 0.95, 0.62, 0.15, -0.12 across those quintiles, with composed output coefficient -0.1654. Reduce that negative coefficient by 10%, adding approximately 0.010 normalized units in the lowest quintile and nearly zero at high concentrations. Change its column only along the downstream scalar readout; every other effective neuron coefficient stays fixed. This is a calibration-derived hypothesis, not a confirmed improvement.",
+  "operations": [
+    {"key": "out_proj.0.mlp.3.weight", "kind": "scale_effective_columns", "readout_key": "out_proj.1.weight", "columns": [193], "value": 0.9}
+  ]
+}

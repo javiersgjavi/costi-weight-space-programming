@@ -1,0 +1,124 @@
+{
+  "name": "metr_point_v0_reverse_memory_dc",
+  "rationale": "Actual calibration inputs give a median slowest-state half-life of about 3 steps in the conditioning reverse scan, versus 59 in the forward scan. Double reverse state lifetimes by halving decay rates, and compensate each B-projection row to preserve its typical steady-state gain. For fixed delta, the exact compensation is (1-exp(-delta*A/2))/(1-exp(-delta*A)); each state uses the median ratio across channels with calibration-input mean deltas. This isolates longer temporal context from the gain increase of naive A scaling. No targets enter these factors; no derivatives or optimizer are used. Other recurrent blocks, delta parameters, C projections and skip D stay fixed.",
+  "calibration_input_diagnostic": "artifacts/audit/metr_point_conditioning_memory_v0.json",
+  "operations": [
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.A_b_log",
+      "kind": "add",
+      "value": -0.6931471805599453
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 4,
+      "stop": 5,
+      "value": 0.5843961341625813
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 5,
+      "stop": 6,
+      "value": 0.6411891410917556
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 6,
+      "stop": 7,
+      "value": 0.6461464897713398
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 7,
+      "stop": 8,
+      "value": 0.7706453343570487
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 8,
+      "stop": 9,
+      "value": 0.7483649407514541
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 9,
+      "stop": 10,
+      "value": 0.9438149714644257
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 10,
+      "stop": 11,
+      "value": 0.9313433037663053
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 11,
+      "stop": 12,
+      "value": 0.8766474888142652
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 12,
+      "stop": 13,
+      "value": 0.9776933580785017
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 13,
+      "stop": 14,
+      "value": 0.9736043283273562
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 14,
+      "stop": 15,
+      "value": 0.9952294123772871
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 15,
+      "stop": 16,
+      "value": 0.9751813246459307
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 16,
+      "stop": 17,
+      "value": 0.9988111924809566
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 17,
+      "stop": 18,
+      "value": 0.9973552449045053
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 18,
+      "stop": 19,
+      "value": 0.9991151283217882
+    },
+    {
+      "key": "cfem.fe.mamba.mamba.mamba_block.2.x_proj_b.weight",
+      "kind": "multiply_rows",
+      "start": 19,
+      "stop": 20,
+      "value": 0.995440223283858
+    }
+  ]
+}

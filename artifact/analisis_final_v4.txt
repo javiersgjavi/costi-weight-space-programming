@@ -1,0 +1,258 @@
+CoSTI — análisis final de V4
+PhysioNet Challenge 2019 · point missing · version_0
+4 de noviembre de 2026
+
+La mejor versión completamente evaluada y exportada es V4. Se modificaron
+965 valores en cinco tensores de la cabeza de salida, sin entrenamiento,
+descenso del gradiente, backpropagation, optimizadores ni ajuste de
+coeficientes a los errores. Se construyeron propuestas explícitas sobre
+los pesos y se comprobaron mediante pasadas hacia delante. Las constantes
+de las propuestas eran decisiones heurísticas fijadas antes de evaluarlas;
+esto no implica que fueran óptimas ni elimina la selección empírica entre
+propuestas.
+
+El trabajo final se centra en este checkpoint de PhysioNet. Los experimentos
+previos de METR-LA son independientes de los resultados de este documento.
+La investigación permanece en pausa. Este documento sintetiza resultados
+guardados; su elaboración no ha reanudado los experimentos.
+
+La referencia es nuestra ejecución del checkpoint original, con sus pesos
+por defecto, bajo el mismo protocolo que V4. No es la media del paper.
+Se conservaron dos pasos de inferencia, con sigmas [80, 20.92], 100
+imputaciones por paciente y la mediana central inferior de esas muestras.
+El test completo comprende 4.033 pacientes y dos semillas de ruido,
+20261103 y 20261104. Son dos evaluaciones del mismo checkpoint, no dos
+modelos entrenados independientemente.
+
+                        Original             V4                 Reducción
+MAE                     2,480960             2,417163           2,5714 %
+MSE                   350,120368           347,977979           0,6119 %
+
+Ambas métricas mejoran en cada semilla por separado. El intervalo del 95 %
+de la diferencia V4-original, mediante bootstrap emparejado por paciente,
+es [-0,066812; -0,060827] para MAE y [-4,672208; -0,596279] para MSE.
+Se promedian primero las diferencias de las dos semillas por paciente.
+Estos intervalos no recogen toda la variabilidad entre posibles semillas
+ni entre checkpoints entrenados independientemente.
+
+La gráfica final está en artifacts/figures/clinical_evolution_latest.html,
+con versiones PNG y PDF del mismo nombre. Las curvas superiores muestran
+cohortes pequeñas de calibración y confirmación; la fila verde contiene el
+test completo. Los porcentajes entre cohortes no deben mezclarse ni sumarse.
+
+El bloque que se modificó tiene la estructura:
+
+  representación de 64 componentes
+    -> 256 neuronas con GELU -> 64 componentes -> salida escalar
+
+Esta salida se calcula para cada posición temporal y variable. Las unidades
+38, 198, 47 y 255 son neuronas ocultas del bloque final. Son intermedias
+dentro de la cabeza de salida, próximas a la lectura final. No corresponden
+a las neuronas de entrada ni existe una neurona exclusiva para cada
+variable clínica. Todas las modificaciones conservadas en V4 están en
+este bloque final.
+
+La descomposición de las dos últimas transformaciones lineales permite
+escribir exactamente la salida de la cabeza, en inferencia, como:
+
+  y = b_efectivo + suma_j a_j * GELU(z_j)
+  z_j = w_j^T h + b_j
+
+Aquí h es la representación de 64 componentes y a_j es el coeficiente
+efectivo con el que cada unidad contribuye a la salida escalar. La fórmula
+permite conocer su contribución y programar cambios concretos en los pesos.
+La interpretación se contrastó con activaciones reales de los dos pasos,
+incluidas las muestras que determinaban la mediana final.
+
+Las representaciones mezclan información temporal, relaciones entre
+variables, observaciones disponibles y nivel de ruido. La explicabilidad
+obtenida es funcional y parcial. Se identificaron regiones de activación,
+contribuciones y asociaciones con errores; no conceptos clínicos únicos
+asignables a cada neurona. Una correlación entre una activación y un error
+no demuestra por sí sola una causa universal.
+
+Las modificaciones que componen V4 son las siguientes:
+
+- Lectura final y unidades 198/38. Se aplicaron una ganancia de 1,005 y una
+  corrección de sesgo de -0,012 en la lectura final, junto con un refuerzo
+  del 1 % de las dos contribuciones efectivas. La motivación fue un patrón
+  de desajuste de nivel y compresión observado en calibración. Son cambios
+  en la salida interna de la red, antes de la dinámica de inferencia; no
+  una transformación equivalente aplicada directamente a la predicción
+  final en unidades físicas.
+
+- Región intermedia de la unidad 198. La infraestimación aparecía en un
+  intervalo, mientras otras regiones mostraban sobreestimación. Se
+  reutilizaron las unidades 246, 226 y 179 para construir una corrección
+  localizada, con puntos de cambio 0, 1,5 y 2 y una pendiente fijada al
+  4 % del coeficiente efectivo de 198. Esta propuesta no mejoró ambas
+  métricas por sí sola; quedó incorporada en una composición posterior
+  que sí pasó la evaluación conjunta.
+
+- Unidad 47. Una preactivación negativa puede producir una GELU negativa;
+  multiplicarla por el coeficiente negativo de esta unidad genera una
+  contribución positiva. Se multiplicaron su fila de entrada y su sesgo
+  por 1,01 y se dividió su coeficiente efectivo por 1,01. El cambio reduce
+  esa contribución en la región negativa y conserva la pendiente lineal
+  asintótica de la región positiva. La observación de preactivaciones
+  negativas corresponde a las trazas examinadas, no a todo posible dato.
+
+- Unidad 255. El signo del error variaba entre regiones próximas de su
+  preactivación. Se desplazó su sesgo en -0,01 para mover su zona de
+  respuesta. La asociación con los errores era heterogénea y no demuestra
+  una función clínica única de esta unidad.
+
+- Contraste entre las unidades 38 y 198. Se construyó d = z38 - z198 y una
+  corrección suave aproximadamente igual a 0,0696 * clip(d, 0, 1).
+  La implementación exacta usa una diferencia de dos GELU:
+
+    A * [GELU(64*d) - GELU(64*(d-1))] / 64,
+    A = 0,05 * coeficiente_efectivo_38 = 0,0695948243.
+
+  Se programó en las unidades existentes 181 y 150, cuyas contribuciones
+  efectivas eran casi nulas en las trazas examinadas. Esto no significa
+  que fueran neuronas globalmente muertas. El contraste positivo se había
+  observado en 15 entradas evaluadas de 11 pacientes entre 512; seis de
+  esas entradas ya estaban sobreestimadas. Era una asociación escasa y
+  mixta que requería validación completa. La suavidad de GELU introduce
+  pequeñas desviaciones respecto a la rampa ideal. Además, limitar la
+  corrección directa de la cabeza no limita de igual forma el efecto
+  final después de los dos pasos de inferencia.
+
+Las identidades algebraicas y las comprobaciones de los tensores muestran
+qué función se programó. Las evaluaciones completas muestran el resultado
+del conjunto V4. No se realizó una ablación completa en test de cada
+componente, por lo que no podemos atribuir una fracción exacta del 2,5714 %
+a una neurona concreta. La suma de funciones en la cabeza con entradas
+fijas tampoco implica suma de efectos en el modelo completo.
+
+Sí se trabajó sobre bloques más profundos: memoria temporal, atención y
+grafo de relaciones entre variables. Lo que no se consiguió fue una
+modificación de esos bloques que justificase sustituir V4 con una mejora
+verificada de ambas métricas. Los principales problemas encontrados fueron:
+
+- Realimentación entre pasos. Cambiar el primer paso cambia las entradas
+  y representaciones del segundo; también puede cambiar qué muestra ocupa
+  la mediana. En dos casos de AST estudiados para una modificación de la
+  unidad 21, intervenir solo en el primer paso reprodujo todo el cambio
+  perjudicial, mientras intervenir solo en el último apenas afectó a la
+  predicción. Es evidencia causal para esos casos seleccionados, no una
+  conclusión poblacional. El candidato se descartó.
+
+- Representaciones con casos de error incompatibles. Una corrección sobre
+  la unidad 36 parecía adecuada al agrupar activaciones, pero elevaba
+  valores de O2Sat que ya estaban sobreestimados. Mejoró ligeramente MSE y
+  empeoró MAE. No se conservó.
+
+- Máscara y contenido entremezclados. Una modificación de atención para
+  favorecer posiciones observadas también alteraba preferencias entre
+  variables. La extracción lineal exacta de una señal pura de máscara
+  resultó imposible para la construcción y el dominio analizados. Esto
+  no descarta extracciones no lineales u otras modificaciones coordinadas.
+  El candidato empeoró MSE y se rechazó.
+
+- Asimetría de memoria temporal. La rama inversa tenía una persistencia
+  nominal mucho menor que la directa. Ampliar analíticamente su memoria
+  empeoró MAE un 1,70 % y MSE un 1,79 % frente a V1 en la calibración
+  examinada. La asimetría observada no demostraba un fallo que se resolviese
+  simplemente aumentando la memoria.
+
+- Concentración del MSE en errores extremos. Redistribuir parte de las
+  contribuciones del grafo adaptativo hacia el grafo guardado mejoró
+  ligeramente MAE, pero empeoró MSE. Casi todo el deterioro agregado de MSE
+  se concentraba en AST. Esa modificación se descartó.
+
+- Reproducibilidad del grafo. Sus factores adaptativos no quedaban
+  registrados en el state_dict habitual. Fue necesario reconstruir los
+  factores de la ejecución correspondiente y conservarlos explícitamente
+  en la exportación. Se verificó su coincidencia exacta con los utilizados
+  en la evaluación. Esta reparación permite reproducir el modelo; no se
+  contabiliza como una mejora de precisión.
+
+Los tipos de variables son grupos de columnas del conjunto de datos,
+no grupos de neuronas. Hay 34 variables fisiológicas, como frecuencia
+cardíaca, saturación, temperatura, presión y analíticas; y seis variables
+demográficas, administrativas y temporales: Age, Gender, Unit1, Unit2,
+HospAdmTime e ICULOS.
+
+No se impuso una prioridad clínica explícita por grupo. El criterio fue
+reducir MAE y MSE globales. Cada entrada evaluable tiene el mismo peso
+dentro de la métrica, pero las variables con más entradas contribuyen
+más. Las seis variables de contexto representan aproximadamente el 46 %
+de las entradas puntuadas. El MSE da más peso a errores grandes y se
+agregan variables con distintas unidades y escalas. Esta es una
+ponderación implícita del benchmark, no una medida de atención del modelo.
+
+Desglose descriptivo del test de V4:
+
+Variables fisiológicas:
+  MAE: 4,184830 -> 4,172789; reducción del 0,287715 %.
+  MSE: 636,030362 -> 633,012646; reducción del 0,474461 %.
+
+Variables demográficas, administrativas y temporales:
+  MAE: 0,452911 -> 0,327512; reducción del 27,687351 %.
+  MSE: 9,813137 -> 8,712616; reducción del 11,214772 %.
+
+El 89,743674 % de la reducción total del MAE procede del segundo grupo.
+Las fisiológicas aportan el 76,546673 % de la reducción total del MSE.
+Estos porcentajes describen dónde disminuyó el error; no el tiempo de
+trabajo dedicado a cada grupo ni qué variables utiliza más la red.
+
+De las 40 variables, 24 mejoran en MAE, 25 en MSE y 17 en ambas métricas.
+O2Sat mejora un 3,5853 % en MAE y un 4,7606 % en MSE. ICULOS reduce MAE
+un 16,4126 %, pero aumenta MSE un 5,8006 %. La mejora agregada no significa
+que todas las variables o todos los pacientes mejoren. Los desgloses por
+grupo y variable son descriptivos, sin intervalos propios en este informe.
+
+La interpretación práctica es una corrección útil de la lectura final de
+las representaciones existentes. La mejora de MAE es especialmente grande
+en variables de contexto y más modesta en las fisiológicas. Todavía no se
+ha demostrado una mejora profunda de la representación de las dinámicas
+clínicas. Para priorizar estas señales en otra etapa habría que definir
+explícitamente sus métricas como objetivos, además de vigilar las globales.
+
+Se utilizaron pacientes distintos para calibración y confirmación, con
+recetas fijadas antes de sus evaluaciones posteriores. Sin embargo, el
+benchmark de test ya se había consultado durante la investigación con
+otros candidatos. Esta evaluación reutiliza el benchmark y no representa
+un conjunto final intacto. Una evaluación externa sin uso previo sería
+necesaria para medir mejor la generalización. Tampoco se infiere utilidad
+clínica a partir de estas métricas de imputación.
+
+V4 conserva el mejor resultado completamente verificado y exportado.
+V9 tiene confirmación completa favorable frente a V4, pero le falta test.
+V14 mejoró la calibración y tiene pendiente confirmación completa y test.
+V10 tiene una sola semilla completa de confirmación; falta la segunda.
+Ninguna de esas mejoras preliminares se suma al resultado final de V4.
+
+Archivos de referencia, relativos a /home/javier/Projects/CoSTI-weight-space:
+
+- Resultado completo frente al original:
+  artifacts/clinical_relative_tail_test_original_report.json
+- Verificación del checkpoint, su carga y sus factores del grafo:
+  artifacts/audit/clinical_v4_verified_01/verification.json
+- Métricas por grupo:
+  artifacts/audit/clinical_v4_verified_01/variable_groups.json
+- Métricas por variable:
+  artifacts/audit/clinical_v4_verified_01/per_variable.csv
+- Receta completa de V4:
+  weight_space/edits/clinical_v0_relative_tail.json
+- Construcción del contraste de las unidades 38 y 198:
+  artifacts/audit/clinical_relative_tail_construction.json
+- Gráfica final:
+  artifacts/figures/clinical_evolution_latest.html
+- Resumen original de cierre:
+  artifacts/clinical_shutdown_20261104.txt
+- Estado y pendientes para retomar:
+  artifacts/clinical_resume_after_shutdown_20261104.json
+- Checkpoint final:
+  artifacts/edited_weights/clinical_v4/ctimba_mimic-iii-challenge_point/version_0/weights.ckpt
+
+El checkpoint original se conserva sin cambios. El estado exportado de V4
+y los factores del grafo coinciden exactamente con el candidato evaluado.
+SHA256 de la exportación:
+0007dc7d57dc2639a314a6add07350c03e5de4bfe475c80c9c4cba22e4dccdc3
+
+Los archivos clinical_point_resultado.txt y clinical_weight_space_method.txt
+documentan etapas anteriores. Sus cifras y estados históricos no deben
+interpretarse como el resultado final de V4 ni actualizarse retroactivamente.

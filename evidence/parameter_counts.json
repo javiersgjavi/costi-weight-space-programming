@@ -1,0 +1,9 @@
+{
+  "registered_parameters": 2406657,
+  "buffers": 40,
+  "unregistered_graph_values": 800,
+  "changed_parameters": 965,
+  "percent_registered_parameters_changed": 0.040097113963477135,
+  "state_dict_values": 2406697,
+  "method": "Instantiation on CPU; named parameters versus buffers; no forward or training."
+}

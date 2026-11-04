@@ -1,0 +1,7 @@
+{
+  "name": "random_graph_half",
+  "rationale": "The upstream adaptive graph factors live in an unregistered Python list: they receive neither optimizer updates nor checkpoint persistence. Nevertheless, the GCN assigns substantial weight to their first and second random graph powers (input channels 320:448). This graph is unrelated to the supplied spatial adjacency. Halve those two channel groups while preserving the self and physical-graph terms. This tests whether the model has acquired excess reliance on random spatial mixing; it is a hypothesis, not an assumed correction. Select exclusively on calibration and reject if confirmation does not support it.",
+  "operations": [
+    {"key": "input_sfe.gcn.mlp.weight", "kind": "multiply_columns", "start": 320, "stop": 448, "value": 0.5}
+  ]
+}
