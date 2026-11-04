@@ -99,19 +99,6 @@ pytest weight_space/test_reference.py     # 18 tests; needs the data linked as a
 
 Tested with Python 3.12, torch 2.12, numpy 2.4, pandas 2.2, einops 0.8 and triton 3.7.
 
+## The neuron follow-up
 
-## Concept interpretation follow-up
-
-The additional figures use only a public aggregate, with NumPy, SciPy and Matplotlib:
-
-```bash
-python -m weight_space.plot_clinical_concepts \
-  --report results/data/clinical_neuron_concepts_summary_20261105.json \
-  --output results/figures
-```
-
-This produces `conceptos_v1_v4`, `intervenciones_conceptos`, `escala_interna_y_extremos` and `funciones_neuronas_v4` in PNG, PDF and SVG. It does not run a model or need patient data.
-
-The corresponding diagnosis scripts are `analyze_clinical_neuron_concepts.py`, `diagnose_clinical_concepts_forward.py`, `verify_clinical_concept_ablation.py` and `summarize_clinical_concepts.py` in `weight_space/`. They preserve the original workspace paths (`../weights`, `artifacts/data`, `artifacts/audit`, and recipes directly under `weight_space/edits`) and need the original private activation files and data, so they are not one-command reproduction scripts for a fresh clone. The forward plan and ablation implementation check are in `results/evidence/clinical_concepts_forward_plan_20261105.json` and `results/evidence/clinical_concept_ablation_verification_20261105.json`.
-
-No checkpoint update or training was performed. The input probe uses two eligible patients per variable, picked before running the models from the same 32-patient confirmation cohort. Inputs are shifted by 0.5 SD of genuinely observed training values, preserving masks and noise. Preactivation changes are averaged over all 100 draws, avoiding a change of median-selected draw as an explanation of the effect. The ablation instead removes a contribution only at the last step and then recomputes the median. A real activation intervention on one patient independently checks that algebraic implementation. These are functional sensitivity probes, not evidence of a medical intervention or a uniquely identified clinical concept.
+Figure 9 is rebuilt by `scripts/make_figures.py` from the aggregate `results/data/clinical_neuron_concepts_summary_20261105.json`, with no model or patient data. The scripts that produced the aggregate are kept as a record: `weight_space/analyze_clinical_neuron_concepts.py`, `diagnose_clinical_concepts_forward.py`, `verify_clinical_concept_ablation.py` and `summarize_clinical_concepts.py`. Like the other diagnostic scripts, they use the original workspace paths (`../weights`, `artifacts/data`, `artifacts/audit`) and the private activation dumps, so they do not run from a fresh clone. The protocol is described in [`neuron-concepts.md`](neuron-concepts.md).

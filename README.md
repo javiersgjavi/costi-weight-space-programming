@@ -23,11 +23,12 @@ The 95% interval for the per-patient change is [−0.067, −0.061] for MAE and 
    3. [Test every idea with forward passes](#step-3--test-every-idea-with-forward-passes)
 4. [Results](#results)
 5. [How to read this result](#how-to-read-this-result)
-6. [What the edited neurons represent](#what-do-the-edited-neurons-represent) / [What did not work](#what-did-not-work)
-7. [Who did what](#who-did-what)
-8. [Repository layout](#repository-layout)
-9. [Reproducing](#reproducing)
-10. [Credits and citation](#credits-and-citation)
+6. [What did not work](#what-did-not-work)
+7. [Follow-up: what do the edited neurons respond to?](#follow-up-what-do-the-edited-neurons-respond-to)
+8. [Who did what](#who-did-what)
+9. [Repository layout](#repository-layout)
+10. [Reproducing](#reproducing)
+11. [Credits and citation](#credits-and-citation)
 
 ---
 
@@ -191,26 +192,6 @@ This is a real improvement, measured carefully, but it is easy to oversell. In p
 - **Explainability is functional, not clinical.** We know exactly which function each edit adds to the head. We do not know which clinical concept a neuron stands for, and probably none maps cleanly to one.
 - **This is an imputation benchmark.** Nothing here shows clinical usefulness.
 
-## What do the edited neurons represent?
-
-A follow-up on 5 November compared saved activations with observed signal levels, trends and observation availability, then ran **V1 and V4 on the same 32 confirmation patients (3,569 scored entries, 100 samples each)**. The checkpoints stayed frozen. Small effective weights do not imply globally inactive neurons; negligible contributions were checked for the selected reused units on the examined traces. These diagnostics add interpretation; they do not change the test results above.
-
-| Units | Supported functional interpretation | Limit |
-|---|---|---|
-| 198 | A contribution for large values on the model's internal scale | High normalized values need not be extreme measurements within that variable |
-| 38 | A response to level that depends on the variable and context | Increasing HR and glucose moved it in opposite directions in the small input probe |
-| 47 and 255 | Candidate smooth level adjustments | Strong level association and measured sensitivity do not identify a unique clinical concept |
-| 246 / 226 / 179 | The programmed interval correction on unit 198 | The mathematical function is known; its clinical meaning inherits the uncertainty about 198 |
-| 181 / 150 | The programmed, saturating contrast between 38 and 198 | Rare cases span several lab variables, not only troponin |
-
-![Matched V1/V4 concept associations](results/figures/conceptos_v1_v4.png)
-
-The within-variable rank associations between preactivation and interpolated level were **0.792 for unit 47** in both versions and **0.697 / 0.706 for unit 255**. A separate input probe raised observations by half an observed-training standard deviation while keeping the mask, temporal shape and noise fixed: eight patient-variable cases per model. It supports sensitivity to level, but is too small to establish universal or clinically specific meanings.
-
-**An important scale distinction:** among V4's calibration entries with positive unit-198 preactivation, 89.5% have a normalized target above 2, but only 11.7% exceed their variable's 95th percentile among actual training observations. The original scaler includes zeros for missing values. Calling this a clinical-anomaly detector would overstate the evidence.
-
-Read the [full Spanish interpretation and limitations](docs/neuron-concepts-es.txt), inspect the [aggregate measurements](results/data/clinical_neuron_concepts_summary_20261105.json), or view the [input interventions](results/figures/intervenciones_conceptos.pdf), [scale comparison](results/figures/escala_interna_y_extremos.pdf) and [programmed functions](results/figures/funciones_neuronas_v4.pdf). Each figure also has PNG and SVG versions. The [reproduction guide](docs/reproduce.md#concept-interpretation-follow-up) distinguishes public figure regeneration from diagnostics requiring private data. Correlations are descriptive and entries within a patient are dependent; no fresh external holdout is claimed.
-
 ## What did not work
 
 The agent also tried editing deeper parts of CoSTI, where the representation is built, not just read out. None of these passed the both-metrics rule:
@@ -221,6 +202,18 @@ The agent also tried editing deeper parts of CoSTI, where the representation is 
 - **Two-step feedback.** Changing the first denoising step changes the input of the second, and can change which of the 100 samples ends up as the median. In the two cases studied for a unit-21 edit, the first step alone reproduced the whole harmful effect. A correction that looks local in the head can act globally.
 
 One side finding concerns reproducibility. CoSTI's adaptive graph factors are not stored in the standard `state_dict`, so a reloaded checkpoint does not reproduce the trained graph exactly. The agent reconstructed the factors and saved them explicitly in the exported checkpoint. That fixes reproducibility. It does not count towards the accuracy gain.
+
+## Follow-up: what do the edited neurons respond to?
+
+After the study, a follow-up ran the frozen V1 and V4 on the same 32 confirmation patients (3,569 imputed values, 100 samples each). It compared the input of each edited neuron with simple properties of the value being imputed (level, slope, variability, time since the last reading) and nudged the readings of four variables up to see how each neuron reacts. No weights were changed and the test set was not used.
+
+![They track how big the value is, not a clinical concept](results/figures/09_neuron_roles.png)
+
+- **Units 47 and 255 follow the level of the signal.** Within each variable, their input rises with the level of the reading (Spearman ρ ≈ 0.79 and 0.71) and went up in every nudge tested. With their negative output weights they act as smooth adjustments of the output level, which is what V2 and V3 retouched.
+- **Unit 38 has no single meaning.** Its input falls when heart rate rises and rises with glucose or creatinine. What it does depends on the variable being imputed; it is not a "high glucose neuron".
+- **"High" for the model is not "extreme" for the patient.** When unit 198 is on, 90% of the values are above 2 on the model's normalized scale, but only 12% are in the top 5% of their own variable (unit 38: 98% vs 19%). The benchmark's preprocessing counts missing values as zeros when it computes each variable's mean and spread, so an ordinary reading of a rarely measured lab looks large to the model. Unit 198 carries large values on that internal scale; it is not an anomaly detector.
+
+V1 and V4 give almost identical numbers throughout, so V4 kept the functions the model already had and changed how they are read out. The only neurons whose function is fully known are the five reused ones, because the agent wrote it. These are descriptive measurements on few cases (the nudge covers 8 per model) from a cohort already used in the search. Full analysis and limits: [`docs/neuron-concepts.md`](docs/neuron-concepts.md).
 
 ## Who did what
 
@@ -240,11 +233,12 @@ weight_space/             the agent's toolkit: inference harness, diagnostics, e
   edits/physionet/        every PhysioNet recipe, including the final V4
   edits/pilots/           recipes from the earlier METR-LA / AQI-36 pilot
 results/
-  figures/                the eight figures on this page (16:9 except the per-variable one)
+  figures/                the nine figures on this page (16:9 except the per-variable one)
   data/                   every number behind the figures, as CSV/JSON
   evidence/               freeze record, test reports and the verification of the export
 docs/
   method.md               the full technical write-up: algebra, each edit, protocol
+  neuron-concepts.md      follow-up: what the edited neurons respond to
   experiment-log.md       every hypothesis, with numbers and the reason it was kept or rejected
   reproduce.md            how to run the evaluation and rebuild the figures
   social-thread.md        a ready-to-post thread

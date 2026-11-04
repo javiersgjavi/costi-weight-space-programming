@@ -675,6 +675,108 @@ def fig_per_variable():
     save(fig, "08_per_variable.png")
 
 
+# --------------------------------------------------------------------------- 9 · what the neurons respond to
+
+def fig_neuron_roles():
+    d = json.loads((DATA / "clinical_neuron_concepts_summary_20261105.json").read_text())
+    units = d["units"]                                   # [38, 198, 47, 255]
+    level = d["features"].index("interpolation")
+    conf = d["confirmation"]
+    corr = {u: (conf["V1"]["matrix"][i][level], conf["V4"]["matrix"][i][level]) for i, u in enumerate(units)}
+    probes = [r for r in d["input_interventions"]["V4"] if r["step"] == 2]
+    regions = d["calibration"]["V4"]["positive_regions"]
+
+    fig = canvas("Follow-up · What do the edited neurons respond to?",
+                 "They track how big the value is, not a clinical concept",
+                 f"Frozen V1 and V4 on the same {conf['V4']['patients']} confirmation patients "
+                 f"({conf['V4']['entries']:,} imputed values, 100 samples each). No weights were changed.\n"
+                 "Both versions give almost the same numbers, so V4 is shown.")
+    gs = fig.add_gridspec(1, 3, left=0.11, right=0.975, bottom=0.15, top=0.55, wspace=0.42,
+                          width_ratios=[1, 1.15, 0.9])
+    heads = ["Which neurons follow the signal level?", "Raising one variable's readings", "“High” for the model ≠ extreme"]
+    subs = ["rank correlation with the reading's level", "change in each neuron's input; unit 38 falls with HR",
+            "values where the neuron is on"]
+
+    # 1 · correlation with signal level.
+    ax1 = fig.add_subplot(gs[0])
+    order = [47, 255, 198, 38]
+    ys = np.arange(len(order))[::-1]
+    for y, u in zip(ys, order):
+        v1, v4 = corr[u]
+        ax1.barh(y, v4, height=0.55, color=BLUE if v4 > 0 else RED)
+        ax1.text(v4 + (0.03 if v4 > 0 else -0.03), y, f"{v4:+.2f}", va="center", fontsize=13,
+                 ha="left" if v4 > 0 else "right", color=INK)
+    ax1.axvline(0, color=INK_2, lw=1)
+    ax1.set_yticks(ys)
+    ax1.set_yticklabels([f"unit {u}" for u in order], fontsize=13.5, color=INK)
+    ax1.set_xlim(-0.45, 1.0)
+    style_axis(ax1, "x")
+    ax1.spines["left"].set_visible(False)
+    ax1.set_xlabel("Spearman ρ with the interpolated level", fontsize=12.5)
+
+    # 2 · input probe, diverging heat table.
+    ax2 = fig.add_subplot(gs[1])
+    variables = [r["variable"] for r in probes]
+    cols = [units.index(u) for u in order]
+    M = np.array([[r["mean_delta_preactivation"][c] for c in cols] for r in probes])
+    cmap = matplotlib.colors.LinearSegmentedColormap.from_list("div", [RED, "#f3f2ee", BLUE])
+    lim = 1.2
+    ax2.imshow(M, cmap=cmap, vmin=-lim, vmax=lim, aspect="auto")
+    for i in range(M.shape[0]):
+        for j in range(M.shape[1]):
+            ax2.text(j, i, f"{M[i, j]:+.2f}", ha="center", va="center", fontsize=12.5,
+                     color=SURFACE if abs(M[i, j]) > 0.7 else INK)
+    ax2.set_xticks(range(len(order)))
+    ax2.set_xticklabels([f"unit {u}" for u in order], fontsize=12.5, color=INK)
+    ax2.set_yticks(range(len(variables)))
+    ax2.set_yticklabels(variables, fontsize=13, color=INK)
+    ax2.tick_params(length=0)
+    for s in ax2.spines.values():
+        s.set_visible(False)
+    ax2.set_xticks(np.arange(-0.5, len(order)), minor=True)
+    ax2.set_yticks(np.arange(-0.5, len(variables)), minor=True)
+    ax2.grid(which="minor", color=SURFACE, lw=3)
+    ax2.tick_params(which="minor", length=0)
+
+    # 3 · internal scale vs within-variable extremes.
+    ax3 = fig.add_subplot(gs[2])
+    show = [198, 38]
+    xs = np.arange(len(show))
+    w = 0.36
+    a_ = [100 * regions[str(u)]["fraction_target_above_2_normalized"] for u in show]
+    b_ = [100 * regions[str(u)]["fraction_target_above_95th_observed_training_percentile"] for u in show]
+    ax3.bar(xs - w / 2 - 0.02, a_, width=w, color=MUTED)
+    ax3.bar(xs + w / 2 + 0.02, b_, width=w, color=BLUE)
+    for x, va, vb in zip(xs, a_, b_):
+        ax3.text(x - w / 2 - 0.02, va + 2, f"{va:.0f}%", ha="center", fontsize=13.5, color=INK)
+        ax3.text(x + w / 2 + 0.02, vb + 2, f"{vb:.0f}%", ha="center", fontsize=13.5, color=INK)
+    ax3.set_xticks(xs)
+    ax3.set_xticklabels([f"unit {u}" for u in show], fontsize=13.5, color=INK)
+    ax3.set_ylim(0, 112)
+    ax3.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:.0f}%"))
+    style_axis(ax3, "y")
+    x3 = ax3.get_position().x0
+    for k, (lab, c) in enumerate([("> 2 on the model's internal scale", MUTED),
+                                  ("in the top 5% of its own variable", BLUE)]):
+        yy = 0.595 - k * 0.032
+        fig.patches.append(matplotlib.patches.FancyBboxPatch(
+            (x3, yy - 0.008), 0.014, 0.016, boxstyle="round,pad=0,rounding_size=0.003",
+            transform=fig.transFigure, facecolor=c, edgecolor="none"))
+        fig.text(x3 + 0.02, yy, lab, fontsize=12, va="center", color=INK_2)
+
+    for k, axh in enumerate([ax1, ax2, ax3]):
+        x0 = [0.05, ax2.get_position().x0 - 0.065, ax3.get_position().x0 - 0.03][k]
+        fig.text(x0, 0.69, str(k + 1), fontsize=16.5, weight="bold", color=BLUE)
+        fig.text(x0 + 0.016, 0.69, heads[k], fontsize=16.5, weight="bold")
+        fig.text(x0, 0.652, subs[k], fontsize=12.5, color=INK_2)
+
+    footer(fig, "1: Spearman ρ within each variable; V1 and V4 differ by ≤ 0.01. Slope, variability and time since the last reading: all |ρ| ≤ 0.25. "
+                "2: two patients per variable, 100 samples, same masks and noise; only 8 cases.\n3: V4 on 512 calibration "
+                "patients. The original scaler counts missing values as zero, so a routine reading of a sparse lab can look "
+                "large to the model. Descriptive only.")
+    save(fig, "09_neuron_roles.png")
+
+
 if __name__ == "__main__":
     fig_headline()
     fig_read_weights()
@@ -684,3 +786,4 @@ if __name__ == "__main__":
     fig_progress()
     fig_where()
     fig_per_variable()
+    fig_neuron_roles()
