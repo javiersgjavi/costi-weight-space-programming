@@ -2,7 +2,7 @@
 
 ## `figures/`
 
-Rebuild them all with `python scripts/make_figures.py`. Figures 1–5 are 2400×1350 px (16:9), sized for X, LinkedIn and slides. Figure 6 is tall, for the README.
+Rebuild them all with `python scripts/make_figures.py`. Figures 1–6 are 2400×1350 px (16:9), sized for X, LinkedIn and slides. Figure 7 is tall, for the README.
 
 | File | Shows |
 |---|---|
@@ -10,8 +10,9 @@ Rebuild them all with `python scripts/make_figures.py`. Figures 1–5 are 2400×
 | `02_read_the_weights.png` | effective weight of each of the 256 output-head neurons; 176 are idle |
 | `03_write_the_weights.png` | the bump and the ramp programmed into idle neurons, plus the full V4 recipe |
 | `04_search.png` | all 17 hypotheses on the 128-patient screening cohorts: kept, rejected, pending |
-| `05_where_the_gain_comes_from.png` | gain by variable group and by version (V1 vs V4) |
-| `06_per_variable.png` | MAE and MSE change for each of the 40 variables |
+| `05_progress.png` | MAE and MSE reduction at each of the 17 iterations, with the accepted model as a staircase and the final test numbers |
+| `06_where_the_gain_comes_from.png` | gain by variable group and by version (V1 vs V4) |
+| `07_per_variable.png` | MAE and MSE change for each of the 40 variables |
 
 ## `data/`
 

@@ -367,7 +367,92 @@ def fig_search():
     save(fig, "04_search.png")
 
 
-# --------------------------------------------------------------------------- 5 · where the gain comes from
+# --------------------------------------------------------------------------- 5 · progress
+
+def fig_progress():
+    h = pd.read_csv(DATA / "hypotheses_128.csv")
+    test = pd.read_csv(DATA / "test_summary.csv").set_index("model")
+    kept = h[h.status.isin(["baseline", "kept"])]
+
+    fig = canvas("Progress across iterations",
+                 "The error went down one kept edit at a time",
+                 "Each mark is one iteration: a frozen edit scored against the original model on 128 held-out "
+                 "confirmation patients\n(2 noise seeds). The line is the model the agent was building on; "
+                 "only edits that lowered both errors moved it.")
+
+    gs = fig.add_gridspec(1, 2, left=0.06, right=0.97, bottom=0.15, top=0.68, wspace=0.14)
+    last = int(h.order.max())
+    for col, (metric, title, ytop) in enumerate([("mae", "MAE reduction vs original", 2.75),
+                                                 ("mse", "MSE reduction vs original", 1.15)]):
+        ax = fig.add_subplot(gs[col])
+        key = f"confirmation_{metric}_reduction_pct"
+
+        # The accepted model: a step that only moves when an edit is kept.
+        xs = list(kept.order) + [last + 0.6]
+        ys = list(kept[key]) + [kept[key].iloc[-1]]
+        ax.fill_between(xs, ys, step="post", color=BLUE, alpha=0.07, lw=0)
+        ax.step(xs, ys, where="post", color=BLUE, lw=2.5, zorder=2)
+
+        rej = h[(h.status == "rejected") & h[key].notna()]
+        ax.scatter(rej.order, rej[key], marker="x", s=80, c=MUTED, linewidths=2, zorder=3)
+        cal_only = h[(h.status == "rejected") & h[key].isna()]
+        ax.scatter(cal_only.order, [0.035] * len(cal_only), marker="x", s=55, c=AXIS, linewidths=2,
+                   transform=matplotlib.transforms.blended_transform_factory(ax.transData, ax.transAxes),
+                   zorder=3, clip_on=False)
+        pen = h[h.status == "pending"]
+        ax.scatter(pen.order, pen[key], s=110, facecolors=SURFACE, edgecolors=ORANGE, linewidths=2.2, zorder=4)
+        k = h[h.status == "kept"]
+        ax.scatter(k.order, k[key], s=130, c=BLUE, edgecolors=SURFACE, linewidths=2, zorder=5)
+
+        for _, r in k.iterrows():
+            if isinstance(r.version, str):
+                ax.text(r.order, r[key] + ytop * 0.035, r.version, ha="center", va="bottom", fontsize=13,
+                        weight="bold", color=INK)
+            else:
+                ax.text(r.order + 0.3, r[key] - ytop * 0.03, "gain + bias\n(first half of V1)", ha="left",
+                        va="top", fontsize=12, color=INK_2)
+
+        if metric == "mae":
+            r = h[h.version == "V5"].iloc[0]
+            ax.annotate("unit 167: best idea on calibration,\nworse on confirmation → rejected",
+                        (r.order, r[key]), (r.order - 4.6, r[key] - 0.62), fontsize=12, color=INK_2,
+                        arrowprops=dict(arrowstyle="-", color=AXIS, lw=1))
+        else:
+            ax.annotate("2 pending: promising,\nnever run on the full set", (pen.order.iloc[0], pen[key].iloc[0]),
+                        (12.6, 0.70), fontsize=12, color=INK_2, va="center",
+                        arrowprops=dict(arrowstyle="-", color=AXIS, lw=1))
+
+        t1 = -test.loc["V1", f"{metric}_change_vs_original_pct"]
+        t4 = -test.loc["V4", f"{metric}_change_vs_original_pct"]
+        ax.text(0.97, 0.20, "Full test set, 4,033 patients", transform=ax.transAxes, ha="right",
+                fontsize=12.5, color=INK_2)
+        ax.text(0.97, 0.08, f"V1  {t1:.2f}%    V4  {t4:.2f}%", transform=ax.transAxes, ha="right",
+                fontsize=17, weight="bold", color=BLUE)
+
+        style_axis(ax, "y")
+        ax.set_xlim(-0.6, last + 0.6)
+        ax.set_ylim(0, ytop)
+        ax.set_xticks(range(0, last + 1))
+        ax.set_xlabel("iteration (order in which the agent tried each idea)", fontsize=13)
+        ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:.1f}%"))
+        ax.set_title(title, loc="left", fontsize=17, weight="bold", pad=12)
+
+    items = [("kept", dict(c=BLUE, s=110, edgecolors=SURFACE)),
+             ("rejected", dict(c=MUTED, marker="x", s=70, linewidths=2)),
+             ("stopped on calibration", dict(c=AXIS, marker="x", s=55, linewidths=2)),
+             ("pending", dict(facecolors=SURFACE, edgecolors=ORANGE, s=100, linewidths=2.2))]
+    for x0, (lab, st) in zip([0.61, 0.676, 0.76, 0.915], items):
+        axl = fig.add_axes([x0 - 0.006, 0.735, 0.012, 0.02])
+        axl.scatter([0], [0], **st)
+        axl.axis("off")
+        fig.text(x0 + 0.014, 0.745, lab, fontsize=12.5, color=INK_2, va="center")
+
+    footer(fig, "Confirmation cohort: 128 patients, seeds 20261103 + 20261104, same patients and noise for every "
+                "model. Test numbers are from the full test split (mean of 2 seeds).")
+    save(fig, "05_progress.png")
+
+
+# --------------------------------------------------------------------------- 6 · where the gain comes from
 
 def fig_where():
     g = json.loads((DATA / "per_group_test.json").read_text())["groups"]
@@ -429,7 +514,7 @@ def fig_where():
 
     footer(fig, "Test set reused: V1 was tested before V4 was built. 17 of 40 variables improve on both "
                 "metrics; some sparse lab values get worse (see per-variable figure).")
-    save(fig, "05_where_the_gain_comes_from.png")
+    save(fig, "06_where_the_gain_comes_from.png")
 
 
 def _legend(fig, x, y, items):
@@ -441,7 +526,7 @@ def _legend(fig, x, y, items):
         fig.text(xx + 0.022, y, lab, fontsize=13, va="center", color=INK_2)
 
 
-# --------------------------------------------------------------------------- 6 · per variable
+# --------------------------------------------------------------------------- 7 · per variable
 
 CONTEXT = {"Age", "Gender", "Unit1", "Unit2", "HospAdmTime", "ICULOS"}
 
@@ -486,7 +571,7 @@ def fig_per_variable():
     fig.text(0.05, 0.018, "Bars clipped at ±40%; the true value is printed next to clipped bars. Variables with "
                           "few scored values (pH, Chloride) swing the most. Test set, mean of 2 seeds.",
              fontsize=11.5, color=MUTED)
-    save(fig, "06_per_variable.png")
+    save(fig, "07_per_variable.png")
 
 
 if __name__ == "__main__":
@@ -494,5 +579,6 @@ if __name__ == "__main__":
     fig_read_weights()
     fig_program_functions()
     fig_search()
+    fig_progress()
     fig_where()
     fig_per_variable()

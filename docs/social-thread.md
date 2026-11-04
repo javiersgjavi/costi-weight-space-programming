@@ -53,6 +53,7 @@ Step 3: test everything.
 The best idea on calibration failed on confirmation and was dropped.
 
 📎 `results/figures/04_search.png`
+📎 `results/figures/05_progress.png`
 
 ---
 
@@ -63,7 +64,7 @@ Most of the MAE gain is in 6 context columns (age, ICU unit, length of stay…).
 
 And the simplest edit, recalibrating the output plus 2 neurons, already gives −2.29%.
 
-📎 `results/figures/05_where_the_gain_comes_from.png`
+📎 `results/figures/06_where_the_gain_comes_from.png`
 
 ---
 

@@ -135,6 +135,10 @@ Two cases show why this matters:
 
 Every hypothesis, with its numbers and the reason it was kept or rejected, is listed in [`docs/experiment-log.md`](docs/experiment-log.md).
 
+Seen in order, the search is a staircase: the accepted model only moves when an edit passes, and most iterations leave it where it was.
+
+![The error went down one kept edit at a time](results/figures/05_progress.png)
+
 ## Results
 
 Full test set: 4,033 patients, 100 imputations per patient, 2 noise seeds (20261103, 20261104), mean of the two seeds. The baseline is our own run of the released checkpoint under exactly the same protocol.
@@ -153,11 +157,11 @@ The exported V4 checkpoint was audited: its state and graph factors match the fr
 
 This is a real improvement, measured carefully, but it is easy to oversell. In particular:
 
-![Most of the gain is recalibration, not better physiology](results/figures/05_where_the_gain_comes_from.png)
+![Most of the gain is recalibration, not better physiology](results/figures/06_where_the_gain_comes_from.png)
 
 - **Most of the MAE gain is in the 6 context columns.** Age, gender, ICU unit, admission time and length of stay improve by 27.7% (MAE) and 11.2% (MSE). The 34 vitals and lab values improve by only **0.29% (MAE) and 0.47% (MSE)**. 90% of the total MAE reduction comes from context columns, while 77% of the MSE reduction comes from physiological ones.
 - **The simplest edit did most of the work.** V1, a recalibration of the output plus two boosted neurons (193 values), already gives −2.29% MAE on test. The programmed functions of V2–V4 improve on V1 by a further 0.29% (MAE) and 0.10% (MSE).
-- **Not every variable improves.** 17 of 40 improve on both metrics. Some sparse lab values get clearly worse: pH (+76% MAE, 706 scored values) and chloride (+40%, 188 values). See the [per-variable figure](results/figures/06_per_variable.png).
+- **Not every variable improves.** 17 of 40 improve on both metrics. Some sparse lab values get clearly worse: pH (+76% MAE, 706 scored values) and chloride (+40%, 188 values). See the [per-variable figure](results/figures/07_per_variable.png).
 - **The test set was used twice.** V1 was evaluated on test before V4 was built, so V4's test number is not a pristine hold-out. No test data was used to design any edit, but a fresh external evaluation would be the proper confirmation.
 - **One checkpoint, one benchmark.** Two noise seeds of the same checkpoint are not five independently trained models. The paper reports the average over five checkpoints, so this baseline is not the paper's number.
 - **Explainability is functional, not clinical.** We know exactly which function each edit adds to the head. We do not know which clinical concept a neuron stands for, and probably none maps cleanly to one.
