@@ -78,7 +78,7 @@ The test set was used twice, and this is one checkpoint. It needs external valid
 **8/8**
 Everything is open: the recipe (965 values as JSON), the agent's toolkit, every rejected hypothesis with its numbers, figures and session transcript.
 
-Directed by a human, executed by an agent (OpenAI Codex).
+Directed by a human, executed by an agent (Astra 6 Max in Codex, about 13 hours).
 
 https://github.com/javiersgjavi/costi-weight-space-programming
 

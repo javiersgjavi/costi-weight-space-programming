@@ -1,6 +1,6 @@
 # Session transcript
 
-[`agent-session-es.txt`](agent-session-es.txt) is the record of the session in which the agent (OpenAI Codex, in a terminal) did this work: the user's messages and the agent's messages, with timestamps in UTC, from 3 November 2026 10:21 to 4 November 2026 14:31.
+[`agent-session-es.txt`](agent-session-es.txt) is the record of the session in which the agent (Astra 6 Max in OpenAI Codex, in a terminal) did this work: the user's messages and the agent's messages, with timestamps in UTC, from 3 November 2026 10:21 to 4 November 2026 14:31.
 
 - **Language:** Spanish, as the session was held. It has not been translated, so the record stays as it happened. The [README](../../README.md#who-did-what) summarises the course of the session in English.
 - **Scope:** user and assistant messages only (411 records). Tool calls, tool outputs, internal reasoning and system or developer instructions are not included. Lines starting with `<codex_internal_context>` are the agent harness's automatic "keep working on the goal" prompts, recorded as user turns.

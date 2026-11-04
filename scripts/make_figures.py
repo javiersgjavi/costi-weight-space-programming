@@ -143,7 +143,7 @@ def fig_headline():
     fig.text(0.05, 0.155,
              "Baseline: our own run of the released CoSTI checkpoint under the same protocol. Lower is better.",
              fontsize=14, color=INK_2)
-    footer(fig, "Agent: Astra 6 Max working in Codex for 8 hours, directed by Javier Solís-García. "
+    footer(fig, "Agent: Astra 6 Max working in Codex for 13 hours, directed by Javier Solís-García. "
                 "Method after Takehi et al., "
                 "“Sparks of Weight-Space Programming” (MIT CSAIL, 2026).")
     save(fig, "01_headline.png")

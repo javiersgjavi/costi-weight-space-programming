@@ -181,7 +181,7 @@ One side finding concerns reproducibility. CoSTI's adaptive graph factors are no
 ## Who did what
 
 - **Javier Solís-García** (first author of CoSTI) set the goal and the rules: follow the weight-space-programming blog post, no gradient-based training, both MAE and MSE must improve. He also chose which checkpoint to focus on, authorised the GPU and decided when to stop.
-- **The agent** (OpenAI Codex, working in a terminal) did everything else: it read the code and the weights, wrote the inference harness, designed the validation protocol, diagnosed the model, wrote every edit, ran every evaluation and documented the failures.
+- **The agent** (Astra 6 Max, working in OpenAI Codex in a terminal) did everything else: it read the code and the weights, wrote the inference harness, designed the validation protocol, diagnosed the model, wrote every edit, ran every evaluation and documented the failures.
 
 The session ran on 3 November 2026, from 10:21 to about 23:40 UTC. The agent worked alone for several hours while the user was away. It started on all benchmark configurations, and an output-layer edit on PhysioNet already looked promising at that point. At the user's request it then spent a few hours on a single METR-LA traffic checkpoint, where the best edit gave only −0.025% MAE and an MSE change whose interval included zero. The user then asked which checkpoint looked most promising, and the agent picked the PhysioNet one shown here. Three promising candidates (V9, V10 and V14) were still in the queue when the machine was shut down. Their status is in the [experiment log](docs/experiment-log.md#unfinished-work).
 
