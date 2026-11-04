@@ -114,7 +114,7 @@ so that `z₂₄₆ = 16 · (z₁₉₈ − t)`. Unit 246 now stays at zero whil
 | 226 | 1.5 | −4 | +1 − 4 = −3: falls |
 | 179 | 2 | +3 | −3 + 3 = 0: flat, switched off |
 
-The result is a small triangle: it adds a little to the prediction (at most about 0.09 in normalized units) while `z₁₉₈` is between 0 and 2, peaks at 1.5, and adds nothing anywhere else. It is the orange curve in panel ③ of the figure below.
+The result is a small triangle: it adds a little to the prediction (at most about 0.09 in normalized units) while `z₁₉₈` is between 0 and 2, peaks at 1.5, and adds nothing anywhere else. It is the orange curve in panel 3 of the figure below.
 
 **The other neurons add, they don't modulate.** Unit 198 itself is not touched by this edit. The three idle neurons read the same input as unit 198, compute their own small ramps, and those ramps are added to the final output next to unit 198's own contribution. The net effect is as if unit 198's response curve had been reshaped, but it is built in parallel.
 
@@ -124,7 +124,7 @@ The result is a small triangle: it adds a little to the prediction (at most abou
 
 ![Fixing one neuron with three idle ones](results/figures/03_fix_unit_198.png)
 
-① Unit 198's error before the fix (V1), by the value of its input. ② The three idle neurons, each switching on at its own threshold. ③ Their sum, the exact correction stored in the weights. ④ The same error with only this correction added: in the 0–2 range it almost disappears, and above 2 it does not change. These are the 128 calibration patients the edit was designed on, so ④ shows that the edit does what it was built to do, not that it generalizes. Generalization is judged on the confirmation patients and the test set below.
+(1) Unit 198's error before the fix (V1), by the value of its input. (2) The three idle neurons, each switching on at its own threshold. (3) Their sum, the exact correction stored in the weights. (4) The same error with only this correction added: in the 0–2 range it almost disappears, and above 2 it does not change. These are the 128 calibration patients the edit was designed on, so panel 4 shows that the edit does what it was built to do, not that it generalizes. Generalization is judged on the confirmation patients and the test set below.
 
 The complete final recipe (V4) has six edits, applied in four validated versions:
 

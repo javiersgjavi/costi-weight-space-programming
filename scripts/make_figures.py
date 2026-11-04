@@ -239,7 +239,7 @@ def fig_program_functions():
 
     gs = fig.add_gridspec(1, 4, left=0.055, right=0.975, bottom=0.15, top=0.62, wspace=0.34)
     xlim = (-0.4, 3.0)
-    heads = ["①  The problem", "②  The pieces", "③  The fix", "④  The result"]
+    heads = ["The problem", "The pieces", "The fix", "The result"]
     subs = ["V1's error, by unit 198's input", "3 idle neurons read that input ×16",
             "their sum, added to the output", "the same error, with the fix"]
     ylab = "median error (normalized)"
@@ -258,14 +258,14 @@ def fig_program_functions():
         if label:
             ax.set_ylabel(label, fontsize=12.5)
 
-    # ① V1's residual error, binned by z198.
+    # 1 · V1's residual error, binned by z198.
     ax1 = fig.add_subplot(gs[0])
     error_bars(ax1, "median_error_v1", RED, 0.9)
     ax1.text(1.0, -0.047, "too low", ha="center", fontsize=13, color=INK, weight="bold")
     ax1.text(2.5, 0.027, "too high", ha="center", fontsize=13, color=INK, weight="bold")
     finish(ax1, (-0.055, 0.04), ylab)
 
-    # ② the three building blocks, one row each.
+    # 2 · the three building blocks, one row each.
     sub = gs[1].subgridspec(3, 1, hspace=0.25)
     z = np.linspace(*xlim, 600)
     rows = []
@@ -289,7 +289,7 @@ def fig_program_functions():
         axk.text(x_, y1, f"unit {u}", transform=axk.transAxes, fontsize=12.5, weight="bold", color=INK, ha=ha_)
         axk.text(x_, y2, f"{when}, {what}", transform=axk.transAxes, fontsize=11.5, color=INK_2, ha=ha_)
 
-    # ③ the sum.
+    # 3 · the sum.
     ax3 = fig.add_subplot(gs[2])
     bump = sum(a[u] * gelu(16 * (z - t)) for u, t, *_ in parts)
     ax3.axvspan(0, 2, color=ORANGE, alpha=0.08, lw=0)
@@ -298,7 +298,7 @@ def fig_program_functions():
     ax3.text(2.55, 0.018, "nothing\nabove 2", ha="center", fontsize=12, color=INK_2)
     finish(ax3, (-0.03, 0.135), "added to the output (normalized)")
 
-    # ④ before vs after, same patients and noise.
+    # 4 · before vs after, same patients and noise.
     ax4 = fig.add_subplot(gs[3])
     error_bars(ax4, "median_error_v1", RED, 0.42, -0.22, alpha=0.35)
     error_bars(ax4, "median_error_v1_plus_bump", BLUE, 0.42, 0.22)
@@ -309,7 +309,8 @@ def fig_program_functions():
 
     for k, axh in enumerate([ax1, rows[0], ax3, ax4]):
         x0 = axh.get_position().x0
-        fig.text(x0, 0.735, heads[k], fontsize=16.5, weight="bold")
+        fig.text(x0, 0.735, str(k + 1), fontsize=16.5, weight="bold", color=BLUE)
+        fig.text(x0 + 0.016, 0.735, heads[k], fontsize=16.5, weight="bold")
         fig.text(x0, 0.70, subs[k], fontsize=12.5, color=INK_2)
 
     footer(fig, "Errors: median over the 128 calibration patients used to design the edit, V1 vs V1 + this fix only, "
