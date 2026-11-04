@@ -1,0 +1,13 @@
+{
+  "unit": 47,
+  "version": "V4",
+  "patients": 1,
+  "samples": 100,
+  "scope": "One implementation check on the first of the 32 confirmation patients; all 48x40 positions checked. Actual GELU ablation in final step versus algebraic draw correction and recomputed median. Not an accuracy improvement.",
+  "max_abs_normalized_prediction_difference": 1.52587890625e-05,
+  "rtol": 2e-05,
+  "atol": 2e-06,
+  "passed": true,
+  "original_checkpoint_unchanged": true,
+  "script_sha256": "9e3d4cdf9ec06aa129967562abb4c55d5ddc8df3049ac0a01e3fbc46e04efdb7"
+}

@@ -1,0 +1,19 @@
+{
+  "source_files": {
+    "weight_space/analyze_clinical_neuron_concepts.py": "20f99c151c1fd3e725a4127071e40a73bcb7486942ec8e91f6d617ba8348c6c0",
+    "weight_space/diagnose_clinical_concepts_forward.py": "11d9e377e7c5cdef326bd3ede531e3fe77dab5c1df75070cb79cb3aeddea1855",
+    "weight_space/verify_clinical_concept_ablation.py": "9e3d4cdf9ec06aa129967562abb4c55d5ddc8df3049ac0a01e3fbc46e04efdb7",
+    "weight_space/summarize_clinical_concepts.py": "53da57390fecfb87d2e6023d3ef88c11a8a3ad850d0945b7aded433fa17de4f1",
+    "weight_space/plot_clinical_concepts.py": "f87a7fb89a4c9ad627fb85207149036562e345fa1dc57491840ba5c40a36c8ce"
+  },
+  "aggregate_sha256": "e4f670306dc3e9b4b725f00b1e03dea057c1c00f77b46cce94384f1ff0ab3571",
+  "counts": {
+    "matched_patients": 32,
+    "scored_entries": 3569,
+    "samples_per_patient": 100,
+    "input_patient_variable_cases_per_version": 8
+  },
+  "privacy": "Only aggregate measurements, no patient identifiers, input traces or individual predictions.",
+  "metric_semantics": "Observed target percentiles use exact physical target values, preserving ties rather than round-tripping float32 normalization.",
+  "accuracy_claim": "No new test evaluation or weight changes; prior V4 result unchanged."
+}

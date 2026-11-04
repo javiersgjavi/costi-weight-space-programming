@@ -39,3 +39,10 @@ Records written by the agent during the study. The only change is that the home 
 | `v4_vs_v1_test_report.json` | same, V4 vs V1 |
 | `v4_verification.json` | audit of the exported checkpoint: state, graph factors, reload parity, recomputed metrics |
 | `parameter_counts.json` | the 2,406,657 registered parameters, buffers and unregistered graph values |
+
+
+## Concept interpretation follow-up (5 November)
+
+Four additional figures, each in PNG/PDF/SVG: `conceptos_v1_v4`, `intervenciones_conceptos`, `escala_interna_y_extremos`, and `funciones_neuronas_v4`. Regenerate them with the separate command in [the reproduction guide](../docs/reproduce.md#concept-interpretation-follow-up).
+
+`data/clinical_neuron_concepts_summary_20261105.json` contains aggregate concept associations, within-variable comparisons, small input interventions and last-step ablation effects. No patient IDs or activation rows are included. The planned forward protocol and the ablation implementation check are in `evidence/clinical_concepts_forward_plan_20261105.json` and `evidence/clinical_concept_ablation_verification_20261105.json`. Test accuracy is unchanged.

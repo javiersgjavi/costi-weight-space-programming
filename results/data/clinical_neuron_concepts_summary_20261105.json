@@ -1,0 +1,2117 @@
+{
+  "scope": "Exploratory functional interpretation, not clinical concept identification. No training, fitted probe, gradients, checkpoint updates or new full benchmark evaluation.",
+  "units": [
+    38,
+    198,
+    47,
+    255
+  ],
+  "features": [
+    "interpolation",
+    "slope",
+    "temporal_variability",
+    "observation_density",
+    "nearest_observation",
+    "time"
+  ],
+  "calibration": {
+    "V1": {
+      "patients": 128,
+      "entries": 12977,
+      "positive_regions": {
+        "38": {
+          "median_normalized_target": 5.4309916496276855,
+          "fraction_target_above_2_normalized": 0.9707792207792207,
+          "median_target_observed_training_percentile": 0.7306275013332624,
+          "fraction_target_above_95th_observed_training_percentile": 0.17207792207792208
+        },
+        "198": {
+          "median_normalized_target": 3.4071807861328125,
+          "fraction_target_above_2_normalized": 0.8924731182795699,
+          "median_target_observed_training_percentile": 0.5840776307836949,
+          "fraction_target_above_95th_observed_training_percentile": 0.11436950146627566
+        },
+        "47": null,
+        "255": {
+          "median_normalized_target": 1.7312003374099731,
+          "fraction_target_above_2_normalized": 0.0,
+          "median_target_observed_training_percentile": 0.34201905896366885,
+          "fraction_target_above_95th_observed_training_percentile": 0.0
+        }
+      },
+      "positive_counts": {
+        "38": 308,
+        "198": 1023,
+        "47": 0,
+        "255": 1
+      },
+      "contrast": null,
+      "effective_coefficients": {
+        "38": 1.3918964862823486,
+        "198": 1.5017606019973755,
+        "47": -1.6755526065826416,
+        "255": -1.4086161851882935
+      }
+    },
+    "V4": {
+      "patients": 510,
+      "entries": 51979,
+      "positive_regions": {
+        "38": {
+          "median_normalized_target": 5.604120254516602,
+          "fraction_target_above_2_normalized": 0.9752895752895753,
+          "median_target_observed_training_percentile": 0.7272133103203209,
+          "fraction_target_above_95th_observed_training_percentile": 0.18532818532818532
+        },
+        "198": {
+          "median_normalized_target": 3.4117863178253174,
+          "fraction_target_above_2_normalized": 0.895267835695412,
+          "median_target_observed_training_percentile": 0.5338500197227133,
+          "fraction_target_above_95th_observed_training_percentile": 0.11746336776363199
+        },
+        "47": null,
+        "255": {
+          "median_normalized_target": 0.610062301158905,
+          "fraction_target_above_2_normalized": 0.07692307692307693,
+          "median_target_observed_training_percentile": 0.359500225759115,
+          "fraction_target_above_95th_observed_training_percentile": 0.07692307692307693
+        }
+      },
+      "positive_counts": {
+        "38": 1295,
+        "198": 4163,
+        "47": 0,
+        "255": 13
+      },
+      "contrast": {
+        "positive_entries": 13,
+        "patients": 9,
+        "variable_counts": {
+          "AST": 1,
+          "Creatinine": 1,
+          "Lactate": 1,
+          "TroponinI": 10
+        },
+        "median_normalized_target": 36.0648193359375,
+        "median_normalized_interpolation": 41.817134857177734,
+        "median_nearest_observation_hours": 6.0,
+        "median_observation_density": 0.08333333333333333,
+        "fraction_target_gt_interpolation": 0.3076923076923077,
+        "mean_normalized_residual": -9.586105346679688,
+        "median_target_observed_training_percentile": 0.9479281261459479,
+        "fraction_target_above_95th_observed_training_percentile": 0.38461538461538464
+      },
+      "effective_coefficients": {
+        "38": 1.3918964862823486,
+        "198": 1.5017606019973755,
+        "47": -1.6589629650115967,
+        "255": -1.4086161851882935
+      },
+      "unit_variable_profiles": {
+        "38": [
+          {
+            "variable": "HR",
+            "entries": 3845,
+            "patients": 495,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.017721354961395264,
+            "contribution_vs_interpolation_spearman": 0.5090363972186561,
+            "contribution_vs_target_spearman": 0.47539102353843904
+          },
+          {
+            "variable": "O2Sat",
+            "entries": 3775,
+            "patients": 497,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.015134338289499283,
+            "contribution_vs_interpolation_spearman": -0.4342849115739296,
+            "contribution_vs_target_spearman": -0.3383132180397257
+          },
+          {
+            "variable": "Temp",
+            "entries": 1487,
+            "patients": 450,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.0027281169313937426,
+            "contribution_vs_interpolation_spearman": -0.2257468935642279,
+            "contribution_vs_target_spearman": -0.19786704392120247
+          },
+          {
+            "variable": "SBP",
+            "entries": 3771,
+            "patients": 494,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.013691148720681667,
+            "contribution_vs_interpolation_spearman": 0.16457744493337173,
+            "contribution_vs_target_spearman": 0.080837475305252
+          },
+          {
+            "variable": "MAP",
+            "entries": 3734,
+            "patients": 483,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.022493816912174225,
+            "contribution_vs_interpolation_spearman": -0.07622342290376756,
+            "contribution_vs_target_spearman": -0.15589070849298162
+          },
+          {
+            "variable": "DBP",
+            "entries": 3853,
+            "patients": 493,
+            "positive_preactivation_fraction": 0.0010381520892810796,
+            "mean_abs_contribution": 0.03310142830014229,
+            "contribution_vs_interpolation_spearman": -0.3143013149742932,
+            "contribution_vs_target_spearman": -0.4021255354385259
+          },
+          {
+            "variable": "Resp",
+            "entries": 3596,
+            "patients": 491,
+            "positive_preactivation_fraction": 0.00027808676307007786,
+            "mean_abs_contribution": 0.02158934436738491,
+            "contribution_vs_interpolation_spearman": 0.4684982264113141,
+            "contribution_vs_target_spearman": 0.38580826175096194
+          },
+          {
+            "variable": "EtCO2",
+            "entries": 297,
+            "patients": 72,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 5.887500286102295,
+            "contribution_vs_interpolation_spearman": 0.9931705950240529,
+            "contribution_vs_target_spearman": 0.8868138513721239
+          },
+          {
+            "variable": "BaseExcess",
+            "entries": 8,
+            "patients": 4,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.06806080043315887,
+            "contribution_vs_interpolation_spearman": -0.6015100547717895,
+            "contribution_vs_target_spearman": -0.4285714285714286
+          },
+          {
+            "variable": "HCO3",
+            "entries": 4,
+            "patients": 3,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22234201431274414,
+            "contribution_vs_interpolation_spearman": null,
+            "contribution_vs_target_spearman": null
+          },
+          {
+            "variable": "FiO2",
+            "entries": 76,
+            "patients": 55,
+            "positive_preactivation_fraction": 0.18421052631578946,
+            "mean_abs_contribution": 0.3030601739883423,
+            "contribution_vs_interpolation_spearman": 0.405332508528161,
+            "contribution_vs_target_spearman": 0.4057757584966835
+          },
+          {
+            "variable": "pH",
+            "entries": 59,
+            "patients": 43,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.14113490283489227,
+            "contribution_vs_interpolation_spearman": -0.17574011852019714,
+            "contribution_vs_target_spearman": -0.2664698660430545
+          },
+          {
+            "variable": "PaCO2",
+            "entries": 79,
+            "patients": 56,
+            "positive_preactivation_fraction": 0.22784810126582278,
+            "mean_abs_contribution": 0.19294732809066772,
+            "contribution_vs_interpolation_spearman": 0.17564468925844795,
+            "contribution_vs_target_spearman": 0.4005675713976885
+          },
+          {
+            "variable": "SaO2",
+            "entries": 61,
+            "patients": 44,
+            "positive_preactivation_fraction": 0.21311475409836064,
+            "mean_abs_contribution": 0.21425564587116241,
+            "contribution_vs_interpolation_spearman": -0.22077176694845893,
+            "contribution_vs_target_spearman": -0.0385465094037817
+          },
+          {
+            "variable": "AST",
+            "entries": 72,
+            "patients": 69,
+            "positive_preactivation_fraction": 0.05555555555555555,
+            "mean_abs_contribution": 0.21187447011470795,
+            "contribution_vs_interpolation_spearman": 0.28304684492011134,
+            "contribution_vs_target_spearman": 0.03487409206077129
+          },
+          {
+            "variable": "BUN",
+            "entries": 233,
+            "patients": 186,
+            "positive_preactivation_fraction": 0.19313304721030042,
+            "mean_abs_contribution": 0.433757483959198,
+            "contribution_vs_interpolation_spearman": 0.42694669607802,
+            "contribution_vs_target_spearman": 0.37279774232911905
+          },
+          {
+            "variable": "Alkalinephos",
+            "entries": 87,
+            "patients": 78,
+            "positive_preactivation_fraction": 0.5287356321839081,
+            "mean_abs_contribution": 0.5464152097702026,
+            "contribution_vs_interpolation_spearman": -0.10407490763227376,
+            "contribution_vs_target_spearman": 0.582411988396223
+          },
+          {
+            "variable": "Calcium",
+            "entries": 282,
+            "patients": 214,
+            "positive_preactivation_fraction": 0.6879432624113475,
+            "mean_abs_contribution": 0.3232956528663635,
+            "contribution_vs_interpolation_spearman": -0.20252458812690122,
+            "contribution_vs_target_spearman": 0.336408289426887
+          },
+          {
+            "variable": "Chloride",
+            "entries": 16,
+            "patients": 14,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22219014167785645,
+            "contribution_vs_interpolation_spearman": -0.09460584857760494,
+            "contribution_vs_target_spearman": 0.020633801344603898
+          },
+          {
+            "variable": "Creatinine",
+            "entries": 236,
+            "patients": 198,
+            "positive_preactivation_fraction": 0.15254237288135594,
+            "mean_abs_contribution": 0.5741965174674988,
+            "contribution_vs_interpolation_spearman": 0.41677038905976177,
+            "contribution_vs_target_spearman": 0.18874227025393078
+          },
+          {
+            "variable": "Bilirubin_direct",
+            "entries": 13,
+            "patients": 12,
+            "positive_preactivation_fraction": 0.38461538461538464,
+            "mean_abs_contribution": 0.2530568838119507,
+            "contribution_vs_interpolation_spearman": -0.3789323733725367,
+            "contribution_vs_target_spearman": -0.01723369655646452
+          },
+          {
+            "variable": "Glucose",
+            "entries": 897,
+            "patients": 337,
+            "positive_preactivation_fraction": 0.09587513935340022,
+            "mean_abs_contribution": 0.23711511492729187,
+            "contribution_vs_interpolation_spearman": -0.11072332088228204,
+            "contribution_vs_target_spearman": -0.03207397779988707
+          },
+          {
+            "variable": "Lactate",
+            "entries": 52,
+            "patients": 34,
+            "positive_preactivation_fraction": 0.6923076923076923,
+            "mean_abs_contribution": 1.474528431892395,
+            "contribution_vs_interpolation_spearman": 0.7164327286696446,
+            "contribution_vs_target_spearman": 0.6592956249337237
+          },
+          {
+            "variable": "Magnesium",
+            "entries": 204,
+            "patients": 174,
+            "positive_preactivation_fraction": 0.2647058823529412,
+            "mean_abs_contribution": 0.19753524661064148,
+            "contribution_vs_interpolation_spearman": 0.275186782575091,
+            "contribution_vs_target_spearman": 0.3292312352205837
+          },
+          {
+            "variable": "Phosphate",
+            "entries": 133,
+            "patients": 111,
+            "positive_preactivation_fraction": 0.9022556390977443,
+            "mean_abs_contribution": 0.8715994358062744,
+            "contribution_vs_interpolation_spearman": 0.18191572923170843,
+            "contribution_vs_target_spearman": 0.49916235681095183
+          },
+          {
+            "variable": "Potassium",
+            "entries": 306,
+            "patients": 220,
+            "positive_preactivation_fraction": 0.016339869281045753,
+            "mean_abs_contribution": 0.20107553899288177,
+            "contribution_vs_interpolation_spearman": 0.04956609922461822,
+            "contribution_vs_target_spearman": -0.05116376059490377
+          },
+          {
+            "variable": "Bilirubin_total",
+            "entries": 70,
+            "patients": 63,
+            "positive_preactivation_fraction": 0.14285714285714285,
+            "mean_abs_contribution": 0.5209711194038391,
+            "contribution_vs_interpolation_spearman": 0.6524584664420856,
+            "contribution_vs_target_spearman": 0.1910251725928127
+          },
+          {
+            "variable": "TroponinI",
+            "entries": 76,
+            "patients": 60,
+            "positive_preactivation_fraction": 0.2894736842105263,
+            "mean_abs_contribution": 1.495229959487915,
+            "contribution_vs_interpolation_spearman": 0.6828188231586357,
+            "contribution_vs_target_spearman": 0.49981558229662815
+          },
+          {
+            "variable": "Hct",
+            "entries": 235,
+            "patients": 187,
+            "positive_preactivation_fraction": 0.08085106382978724,
+            "mean_abs_contribution": 0.17853477597236633,
+            "contribution_vs_interpolation_spearman": -0.0024707793299210785,
+            "contribution_vs_target_spearman": 0.19610428681890027
+          },
+          {
+            "variable": "Hgb",
+            "entries": 254,
+            "patients": 205,
+            "positive_preactivation_fraction": 0.10236220472440945,
+            "mean_abs_contribution": 0.1950468271970749,
+            "contribution_vs_interpolation_spearman": 0.21912752490261092,
+            "contribution_vs_target_spearman": 0.5340266903079777
+          },
+          {
+            "variable": "PTT",
+            "entries": 32,
+            "patients": 28,
+            "positive_preactivation_fraction": 0.34375,
+            "mean_abs_contribution": 0.28291261196136475,
+            "contribution_vs_interpolation_spearman": 0.39782434816914225,
+            "contribution_vs_target_spearman": 0.5236916894875204
+          },
+          {
+            "variable": "WBC",
+            "entries": 249,
+            "patients": 203,
+            "positive_preactivation_fraction": 0.21686746987951808,
+            "mean_abs_contribution": 0.23470202088356018,
+            "contribution_vs_interpolation_spearman": 0.16019824788296777,
+            "contribution_vs_target_spearman": 0.33684504834301315
+          },
+          {
+            "variable": "Fibrinogen",
+            "entries": 18,
+            "patients": 16,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 4.111599922180176,
+            "contribution_vs_interpolation_spearman": 0.5751749823229851,
+            "contribution_vs_target_spearman": 0.5583075335397317
+          },
+          {
+            "variable": "Platelets",
+            "entries": 213,
+            "patients": 169,
+            "positive_preactivation_fraction": 0.4413145539906103,
+            "mean_abs_contribution": 0.45307713747024536,
+            "contribution_vs_interpolation_spearman": 0.17246621871736734,
+            "contribution_vs_target_spearman": 0.6484013220752299
+          },
+          {
+            "variable": "Age",
+            "entries": 4547,
+            "patients": 505,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.022074786946177483,
+            "contribution_vs_interpolation_spearman": 0.39282731239421953,
+            "contribution_vs_target_spearman": 0.3928263217241321
+          },
+          {
+            "variable": "Gender",
+            "entries": 4450,
+            "patients": 508,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.030164366587996483,
+            "contribution_vs_interpolation_spearman": 0.7570042412191388,
+            "contribution_vs_target_spearman": 0.7565494237096916
+          },
+          {
+            "variable": "Unit1",
+            "entries": 2906,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.03253655508160591,
+            "contribution_vs_interpolation_spearman": 0.7073521778167265,
+            "contribution_vs_target_spearman": 0.7077833294763916
+          },
+          {
+            "variable": "Unit2",
+            "entries": 2934,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.027974402531981468,
+            "contribution_vs_interpolation_spearman": 0.6855905852792665,
+            "contribution_vs_target_spearman": 0.6855409104037125
+          },
+          {
+            "variable": "HospAdmTime",
+            "entries": 4404,
+            "patients": 506,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.02718925289809704,
+            "contribution_vs_interpolation_spearman": 0.46969029402650764,
+            "contribution_vs_target_spearman": 0.46980425869692094
+          },
+          {
+            "variable": "ICULOS",
+            "entries": 4415,
+            "patients": 507,
+            "positive_preactivation_fraction": 0.014269535673839184,
+            "mean_abs_contribution": 0.06557782739400864,
+            "contribution_vs_interpolation_spearman": -0.0847056844924556,
+            "contribution_vs_target_spearman": -0.08363994311980809
+          }
+        ],
+        "198": [
+          {
+            "variable": "HR",
+            "entries": 3845,
+            "patients": 495,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.20747408270835876,
+            "contribution_vs_interpolation_spearman": -0.2552912194356371,
+            "contribution_vs_target_spearman": -0.252679562369816
+          },
+          {
+            "variable": "O2Sat",
+            "entries": 3775,
+            "patients": 497,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22403469681739807,
+            "contribution_vs_interpolation_spearman": -0.4478707594044908,
+            "contribution_vs_target_spearman": -0.35584884777627107
+          },
+          {
+            "variable": "Temp",
+            "entries": 1487,
+            "patients": 450,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.20492348074913025,
+            "contribution_vs_interpolation_spearman": -0.30025674078671943,
+            "contribution_vs_target_spearman": -0.2830007410458152
+          },
+          {
+            "variable": "SBP",
+            "entries": 3771,
+            "patients": 494,
+            "positive_preactivation_fraction": 0.0021214531954388757,
+            "mean_abs_contribution": 0.20838887989521027,
+            "contribution_vs_interpolation_spearman": -0.34625225378160335,
+            "contribution_vs_target_spearman": -0.41143841982901447
+          },
+          {
+            "variable": "MAP",
+            "entries": 3734,
+            "patients": 483,
+            "positive_preactivation_fraction": 0.006427423674343867,
+            "mean_abs_contribution": 0.21805958449840546,
+            "contribution_vs_interpolation_spearman": -0.3885980919240457,
+            "contribution_vs_target_spearman": -0.4554115349140012
+          },
+          {
+            "variable": "DBP",
+            "entries": 3853,
+            "patients": 493,
+            "positive_preactivation_fraction": 0.033220866856994546,
+            "mean_abs_contribution": 0.2324908822774887,
+            "contribution_vs_interpolation_spearman": 0.0012079856151272544,
+            "contribution_vs_target_spearman": 0.022589948852004688
+          },
+          {
+            "variable": "Resp",
+            "entries": 3596,
+            "patients": 491,
+            "positive_preactivation_fraction": 0.0016685205784204673,
+            "mean_abs_contribution": 0.22267407178878784,
+            "contribution_vs_interpolation_spearman": -0.17855465520403488,
+            "contribution_vs_target_spearman": -0.160688474381404
+          },
+          {
+            "variable": "EtCO2",
+            "entries": 297,
+            "patients": 72,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 8.930083274841309,
+            "contribution_vs_interpolation_spearman": 0.9326977940799106,
+            "contribution_vs_target_spearman": 0.8413382096962864
+          },
+          {
+            "variable": "BaseExcess",
+            "entries": 8,
+            "patients": 4,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.15495187044143677,
+            "contribution_vs_interpolation_spearman": -0.4664771853332245,
+            "contribution_vs_target_spearman": 0.09523809523809526
+          },
+          {
+            "variable": "HCO3",
+            "entries": 4,
+            "patients": 3,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 1.9251723289489746,
+            "contribution_vs_interpolation_spearman": null,
+            "contribution_vs_target_spearman": null
+          },
+          {
+            "variable": "FiO2",
+            "entries": 76,
+            "patients": 55,
+            "positive_preactivation_fraction": 0.9473684210526315,
+            "mean_abs_contribution": 1.226109504699707,
+            "contribution_vs_interpolation_spearman": 0.4645715739990278,
+            "contribution_vs_target_spearman": 0.5665851003080131
+          },
+          {
+            "variable": "pH",
+            "entries": 59,
+            "patients": 43,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 1.1481112241744995,
+            "contribution_vs_interpolation_spearman": -0.043787398482098845,
+            "contribution_vs_target_spearman": 0.2556729646957516
+          },
+          {
+            "variable": "PaCO2",
+            "entries": 79,
+            "patients": 56,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 2.159660816192627,
+            "contribution_vs_interpolation_spearman": 0.2204797816047009,
+            "contribution_vs_target_spearman": 0.41776328496978915
+          },
+          {
+            "variable": "SaO2",
+            "entries": 61,
+            "patients": 44,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 4.089147567749023,
+            "contribution_vs_interpolation_spearman": 0.13771312048065457,
+            "contribution_vs_target_spearman": -0.0816434646671725
+          },
+          {
+            "variable": "AST",
+            "entries": 72,
+            "patients": 69,
+            "positive_preactivation_fraction": 0.125,
+            "mean_abs_contribution": 0.367660790681839,
+            "contribution_vs_interpolation_spearman": 0.25273292056017127,
+            "contribution_vs_target_spearman": 0.3012394474271513
+          },
+          {
+            "variable": "BUN",
+            "entries": 233,
+            "patients": 186,
+            "positive_preactivation_fraction": 0.8197424892703863,
+            "mean_abs_contribution": 1.0699483156204224,
+            "contribution_vs_interpolation_spearman": 0.4787782565972303,
+            "contribution_vs_target_spearman": 0.826608649133858
+          },
+          {
+            "variable": "Alkalinephos",
+            "entries": 87,
+            "patients": 78,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 2.1882288455963135,
+            "contribution_vs_interpolation_spearman": 0.25972052092622666,
+            "contribution_vs_target_spearman": 0.7489586471122157
+          },
+          {
+            "variable": "Calcium",
+            "entries": 282,
+            "patients": 214,
+            "positive_preactivation_fraction": 0.9113475177304965,
+            "mean_abs_contribution": 3.05653715133667,
+            "contribution_vs_interpolation_spearman": 0.1741247899990641,
+            "contribution_vs_target_spearman": 0.6343028359740367
+          },
+          {
+            "variable": "Chloride",
+            "entries": 16,
+            "patients": 14,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 2.173262119293213,
+            "contribution_vs_interpolation_spearman": 0.498158921416451,
+            "contribution_vs_target_spearman": 0.7015492457165325
+          },
+          {
+            "variable": "Creatinine",
+            "entries": 236,
+            "patients": 198,
+            "positive_preactivation_fraction": 0.6610169491525424,
+            "mean_abs_contribution": 1.054291844367981,
+            "contribution_vs_interpolation_spearman": 0.4874955800776502,
+            "contribution_vs_target_spearman": 0.8372828133458241
+          },
+          {
+            "variable": "Bilirubin_direct",
+            "entries": 13,
+            "patients": 12,
+            "positive_preactivation_fraction": 0.7692307692307693,
+            "mean_abs_contribution": 0.8095211386680603,
+            "contribution_vs_interpolation_spearman": -0.4465988686176326,
+            "contribution_vs_target_spearman": 0.2154212069558065
+          },
+          {
+            "variable": "Glucose",
+            "entries": 897,
+            "patients": 337,
+            "positive_preactivation_fraction": 0.9409141583054627,
+            "mean_abs_contribution": 0.9043636918067932,
+            "contribution_vs_interpolation_spearman": 0.8783639933005369,
+            "contribution_vs_target_spearman": 0.6905727941704675
+          },
+          {
+            "variable": "Lactate",
+            "entries": 52,
+            "patients": 34,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 2.945882558822632,
+            "contribution_vs_interpolation_spearman": 0.8034238419340464,
+            "contribution_vs_target_spearman": 0.6528495203387359
+          },
+          {
+            "variable": "Magnesium",
+            "entries": 204,
+            "patients": 174,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 2.4398179054260254,
+            "contribution_vs_interpolation_spearman": 0.33266002417908686,
+            "contribution_vs_target_spearman": 0.40290893521223964
+          },
+          {
+            "variable": "Phosphate",
+            "entries": 133,
+            "patients": 111,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 3.139465808868408,
+            "contribution_vs_interpolation_spearman": 0.3596540810278133,
+            "contribution_vs_target_spearman": 0.5551778153259826
+          },
+          {
+            "variable": "Potassium",
+            "entries": 306,
+            "patients": 220,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 1.5609012842178345,
+            "contribution_vs_interpolation_spearman": 0.5593131716367872,
+            "contribution_vs_target_spearman": 0.5633617359366925
+          },
+          {
+            "variable": "Bilirubin_total",
+            "entries": 70,
+            "patients": 63,
+            "positive_preactivation_fraction": 0.7714285714285715,
+            "mean_abs_contribution": 0.9827226996421814,
+            "contribution_vs_interpolation_spearman": 0.3822581668002821,
+            "contribution_vs_target_spearman": 0.7279171605268286
+          },
+          {
+            "variable": "TroponinI",
+            "entries": 76,
+            "patients": 60,
+            "positive_preactivation_fraction": 0.3815789473684211,
+            "mean_abs_contribution": 1.9002119302749634,
+            "contribution_vs_interpolation_spearman": 0.6055349107221729,
+            "contribution_vs_target_spearman": 0.6519720483788783
+          },
+          {
+            "variable": "Hct",
+            "entries": 235,
+            "patients": 187,
+            "positive_preactivation_fraction": 0.9829787234042553,
+            "mean_abs_contribution": 1.436370611190796,
+            "contribution_vs_interpolation_spearman": 0.1510191278076098,
+            "contribution_vs_target_spearman": 0.9348722498482601
+          },
+          {
+            "variable": "Hgb",
+            "entries": 254,
+            "patients": 205,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 1.7427252531051636,
+            "contribution_vs_interpolation_spearman": 0.41047218164596333,
+            "contribution_vs_target_spearman": 0.9151619524077858
+          },
+          {
+            "variable": "PTT",
+            "entries": 32,
+            "patients": 28,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 2.2627902030944824,
+            "contribution_vs_interpolation_spearman": 0.4650230636519859,
+            "contribution_vs_target_spearman": 0.5843644053504429
+          },
+          {
+            "variable": "WBC",
+            "entries": 249,
+            "patients": 203,
+            "positive_preactivation_fraction": 0.927710843373494,
+            "mean_abs_contribution": 1.3063536882400513,
+            "contribution_vs_interpolation_spearman": 0.2615380691911036,
+            "contribution_vs_target_spearman": 0.6529614696234181
+          },
+          {
+            "variable": "Fibrinogen",
+            "entries": 18,
+            "patients": 16,
+            "positive_preactivation_fraction": 1.0,
+            "mean_abs_contribution": 6.0592041015625,
+            "contribution_vs_interpolation_spearman": 0.8962523292019897,
+            "contribution_vs_target_spearman": 0.5252837977296182
+          },
+          {
+            "variable": "Platelets",
+            "entries": 213,
+            "patients": 169,
+            "positive_preactivation_fraction": 0.9295774647887324,
+            "mean_abs_contribution": 1.8556987047195435,
+            "contribution_vs_interpolation_spearman": 0.41744147946822924,
+            "contribution_vs_target_spearman": 0.8254120727258181
+          },
+          {
+            "variable": "Age",
+            "entries": 4547,
+            "patients": 505,
+            "positive_preactivation_fraction": 0.00021992522542335605,
+            "mean_abs_contribution": 0.19412244856357574,
+            "contribution_vs_interpolation_spearman": -0.5008702813246306,
+            "contribution_vs_target_spearman": -0.5007845656350045
+          },
+          {
+            "variable": "Gender",
+            "entries": 4450,
+            "patients": 508,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.17297004163265228,
+            "contribution_vs_interpolation_spearman": -0.48606802132319316,
+            "contribution_vs_target_spearman": -0.4863480605653828
+          },
+          {
+            "variable": "Unit1",
+            "entries": 2906,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.1936725676059723,
+            "contribution_vs_interpolation_spearman": -0.7053441965023347,
+            "contribution_vs_target_spearman": -0.7056884986735213
+          },
+          {
+            "variable": "Unit2",
+            "entries": 2934,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.19489286839962006,
+            "contribution_vs_interpolation_spearman": -0.7746839585582339,
+            "contribution_vs_target_spearman": -0.7750475526503214
+          },
+          {
+            "variable": "HospAdmTime",
+            "entries": 4404,
+            "patients": 506,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.1633700132369995,
+            "contribution_vs_interpolation_spearman": -0.005495040027315437,
+            "contribution_vs_target_spearman": -0.005115324621564537
+          },
+          {
+            "variable": "ICULOS",
+            "entries": 4415,
+            "patients": 507,
+            "positive_preactivation_fraction": 0.02536806342015855,
+            "mean_abs_contribution": 0.27395233511924744,
+            "contribution_vs_interpolation_spearman": -0.5111471948788437,
+            "contribution_vs_target_spearman": -0.5100073065787367
+          }
+        ],
+        "47": [
+          {
+            "variable": "HR",
+            "entries": 3845,
+            "patients": 495,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.0983821451663971,
+            "contribution_vs_interpolation_spearman": 0.9813209912981387,
+            "contribution_vs_target_spearman": 0.923935178317474
+          },
+          {
+            "variable": "O2Sat",
+            "entries": 3775,
+            "patients": 497,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.10224490612745285,
+            "contribution_vs_interpolation_spearman": 0.6543100252817013,
+            "contribution_vs_target_spearman": 0.525334948051143
+          },
+          {
+            "variable": "Temp",
+            "entries": 1487,
+            "patients": 450,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.25896018743515015,
+            "contribution_vs_interpolation_spearman": -0.41041975126387303,
+            "contribution_vs_target_spearman": -0.35288120938778
+          },
+          {
+            "variable": "SBP",
+            "entries": 3771,
+            "patients": 494,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.14139072597026825,
+            "contribution_vs_interpolation_spearman": 0.873370084496563,
+            "contribution_vs_target_spearman": 0.8929356628428058
+          },
+          {
+            "variable": "MAP",
+            "entries": 3734,
+            "patients": 483,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.14543861150741577,
+            "contribution_vs_interpolation_spearman": 0.8253205715958882,
+            "contribution_vs_target_spearman": 0.9305779829639822
+          },
+          {
+            "variable": "DBP",
+            "entries": 3853,
+            "patients": 493,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2301005721092224,
+            "contribution_vs_interpolation_spearman": 0.061127756198585036,
+            "contribution_vs_target_spearman": 0.08321198727344015
+          },
+          {
+            "variable": "Resp",
+            "entries": 3596,
+            "patients": 491,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.08081996440887451,
+            "contribution_vs_interpolation_spearman": 0.9258007822118878,
+            "contribution_vs_target_spearman": 0.738641525575328
+          },
+          {
+            "variable": "EtCO2",
+            "entries": 297,
+            "patients": 72,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.24223452806472778,
+            "contribution_vs_interpolation_spearman": -0.8622031094719316,
+            "contribution_vs_target_spearman": -0.7947033647793834
+          },
+          {
+            "variable": "BaseExcess",
+            "entries": 8,
+            "patients": 4,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.012188182212412357,
+            "contribution_vs_interpolation_spearman": 0.7365429242103546,
+            "contribution_vs_target_spearman": 0.3571428571428572
+          },
+          {
+            "variable": "HCO3",
+            "entries": 4,
+            "patients": 3,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.25145310163497925,
+            "contribution_vs_interpolation_spearman": null,
+            "contribution_vs_target_spearman": null
+          },
+          {
+            "variable": "FiO2",
+            "entries": 76,
+            "patients": 55,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2193458527326584,
+            "contribution_vs_interpolation_spearman": -0.05473740293211656,
+            "contribution_vs_target_spearman": -0.022500474353025213
+          },
+          {
+            "variable": "pH",
+            "entries": 59,
+            "patients": 43,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.27374812960624695,
+            "contribution_vs_interpolation_spearman": 0.05952487885361516,
+            "contribution_vs_target_spearman": 0.14135455395344196
+          },
+          {
+            "variable": "PaCO2",
+            "entries": 79,
+            "patients": 56,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.21763384342193604,
+            "contribution_vs_interpolation_spearman": -0.01643079407620966,
+            "contribution_vs_target_spearman": 0.07903695544117105
+          },
+          {
+            "variable": "SaO2",
+            "entries": 61,
+            "patients": 44,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.275709867477417,
+            "contribution_vs_interpolation_spearman": 0.3050688891820717,
+            "contribution_vs_target_spearman": 0.021879178638934432
+          },
+          {
+            "variable": "AST",
+            "entries": 72,
+            "patients": 69,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.0420805960893631,
+            "contribution_vs_interpolation_spearman": 0.26823176910510305,
+            "contribution_vs_target_spearman": 0.5563125460469163
+          },
+          {
+            "variable": "BUN",
+            "entries": 233,
+            "patients": 186,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.24083346128463745,
+            "contribution_vs_interpolation_spearman": 0.3202634974115636,
+            "contribution_vs_target_spearman": 0.46190568712687646
+          },
+          {
+            "variable": "Alkalinephos",
+            "entries": 87,
+            "patients": 78,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.24160316586494446,
+            "contribution_vs_interpolation_spearman": -0.43379772091536095,
+            "contribution_vs_target_spearman": 0.16497890339095161
+          },
+          {
+            "variable": "Calcium",
+            "entries": 282,
+            "patients": 214,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.250976026058197,
+            "contribution_vs_interpolation_spearman": 0.02036684429799877,
+            "contribution_vs_target_spearman": 0.329470658277377
+          },
+          {
+            "variable": "Chloride",
+            "entries": 16,
+            "patients": 14,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.25025448203086853,
+            "contribution_vs_interpolation_spearman": 0.3237293881014919,
+            "contribution_vs_target_spearman": 0.6735462296059986
+          },
+          {
+            "variable": "Creatinine",
+            "entries": 236,
+            "patients": 198,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.24564164876937866,
+            "contribution_vs_interpolation_spearman": -0.08159530885287287,
+            "contribution_vs_target_spearman": 0.14950777737290258
+          },
+          {
+            "variable": "Bilirubin_direct",
+            "entries": 13,
+            "patients": 12,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.21950581669807434,
+            "contribution_vs_interpolation_spearman": -0.28419928002940253,
+            "contribution_vs_target_spearman": 0.1723369655646452
+          },
+          {
+            "variable": "Glucose",
+            "entries": 897,
+            "patients": 337,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.21194149553775787,
+            "contribution_vs_interpolation_spearman": -0.44548035734497243,
+            "contribution_vs_target_spearman": -0.30497170617943736
+          },
+          {
+            "variable": "Lactate",
+            "entries": 52,
+            "patients": 34,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.260625958442688,
+            "contribution_vs_interpolation_spearman": -0.45310016243189166,
+            "contribution_vs_target_spearman": -0.5192742800889546
+          },
+          {
+            "variable": "Magnesium",
+            "entries": 204,
+            "patients": 174,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2499750554561615,
+            "contribution_vs_interpolation_spearman": 0.2020431514640682,
+            "contribution_vs_target_spearman": 0.06575615357514067
+          },
+          {
+            "variable": "Phosphate",
+            "entries": 133,
+            "patients": 111,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.26800209283828735,
+            "contribution_vs_interpolation_spearman": 0.0794527597334218,
+            "contribution_vs_target_spearman": 0.055522885911905275
+          },
+          {
+            "variable": "Potassium",
+            "entries": 306,
+            "patients": 220,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.1809701770544052,
+            "contribution_vs_interpolation_spearman": 0.11526594302831404,
+            "contribution_vs_target_spearman": 0.13856900780560044
+          },
+          {
+            "variable": "Bilirubin_total",
+            "entries": 70,
+            "patients": 63,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.21989805996418,
+            "contribution_vs_interpolation_spearman": 0.6055552814667371,
+            "contribution_vs_target_spearman": 0.6430034355427554
+          },
+          {
+            "variable": "TroponinI",
+            "entries": 76,
+            "patients": 60,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.08395528793334961,
+            "contribution_vs_interpolation_spearman": 0.6955964300147977,
+            "contribution_vs_target_spearman": 0.7666402927646921
+          },
+          {
+            "variable": "Hct",
+            "entries": 235,
+            "patients": 187,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.18784883618354797,
+            "contribution_vs_interpolation_spearman": 0.03292514828445058,
+            "contribution_vs_target_spearman": -0.013621287888330273
+          },
+          {
+            "variable": "Hgb",
+            "entries": 254,
+            "patients": 205,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22551307082176208,
+            "contribution_vs_interpolation_spearman": -0.0854758558356816,
+            "contribution_vs_target_spearman": 0.12487409532052993
+          },
+          {
+            "variable": "PTT",
+            "entries": 32,
+            "patients": 28,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.1905311495065689,
+            "contribution_vs_interpolation_spearman": 0.11153396268010438,
+            "contribution_vs_target_spearman": 0.2775181021645453
+          },
+          {
+            "variable": "WBC",
+            "entries": 249,
+            "patients": 203,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2627776563167572,
+            "contribution_vs_interpolation_spearman": -0.2288437069673088,
+            "contribution_vs_target_spearman": 0.047712378732727406
+          },
+          {
+            "variable": "Fibrinogen",
+            "entries": 18,
+            "patients": 16,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2612994909286499,
+            "contribution_vs_interpolation_spearman": -0.7537875461497161,
+            "contribution_vs_target_spearman": -0.49226006191950467
+          },
+          {
+            "variable": "Platelets",
+            "entries": 213,
+            "patients": 169,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.24880483746528625,
+            "contribution_vs_interpolation_spearman": -0.1691254216088485,
+            "contribution_vs_target_spearman": 0.20543328303996328
+          },
+          {
+            "variable": "Age",
+            "entries": 4547,
+            "patients": 505,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.08006130903959274,
+            "contribution_vs_interpolation_spearman": 0.9948569819761108,
+            "contribution_vs_target_spearman": 0.9946436872206168
+          },
+          {
+            "variable": "Gender",
+            "entries": 4450,
+            "patients": 508,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.12739770114421844,
+            "contribution_vs_interpolation_spearman": 0.8631734916496322,
+            "contribution_vs_target_spearman": 0.8630912990767527
+          },
+          {
+            "variable": "Unit1",
+            "entries": 2906,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.12368686497211456,
+            "contribution_vs_interpolation_spearman": 0.8644816070680973,
+            "contribution_vs_target_spearman": 0.8648709881543378
+          },
+          {
+            "variable": "Unit2",
+            "entries": 2934,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.13815461099147797,
+            "contribution_vs_interpolation_spearman": 0.8653635985016094,
+            "contribution_vs_target_spearman": 0.8657348641993114
+          },
+          {
+            "variable": "HospAdmTime",
+            "entries": 4404,
+            "patients": 506,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.0023449789732694626,
+            "contribution_vs_interpolation_spearman": 0.9270969263718063,
+            "contribution_vs_target_spearman": 0.9265364020690976
+          },
+          {
+            "variable": "ICULOS",
+            "entries": 4415,
+            "patients": 507,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.047630295157432556,
+            "contribution_vs_interpolation_spearman": 0.9867123041360697,
+            "contribution_vs_target_spearman": 0.9863272311742359
+          }
+        ],
+        "255": [
+          {
+            "variable": "HR",
+            "entries": 3845,
+            "patients": 495,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.1606215089559555,
+            "contribution_vs_interpolation_spearman": 0.9347738046763377,
+            "contribution_vs_target_spearman": 0.8737378025779363
+          },
+          {
+            "variable": "O2Sat",
+            "entries": 3775,
+            "patients": 497,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2131483405828476,
+            "contribution_vs_interpolation_spearman": 0.7555323416037564,
+            "contribution_vs_target_spearman": 0.5992053936896832
+          },
+          {
+            "variable": "Temp",
+            "entries": 1487,
+            "patients": 450,
+            "positive_preactivation_fraction": 0.0026899798251513113,
+            "mean_abs_contribution": 0.21952949464321136,
+            "contribution_vs_interpolation_spearman": -0.17168744115248954,
+            "contribution_vs_target_spearman": -0.1719584696097139
+          },
+          {
+            "variable": "SBP",
+            "entries": 3771,
+            "patients": 494,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.1933341920375824,
+            "contribution_vs_interpolation_spearman": 0.7112578270795517,
+            "contribution_vs_target_spearman": 0.7814119478293575
+          },
+          {
+            "variable": "MAP",
+            "entries": 3734,
+            "patients": 483,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.19741620123386383,
+            "contribution_vs_interpolation_spearman": 0.6231211070180137,
+            "contribution_vs_target_spearman": 0.7726276362162495
+          },
+          {
+            "variable": "DBP",
+            "entries": 3853,
+            "patients": 493,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2212427258491516,
+            "contribution_vs_interpolation_spearman": 0.009208646827934682,
+            "contribution_vs_target_spearman": 0.010927390396553925
+          },
+          {
+            "variable": "Resp",
+            "entries": 3596,
+            "patients": 491,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.15398703515529633,
+            "contribution_vs_interpolation_spearman": 0.8449724037083929,
+            "contribution_vs_target_spearman": 0.676805244592927
+          },
+          {
+            "variable": "EtCO2",
+            "entries": 297,
+            "patients": 72,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22812685370445251,
+            "contribution_vs_interpolation_spearman": 0.2615295699230333,
+            "contribution_vs_target_spearman": 0.2657015729317564
+          },
+          {
+            "variable": "BaseExcess",
+            "entries": 8,
+            "patients": 4,
+            "positive_preactivation_fraction": 0.625,
+            "mean_abs_contribution": 1.131234884262085,
+            "contribution_vs_interpolation_spearman": 0.8715757936489197,
+            "contribution_vs_target_spearman": -0.4047619047619048
+          },
+          {
+            "variable": "HCO3",
+            "entries": 4,
+            "patients": 3,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23678070306777954,
+            "contribution_vs_interpolation_spearman": null,
+            "contribution_vs_target_spearman": null
+          },
+          {
+            "variable": "FiO2",
+            "entries": 76,
+            "patients": 55,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2018934190273285,
+            "contribution_vs_interpolation_spearman": 0.4319907913748228,
+            "contribution_vs_target_spearman": 0.05268709958547814
+          },
+          {
+            "variable": "pH",
+            "entries": 59,
+            "patients": 43,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.18451163172721863,
+            "contribution_vs_interpolation_spearman": 0.03921083289563538,
+            "contribution_vs_target_spearman": 0.21441651239304965
+          },
+          {
+            "variable": "PaCO2",
+            "entries": 79,
+            "patients": 56,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23450061678886414,
+            "contribution_vs_interpolation_spearman": -0.08697333703258092,
+            "contribution_vs_target_spearman": -0.02372326489975365
+          },
+          {
+            "variable": "SaO2",
+            "entries": 61,
+            "patients": 44,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23301951587200165,
+            "contribution_vs_interpolation_spearman": -0.32903070291184344,
+            "contribution_vs_target_spearman": -0.03299073248216594
+          },
+          {
+            "variable": "AST",
+            "entries": 72,
+            "patients": 69,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.11701182276010513,
+            "contribution_vs_interpolation_spearman": -0.05691093029055261,
+            "contribution_vs_target_spearman": 0.3785479743847467
+          },
+          {
+            "variable": "BUN",
+            "entries": 233,
+            "patients": 186,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22742076218128204,
+            "contribution_vs_interpolation_spearman": 0.3427994195444776,
+            "contribution_vs_target_spearman": 0.18071112185013136
+          },
+          {
+            "variable": "Alkalinephos",
+            "entries": 87,
+            "patients": 78,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22488752007484436,
+            "contribution_vs_interpolation_spearman": 0.4168656868015225,
+            "contribution_vs_target_spearman": 0.05596521916135043
+          },
+          {
+            "variable": "Calcium",
+            "entries": 282,
+            "patients": 214,
+            "positive_preactivation_fraction": 0.0070921985815602835,
+            "mean_abs_contribution": 0.218040332198143,
+            "contribution_vs_interpolation_spearman": 0.10318997134875048,
+            "contribution_vs_target_spearman": 0.22281621364786094
+          },
+          {
+            "variable": "Chloride",
+            "entries": 16,
+            "patients": 14,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23229393362998962,
+            "contribution_vs_interpolation_spearman": 0.2734700310446393,
+            "contribution_vs_target_spearman": 0.12969817988036736
+          },
+          {
+            "variable": "Creatinine",
+            "entries": 236,
+            "patients": 198,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22715862095355988,
+            "contribution_vs_interpolation_spearman": 0.12197109014609854,
+            "contribution_vs_target_spearman": -0.019853263298229496
+          },
+          {
+            "variable": "Bilirubin_direct",
+            "entries": 13,
+            "patients": 12,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.20997585356235504,
+            "contribution_vs_interpolation_spearman": -0.6089984572058627,
+            "contribution_vs_target_spearman": 0.35616306216693333
+          },
+          {
+            "variable": "Glucose",
+            "entries": 897,
+            "patients": 337,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23054608702659607,
+            "contribution_vs_interpolation_spearman": -0.19138006908528252,
+            "contribution_vs_target_spearman": -0.07599451568448892
+          },
+          {
+            "variable": "Lactate",
+            "entries": 52,
+            "patients": 34,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22602351009845734,
+            "contribution_vs_interpolation_spearman": 0.029683358175032572,
+            "contribution_vs_target_spearman": -0.1533831378131876
+          },
+          {
+            "variable": "Magnesium",
+            "entries": 204,
+            "patients": 174,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23366063833236694,
+            "contribution_vs_interpolation_spearman": 0.03666089284098122,
+            "contribution_vs_target_spearman": 0.015946828215290147
+          },
+          {
+            "variable": "Phosphate",
+            "entries": 133,
+            "patients": 111,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23355577886104584,
+            "contribution_vs_interpolation_spearman": -0.18868798270192802,
+            "contribution_vs_target_spearman": -0.13747880006511612
+          },
+          {
+            "variable": "Potassium",
+            "entries": 306,
+            "patients": 220,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2337436079978943,
+            "contribution_vs_interpolation_spearman": -0.0026892028270537886,
+            "contribution_vs_target_spearman": -0.028955635522023165
+          },
+          {
+            "variable": "Bilirubin_total",
+            "entries": 70,
+            "patients": 63,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2266010195016861,
+            "contribution_vs_interpolation_spearman": -0.20387350295909137,
+            "contribution_vs_target_spearman": -0.28785384266144587
+          },
+          {
+            "variable": "TroponinI",
+            "entries": 76,
+            "patients": 60,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.13976041972637177,
+            "contribution_vs_interpolation_spearman": 0.5860662344692897,
+            "contribution_vs_target_spearman": 0.6577068292809619
+          },
+          {
+            "variable": "Hct",
+            "entries": 235,
+            "patients": 187,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22817714512348175,
+            "contribution_vs_interpolation_spearman": 0.018225509848724137,
+            "contribution_vs_target_spearman": 0.23265997491132187
+          },
+          {
+            "variable": "Hgb",
+            "entries": 254,
+            "patients": 205,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23155826330184937,
+            "contribution_vs_interpolation_spearman": 0.004970833330703698,
+            "contribution_vs_target_spearman": -0.11332065791908767
+          },
+          {
+            "variable": "PTT",
+            "entries": 32,
+            "patients": 28,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.22976087033748627,
+            "contribution_vs_interpolation_spearman": 0.41850087601001723,
+            "contribution_vs_target_spearman": 0.5288241246662572
+          },
+          {
+            "variable": "WBC",
+            "entries": 249,
+            "patients": 203,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2259097844362259,
+            "contribution_vs_interpolation_spearman": 0.1735557482010511,
+            "contribution_vs_target_spearman": 0.030830577509958518
+          },
+          {
+            "variable": "Fibrinogen",
+            "entries": 18,
+            "patients": 16,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.2252771556377411,
+            "contribution_vs_interpolation_spearman": 0.03295827070612299,
+            "contribution_vs_target_spearman": 0.32714138286893707
+          },
+          {
+            "variable": "Platelets",
+            "entries": 213,
+            "patients": 169,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.23215875029563904,
+            "contribution_vs_interpolation_spearman": 0.028178687797167083,
+            "contribution_vs_target_spearman": -0.058695729812141384
+          },
+          {
+            "variable": "Age",
+            "entries": 4547,
+            "patients": 505,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.14842350780963898,
+            "contribution_vs_interpolation_spearman": 0.9016516993740097,
+            "contribution_vs_target_spearman": 0.9014333528905216
+          },
+          {
+            "variable": "Gender",
+            "entries": 4450,
+            "patients": 508,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.10757941007614136,
+            "contribution_vs_interpolation_spearman": 0.8631748979164265,
+            "contribution_vs_target_spearman": 0.8630927052096404
+          },
+          {
+            "variable": "Unit1",
+            "entries": 2906,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.00034411562284927734,
+            "mean_abs_contribution": 0.10559581965208054,
+            "contribution_vs_interpolation_spearman": 0.8637223712975608,
+            "contribution_vs_target_spearman": 0.8636091608164983
+          },
+          {
+            "variable": "Unit2",
+            "entries": 2934,
+            "patients": 331,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.11373384296894073,
+            "contribution_vs_interpolation_spearman": 0.8655929302264299,
+            "contribution_vs_target_spearman": 0.8657340592089134
+          },
+          {
+            "variable": "HospAdmTime",
+            "entries": 4404,
+            "patients": 506,
+            "positive_preactivation_fraction": 0.0,
+            "mean_abs_contribution": 0.05693720281124115,
+            "contribution_vs_interpolation_spearman": 0.7030307946811574,
+            "contribution_vs_target_spearman": 0.7024493248222834
+          },
+          {
+            "variable": "ICULOS",
+            "entries": 4415,
+            "patients": 507,
+            "positive_preactivation_fraction": 0.00022650056625141563,
+            "mean_abs_contribution": 0.09022558480501175,
+            "contribution_vs_interpolation_spearman": 0.951246731589364,
+            "contribution_vs_target_spearman": 0.950890493368562
+          }
+        ]
+      }
+    }
+  },
+  "confirmation": {
+    "V1": {
+      "patients": 32,
+      "entries": 3569,
+      "matrix": [
+        [
+          -0.1561480201996362,
+          -0.015578846393488862,
+          -0.029248800655500475,
+          -0.03336134940394479,
+          -0.024711576597213625,
+          0.04489675172466003
+        ],
+        [
+          0.4600859251237064,
+          0.01848374746209669,
+          0.17166396554440408,
+          0.028405103760573668,
+          -0.004558628753467902,
+          0.0599002978332277
+        ],
+        [
+          0.7920000501987099,
+          0.00843205770511566,
+          0.25175814080093667,
+          0.05161062626375655,
+          -0.0314555296442399,
+          0.06839310782414657
+        ],
+        [
+          0.6974186074718449,
+          0.008388641201071488,
+          0.248406446071013,
+          0.06483315457563832,
+          -0.013770397455946945,
+          0.05396630204158678
+        ]
+      ],
+      "positive_regions": {
+        "38": {
+          "median_normalized_target": 5.262591361999512,
+          "fraction_target_above_2_normalized": 0.9846153846153847,
+          "median_target_observed_training_percentile": 0.8604249487722908,
+          "fraction_target_above_95th_observed_training_percentile": 0.2153846153846154
+        },
+        "198": {
+          "median_normalized_target": 3.554267406463623,
+          "fraction_target_above_2_normalized": 0.9180327868852459,
+          "median_target_observed_training_percentile": 0.6153246739023295,
+          "fraction_target_above_95th_observed_training_percentile": 0.13934426229508196
+        },
+        "47": null,
+        "255": {
+          "median_normalized_target": -8.301172256469727,
+          "fraction_target_above_2_normalized": 0.0,
+          "median_target_observed_training_percentile": 0.025934078338412915,
+          "fraction_target_above_95th_observed_training_percentile": 0.0
+        }
+      },
+      "contrast": {
+        "positive_entries": 5,
+        "patients": 4,
+        "variable_counts": {
+          "AST": 1,
+          "Alkalinephos": 2,
+          "Creatinine": 1,
+          "TroponinI": 1
+        },
+        "median_normalized_target": 42.35757827758789,
+        "median_normalized_interpolation": 41.33219909667969,
+        "median_nearest_observation_hours": 18.0,
+        "median_observation_density": 0.020833333333333332,
+        "fraction_target_gt_interpolation": 0.4,
+        "mean_normalized_residual": -6.160524368286133,
+        "median_target_observed_training_percentile": 0.9946821721281538,
+        "fraction_target_above_95th_observed_training_percentile": 0.8
+      }
+    },
+    "V4": {
+      "patients": 32,
+      "entries": 3569,
+      "matrix": [
+        [
+          -0.1467408315197497,
+          -0.01689828822622045,
+          -0.030146755705087413,
+          -0.03639754472185806,
+          -0.025956390032673613,
+          0.043074738732284165
+        ],
+        [
+          0.45935989074501704,
+          0.01661842018543889,
+          0.1767175590443547,
+          0.020617850377599216,
+          -0.007269028659816258,
+          0.05733047121902332
+        ],
+        [
+          0.7923409891386426,
+          0.01191960610590922,
+          0.25381197772575875,
+          0.04813625921776814,
+          -0.02421624702070084,
+          0.06974837381022946
+        ],
+        [
+          0.7064474900711433,
+          0.023464698309241378,
+          0.24532619088502228,
+          0.07111690062362727,
+          -0.014041668652717273,
+          0.0540740393112563
+        ]
+      ],
+      "positive_regions": {
+        "38": {
+          "median_normalized_target": 5.406956672668457,
+          "fraction_target_above_2_normalized": 0.9920634920634921,
+          "median_target_observed_training_percentile": 0.8681915113220613,
+          "fraction_target_above_95th_observed_training_percentile": 0.2222222222222222
+        },
+        "198": {
+          "median_normalized_target": 3.5488855838775635,
+          "fraction_target_above_2_normalized": 0.9182561307901907,
+          "median_target_observed_training_percentile": 0.6077251318384929,
+          "fraction_target_above_95th_observed_training_percentile": 0.13896457765667575
+        },
+        "47": null,
+        "255": {
+          "median_normalized_target": -8.163667678833008,
+          "fraction_target_above_2_normalized": 0.0,
+          "median_target_observed_training_percentile": 0.030389293373969974,
+          "fraction_target_above_95th_observed_training_percentile": 0.0
+        }
+      },
+      "contrast": {
+        "positive_entries": 5,
+        "patients": 4,
+        "variable_counts": {
+          "AST": 1,
+          "Alkalinephos": 2,
+          "Creatinine": 1,
+          "TroponinI": 1
+        },
+        "median_normalized_target": 42.35757827758789,
+        "median_normalized_interpolation": 41.33219909667969,
+        "median_nearest_observation_hours": 18.0,
+        "median_observation_density": 0.020833333333333332,
+        "fraction_target_gt_interpolation": 0.4,
+        "mean_normalized_residual": -6.136855125427246,
+        "median_target_observed_training_percentile": 0.9946821721281538,
+        "fraction_target_above_95th_observed_training_percentile": 0.8
+      }
+    }
+  },
+  "input_interventions": {
+    "V1": [
+      {
+        "variable": "HR",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          -0.061872933991253376,
+          0.016637973487377167,
+          0.38588176667690277,
+          0.16339460015296936
+        ],
+        "fraction_cases_positive_delta": [
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.1959553360939026
+      },
+      {
+        "variable": "HR",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          -0.06794213317334652,
+          0.019179497845470905,
+          0.3790896236896515,
+          0.16183707118034363
+        ],
+        "fraction_cases_positive_delta": [
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.1959553360939026
+      },
+      {
+        "variable": "O2Sat",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.05323181673884392,
+          0.04880493879318237,
+          0.08456385880708694,
+          0.08026408031582832
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.03294265549629927
+      },
+      {
+        "variable": "O2Sat",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.044288355857133865,
+          0.043432341888546944,
+          0.07765708863735199,
+          0.07329824194312096
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.03294265549629927
+      },
+      {
+        "variable": "Glucose",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.36459094285964966,
+          0.35542120039463043,
+          0.10146439960226417,
+          0.052053912077099085
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.5085355639457703
+      },
+      {
+        "variable": "Glucose",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.3436296433210373,
+          0.3630605787038803,
+          0.09424197231419384,
+          0.05579992290586233
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.5085355639457703
+      },
+      {
+        "variable": "Creatinine",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.9880784451961517,
+          1.1091451048851013,
+          0.5467739999294281,
+          0.11864599585533142
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          0.5,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 1.772662341594696
+      },
+      {
+        "variable": "Creatinine",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.9812384247779846,
+          1.129205048084259,
+          0.5509117245674133,
+          0.11395932734012604
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 1.772662341594696
+      }
+    ],
+    "V4": [
+      {
+        "variable": "HR",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          -0.061872933991253376,
+          0.016637973487377167,
+          0.38974063098430634,
+          0.16339455544948578
+        ],
+        "fraction_cases_positive_delta": [
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.19613511860370636
+      },
+      {
+        "variable": "HR",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          -0.06798309087753296,
+          0.019168537110090256,
+          0.38290125131607056,
+          0.1618722379207611
+        ],
+        "fraction_cases_positive_delta": [
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.19613511860370636
+      },
+      {
+        "variable": "O2Sat",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.05323181673884392,
+          0.04880493879318237,
+          0.0854094997048378,
+          0.0802641473710537
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.03289914131164551
+      },
+      {
+        "variable": "O2Sat",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.04427654668688774,
+          0.043428124859929085,
+          0.07843499630689621,
+          0.0733029693365097
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.03289914131164551
+      },
+      {
+        "variable": "Glucose",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.36459094285964966,
+          0.35542120039463043,
+          0.10247903177514672,
+          0.05205391952767968
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.5182216465473175
+      },
+      {
+        "variable": "Glucose",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.34372033178806305,
+          0.36326709389686584,
+          0.09526131744496524,
+          0.05582543648779392
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 0.5182216465473175
+      },
+      {
+        "variable": "Creatinine",
+        "step": 1,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.9880784451961517,
+          1.1091451048851013,
+          0.5522418916225433,
+          0.11864590644836426
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          0.5,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 1.7894009351730347
+      },
+      {
+        "variable": "Creatinine",
+        "step": 2,
+        "patient_cases": 2,
+        "mean_delta_preactivation": [
+          0.981298953294754,
+          1.1293975114822388,
+          0.556565135717392,
+          0.11397452652454376
+        ],
+        "fraction_cases_positive_delta": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_prediction_delta_normalized": 1.7894009351730347
+      }
+    ]
+  },
+  "last_step_ablations": {
+    "V1": [
+      {
+        "group": "198",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.20254563702216632,
+        "mean_signed_prediction_delta_normalized": -0.02388672183903702
+      },
+      {
+        "group": "255",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.08126029888082908,
+        "mean_signed_prediction_delta_normalized": -0.07685122202662242
+      },
+      {
+        "group": "38",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.046798723326037246,
+        "mean_signed_prediction_delta_normalized": -0.013730057647765418
+      },
+      {
+        "group": "47",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.06471857462623974,
+        "mean_signed_prediction_delta_normalized": -0.06471857462623974
+      },
+      {
+        "group": "contrast38_198",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 2.0684350806980714e-08,
+        "mean_signed_prediction_delta_normalized": -2.0618591970106774e-08
+      },
+      {
+        "group": "midrange198",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 1.698150201634086e-09,
+        "mean_signed_prediction_delta_normalized": -3.7478622801666603e-11
+      }
+    ],
+    "V4": [
+      {
+        "group": "198",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.20260871117206541,
+        "mean_signed_prediction_delta_normalized": -0.02394742581082112
+      },
+      {
+        "group": "255",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.08107111779892016,
+        "mean_signed_prediction_delta_normalized": -0.07667981979611224
+      },
+      {
+        "group": "38",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.04681276880297575,
+        "mean_signed_prediction_delta_normalized": -0.013764513818023669
+      },
+      {
+        "group": "47",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.06366089050322468,
+        "mean_signed_prediction_delta_normalized": -0.06366089050322468
+      },
+      {
+        "group": "contrast38_198",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 8.843599096604441e-06,
+        "mean_signed_prediction_delta_normalized": -8.843599096604441e-06
+      },
+      {
+        "group": "midrange198",
+        "entries": 3569,
+        "mean_absolute_prediction_delta_normalized": 0.001737121850644617,
+        "mean_signed_prediction_delta_normalized": -0.0017316375051970308
+      }
+    ]
+  },
+  "sources": {
+    "artifacts/audit/clinical_neuron_concepts_exact_percentiles_20261105.json": "919c938ba791c6e86cc885d589efa46ee6fb7534266219898c93e8d666096115",
+    "artifacts/audit/clinical_concepts_confirmation32_20261105/V1_aggregate.json": "b634d686cef990d2afa4832ff781eccd92cdcd1edccdaf7f440df93986565f05",
+    "artifacts/audit/clinical_concepts_confirmation32_20261105/V4_aggregate.json": "906ec584277ed263268c3f6a5a0b490d9972a66959aa694c17ce2d95cc6560eb"
+  },
+  "evidence_limits": [
+    "Calibration cohorts V1=128 and V4=512 are different; paired new confirmation uses the same 32 patients and noise.",
+    "Cohorts were used previously in the broader benchmark; no untouched external holdout is claimed.",
+    "Within-variable ranks remove between-variable level differences but do not remove all confounding; entries within a patient are dependent.",
+    "Input interventions have only two eligible patients per variable, selected before inference; descriptive sensitivities only.",
+    "Observed training percentiles are empirical reference ranks, not clinical normality thresholds.",
+    "Ablations remove last-step contributions only and recompute all-draw median; they do not establish the effect of removing a unit across the entire model.",
+    "A lack of a marginal correlation does not exclude a nonlinear or context-dependent concept."
+  ],
+  "ablation_verification": {
+    "unit": 47,
+    "version": "V4",
+    "patients": 1,
+    "samples": 100,
+    "scope": "One implementation check on the first of the 32 confirmation patients; all 48x40 positions checked. Actual GELU ablation in final step versus algebraic draw correction and recomputed median. Not an accuracy improvement.",
+    "max_abs_normalized_prediction_difference": 1.52587890625e-05,
+    "rtol": 2e-05,
+    "atol": 2e-06,
+    "passed": true,
+    "original_checkpoint_unchanged": true,
+    "script_sha256": "9e3d4cdf9ec06aa129967562abb4c55d5ddc8df3049ac0a01e3fbc46e04efdb7"
+  }
+}

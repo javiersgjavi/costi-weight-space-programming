@@ -1,0 +1,29 @@
+{
+  "dataset": "mimic-iii-challenge_point",
+  "split": "confirmation",
+  "patients": 32,
+  "samples": 100,
+  "seed": 20261103,
+  "sigmas": [
+    80,
+    20.92
+  ],
+  "chunk": 4,
+  "source_sha256": "a012e3bcb5ade901bfa51405f30c4c0ef3b336a07da9203f6930e23ebaa7f1c2",
+  "recipe_sha256": {
+    "V1": "e9d13ffb880a9ed02dbda070b7456f2c334d02a9b5bb7455c674c021d7e4b0fa",
+    "V4": "3415dba55842fb889b7e16021f2275f6bede2a85a2462448edc253ed9279341e"
+  },
+  "input_intervention": "Raise conditioning observations of one variable by 0.5 SD of observed training values, preserving mask; recompute its interpolation by the same translation. Synthetic sensitivity probe, not a clinical intervention.",
+  "intervention_variables": [
+    "HR",
+    "O2Sat",
+    "Glucose",
+    "Creatinine"
+  ],
+  "intervention_patient_variable_cases": 8,
+  "comparison": "Paired same patients/noise; summarize all-draw preactivations for input effects to avoid median selection confounding. Scored median-selected activations saved for descriptive associations.",
+  "ablation": "Exact last-step-only removal of individual/group head contributions across ALL 100 draws followed by a new median. Not full two-step ablation and not a candidate.",
+  "gradients_training_or_weight_updates": false,
+  "source_script_sha256": "11d9e377e7c5cdef326bd3ede531e3fe77dab5c1df75070cb79cb3aeddea1855"
+}
