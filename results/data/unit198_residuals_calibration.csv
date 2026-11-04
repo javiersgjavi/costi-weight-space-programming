@@ -1,0 +1,5 @@
+unit,z_low,z_high,scored_entries,patients,median_normalized_error,mean_normalized_error,model,split
+198,0,0.5,302,93,-0.012767195701599121,-0.06692349165678024,V1,"calibration (128 patients, 100 samples, median draw)"
+198,0.5,1,204,81,-0.0326617956161499,-0.18012338876724243,V1,"calibration (128 patients, 100 samples, median draw)"
+198,1,2,287,96,-0.04921245574951172,-0.08680973201990128,V1,"calibration (128 patients, 100 samples, median draw)"
+198,2,100,230,76,0.02225327491760254,0.011724885553121567,V1,"calibration (128 patients, 100 samples, median draw)"

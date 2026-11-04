@@ -114,15 +114,15 @@ so that `z₂₄₆ = 16 · (z₁₉₈ − t)`. Unit 246 now stays at zero whil
 | 226 | 1.5 | −4 | +1 − 4 = −3: falls |
 | 179 | 2 | +3 | −3 + 3 = 0: flat, switched off |
 
-The result is a small triangle: it adds a little to the prediction (at most about 0.09 in normalized units) while `z₁₉₈` is between 0 and 2, peaks at 1.5, and adds nothing anywhere else. It is the orange curve in the left panel below.
+The result is a small triangle: it adds a little to the prediction (at most about 0.09 in normalized units) while `z₁₉₈` is between 0 and 2, peaks at 1.5, and adds nothing anywhere else. It is the orange curve in the right panel of the figure below.
 
 **Why not just scale unit 198?** The diagnosis said unit 198 left predictions too low for `z₁₉₈` between 0 and 2, but too high above 2. Raising its output weight would fix the first range and make the second worse. The bump acts only where the error was. It is as if the agent had added `if 0 < z₁₉₈ < 2: add a little` to the model, written directly into its weights.
 
 **The ramp uses the same trick on a difference.** Units 181 and 150 copy `64 · (input weights of 38 − input weights of 198)`, so they watch `d = z₃₈ − z₁₉₈`. The first switches on at `d = 0` and the second cancels it at `d = 1`, which gives `0.070 · clip(d, 0, 1)`. Normally `z₃₈ < z₁₉₈`, so the ramp only acts in the rare cases where unit 38 overtakes 198.
 
-![Building small functions out of idle neurons](results/figures/03_write_the_weights.png)
+![Fixing one neuron with three idle ones](results/figures/03_write_the_weights.png)
 
-Left and middle: the exact bump and ramp stored in the V4 weights, with their building blocks as faint lines.
+Left: unit 198's error on calibration patients, by the value of its input. Middle: the three idle neurons, each switching on at its own threshold. Right: their sum, the exact correction stored in the V4 weights.
 
 The complete final recipe (V4) has six edits, applied in four validated versions:
 

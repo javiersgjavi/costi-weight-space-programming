@@ -224,81 +224,85 @@ def fig_read_weights():
 
 def fig_program_functions():
     head = pd.read_csv(DATA / "output_head_coefficients.csv").set_index("unit")
+    res = pd.read_csv(DATA / "unit198_residuals_calibration.csv")
     a = head["a_v4"]  # exact effective output weights of the reused neurons in V4
+    parts = [(246, 0.0, "on at 0", "rises (×1)"),
+             (226, 1.5, "on at 1.5", "falls (×4)"),
+             (179, 2.0, "on at 2", "rises (×3), cancelling it")]
 
     fig = canvas("Step 2 · Write the weights",
-                 "Building small functions out of idle neurons",
-                 "A very steep GELU behaves like a ReLU. Copying an existing neuron's input weights ×16 or ×64 "
-                 "into an idle neuron,\nwith a new bias and output weight, makes it switch on exactly where "
-                 "the agent wants. Sums of those switches draw shapes.")
+                 "Fixing one neuron with three idle ones",
+                 "Unit 198 left predictions too low when its input was between 0 and 2, and too high above 2. "
+                 "Scaling it would fix\none range and break the other. So the agent wired three idle neurons to "
+                 "watch unit 198 and correct only that range.")
 
-    gs = fig.add_gridspec(1, 3, left=0.05, right=0.97, bottom=0.14, top=0.66, wspace=0.28)
+    gs = fig.add_gridspec(1, 3, left=0.06, right=0.97, bottom=0.15, top=0.64, wspace=0.30)
+    xlim = (-0.4, 3.0)
+    heads = ["①  The problem", "②  The pieces", "③  The fix"]
+    subs = ["error of the prediction vs unit 198's input",
+            "three idle neurons copy unit 198's input ×16",
+            "their sum, added to the prediction"]
 
-    # (a) triangular bump on unit 198 from three reused neurons.
+    # ① residual error of V1, binned by z198.
     ax = fig.add_subplot(gs[0])
-    z = np.linspace(-0.5, 3.0, 800)
-    # Each reused neuron sees 16 * (z198 - t): a 16x copy of unit 198's input row with a shifted bias.
-    parts = [(246, 0.0), (226, 1.5), (179, 2.0)]
-    for u, t in parts:
-        ax.plot(z, a[u] * gelu(16 * (z - t)), color=ORANGE, lw=1.2, alpha=0.45)
-    bump = sum(a[u] * gelu(16 * (z - t)) for u, t in parts)
-    ax.plot(z, bump, color=ORANGE, lw=3)
-    ax.axhline(0, color=AXIS, lw=1)
+    for _, r in res.iterrows():
+        lo, hi = r.z_low, min(r.z_high, xlim[1])
+        ax.bar((lo + hi) / 2, r.median_normalized_error, width=(hi - lo) - 0.05, color=RED)
+    ax.axhline(0, color=INK_2, lw=1)
+    ax.text(1.0, -0.062, "too low", ha="center", fontsize=13.5, color=INK, weight="bold")
+    ax.text(2.5, 0.029, "too high", ha="center", fontsize=13.5, color=INK, weight="bold")
     style_axis(ax)
-    ax.set_ylim(-0.15, 0.16)
+    ax.set_xlim(*xlim)
+    ax.set_ylim(-0.075, 0.045)
+    ax.set_ylabel("median error (normalized)", fontsize=13)
     ax.set_xlabel("input of unit 198,  z₁₉₈", fontsize=13)
-    ax.set_ylabel("added to the output (normalized)", fontsize=13)
-    ax.set_title("A bump on unit 198", loc="left", fontsize=17, weight="bold", pad=34)
-    ax.text(0, 1.04, "units 246 + 226 + 179 → peak at 1.5, off after 2", transform=ax.transAxes,
-            fontsize=12.5, color=INK_2)
-    ax.annotate("sum", (1.5, bump[np.argmin(abs(z - 1.5))]), (0.6, 0.13), fontsize=12.5,
-                arrowprops=dict(arrowstyle="-", color=AXIS))
-    ax.text(-0.45, -0.135, "faint lines: the three building blocks", fontsize=11.5, color=MUTED)
 
-    # (b) capped ramp on the contrast z38 - z198 from two reused neurons.
-    ax = fig.add_subplot(gs[1])
-    d = np.linspace(-0.6, 1.8, 800)
-    # Units 181 and 150 see 64 * (z38 - z198) and 64 * (z38 - z198 - 1).
-    on = a[181] * gelu(64 * d)
-    off = a[150] * gelu(64 * (d - 1))
-    A = 64 * a[181]
-    ax.plot(d, on, color=ORANGE, lw=1.2, alpha=0.45)
-    ax.plot(d, off, color=ORANGE, lw=1.2, alpha=0.45)
-    ax.plot(d, on + off, color=ORANGE, lw=3)
-    ax.axhline(0, color=AXIS, lw=1)
+    # ② the three building blocks, one row each.
+    sub = gs[1].subgridspec(3, 1, hspace=0.25)
+    z = np.linspace(*xlim, 600)
+    for k, (u, t, when, what) in enumerate(parts):
+        axk = fig.add_subplot(sub[k])
+        yk = a[u] * gelu(16 * (z - t))
+        axk.plot(z, yk, color=ORANGE, lw=2.2)
+        axk.axvline(t, color=AXIS, lw=1, ls=":")
+        axk.axhline(0, color=AXIS, lw=1)
+        lim = 0.12
+        axk.set_ylim(-lim, lim)
+        axk.set_xlim(*xlim)
+        axk.set_yticks([])
+        axk.tick_params(length=0, labelsize=12.5)
+        axk.spines["left"].set_visible(False)
+        if k < 2:
+            axk.set_xticks([])
+            axk.spines["bottom"].set_visible(False)
+        else:
+            axk.set_xlabel("input of unit 198,  z₁₉₈", fontsize=13)
+        x_, ha_, y1, y2 = (0.99, "right", 0.30, 0.08) if k == 0 else (0.01, "left", 0.80, 0.58)
+        axk.text(x_, y1, f"unit {u}", transform=axk.transAxes, fontsize=13, weight="bold", color=INK, ha=ha_)
+        axk.text(x_, y2, f"{when}, {what}", transform=axk.transAxes, fontsize=12, color=INK_2, ha=ha_)
+
+    # ③ the sum.
+    ax = fig.add_subplot(gs[2])
+    bump = sum(a[u] * gelu(16 * (z - t)) for u, t, *_ in parts)
+    ax.axvspan(0, 2, color=ORANGE, alpha=0.08, lw=0)
+    ax.plot(z, bump, color=ORANGE, lw=3.2)
+    ax.axhline(0, color=INK_2, lw=1)
+    ax.text(1.0, 0.108, "adds a little only where\nunit 198 was too low", ha="center", fontsize=12.5, color=INK)
+    ax.text(2.55, 0.018, "nothing\nabove 2", ha="center", fontsize=12.5, color=INK_2)
     style_axis(ax)
-    ax.set_ylim(-0.12, 0.12)
-    ax.set_xlabel("contrast  d = z₃₈ − z₁₉₈", fontsize=13)
-    ax.set_title("A capped ramp on a contrast", loc="left", fontsize=17, weight="bold", pad=34)
-    ax.text(0, 1.04, f"units 181 + 150 → {A:.3f} · clip(d, 0, 1)", transform=ax.transAxes,
-            fontsize=12.5, color=INK_2)
-    ax.text(-0.55, 0.085, "fires only in the rare case\nwhere unit 38 overtakes 198", fontsize=11.5,
-            color=MUTED)
+    ax.set_xlim(*xlim)
+    ax.set_ylim(-0.03, 0.135)
+    ax.set_ylabel("added to the prediction (normalized)", fontsize=13)
+    ax.set_xlabel("input of unit 198,  z₁₉₈", fontsize=13)
 
-    # (c) the full V4 recipe, as a card.
-    card = fig.add_subplot(gs[2])
-    card.axis("off")
-    card.set_title("The full V4 recipe", loc="left", fontsize=17, weight="bold", pad=34)
-    card.text(0, 1.04, "965 values in 5 tensors of the output head", transform=card.transAxes,
-              fontsize=12.5, color=INK_2)
-    steps = [
-        ("V1", "Output gain ×1.005, bias −0.012", "recalibrates level and spread"),
-        ("", "Units 198 and 38: output weight +1%", "two strong positive paths"),
-        ("V2", "Bump on 198 (units 246, 226, 179)", "left panel"),
-        ("", "Unit 47: input ×1.01, output ÷1.01", "same slope, shallower negative dip"),
-        ("V3", "Unit 255: bias −0.01", "slides its negative dip sideways"),
-        ("V4", "Ramp on z₃₈ − z₁₉₈ (units 181, 150)", "middle panel"),
-    ]
-    y = 0.97
-    for tag, what, why in steps:
-        if tag:
-            card.text(0.0, y, tag, fontsize=13.5, weight="bold", color=BLUE, transform=card.transAxes, va="top")
-        card.text(0.12, y, what, fontsize=13.5, color=INK, transform=card.transAxes, va="top")
-        card.text(0.12, y - 0.075, why, fontsize=12, color=MUTED, transform=card.transAxes, va="top")
-        y -= 0.165
+    for k, axh in enumerate([fig.axes[0], fig.axes[1], fig.axes[4]]):
+        pos = axh.get_position()
+        fig.text(pos.x0, 0.715, heads[k], fontsize=17, weight="bold")
+        fig.text(pos.x0, 0.675, subs[k], fontsize=13, color=INK_2)
 
-    footer(fig, "Curves are the exact functions stored in the V4 weights. Every coefficient was fixed before it "
-                "was evaluated; none was fitted to data.")
+    footer(fig, "Each idle neuron gets unit 198's input weights ×16 and a shifted bias, so it computes ≈ 16·max(0, z₁₉₈ − t). "
+                "Errors: V1 on 128 calibration patients.\nThe V4 ramp on z₃₈ − z₁₉₈ uses the same trick with units "
+                "181 and 150. Curves are the exact functions stored in the V4 weights.")
     save(fig, "03_write_the_weights.png")
 
 

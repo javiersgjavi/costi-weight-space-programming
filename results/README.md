@@ -8,7 +8,7 @@ Rebuild them all with `python scripts/make_figures.py`. Figures 1–6 are 2400×
 |---|---|
 | `01_headline.png` | the headline numbers |
 | `02_read_the_weights.png` | effective weight of each of the 256 output-head neurons; 176 are idle |
-| `03_write_the_weights.png` | the bump and the ramp programmed into idle neurons, plus the full V4 recipe |
+| `03_write_the_weights.png` | how three idle neurons fix unit 198: its error by input, the three switches, and their sum |
 | `04_search.png` | all 17 hypotheses on the 128-patient screening cohorts: kept, rejected, pending |
 | `05_progress.png` | MAE and MSE reduction at each of the 17 iterations, with the accepted model as a staircase and the final test numbers |
 | `06_where_the_gain_comes_from.png` | gain by variable group and by version (V1 vs V4) |
@@ -23,6 +23,7 @@ Rebuild them all with `python scripts/make_figures.py`. Figures 1–6 are 2400×
 | `calibration_512_vs_v3.csv` | later candidates on 512 calibration patients vs V3, with 95% intervals |
 | `per_variable_test.csv` | test MAE/MSE per variable, original vs V4 |
 | `per_group_test.json` | test MAE/MSE for physiological vs context variables, with each group's share of the reduction |
+| `unit198_residuals_calibration.csv` | V1's median error by range of unit 198's input, on 128 calibration patients (the diagnosis behind the bump) |
 | `output_head_coefficients.csv` | for each of the 256 head neurons: effective output weight, bias and input norm, original vs V4, and its role in the edit |
 
 ## `evidence/`
