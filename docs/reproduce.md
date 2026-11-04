@@ -72,6 +72,20 @@ Repeat with `--seed 20261104`. Use `--split calibration` or `--split confirmatio
 
 Numbers to expect, averaged over the two seeds: original MAE 2.480960 and MSE 350.120368; V4 MAE 2.417163 and MSE 347.977979. The original runs used a CUDA GPU with the fused Triton kernel (`--backend triton`, the default for `paired_head`). The CPU reference backend (`--device cpu --backend reference`) agrees within floating-point tolerance, but it is very slow for 4,033 patients × 100 samples.
 
+### The before/after bars of figure 3
+
+`results/data/unit198_bump_before_after_calibration.csv` comes from two diagnostic runs on the 128 calibration patients (seed 20261103, 100 samples), one for V1 and one for V1 plus the bump only, keeping the selected draw's GELU inputs:
+
+```bash
+for edit in clinical_v0_affine_tail_readout clinical_v0_local_positive_repair; do
+  python -m weight_space.diagnose_head --dataset mimic-iii-challenge_point --replicate 0 \
+      --limit 128 --samples 100 --device cuda --backend triton --chunk 10 --preactivations \
+      --edit weight_space/edits/physionet/$edit.json --output artifacts/audit/${edit}_cal128.json
+done
+```
+
+The errors are then binned by unit 198's input (`preactivation[:, 198]`), and the median of each bin is taken. `diagnose_head` looks for the checkpoint in `../weights/`, as in the agent's original workspace. The V1 run reproduces the agent's own audit of the same patients to within 8·10⁻⁶.
+
 ### Checks
 
 ```bash

@@ -41,7 +41,8 @@ A steep GELU is a ReLU switch. The agent copied a neuron's input weights ×16 in
 
 Small functions, compiled into weights by hand.
 
-📎 `results/figures/03_write_the_weights.png`
+📎 `results/figures/03_fix_unit_198.png`
+📎 `results/figures/04_two_programs.png`
 
 ---
 
@@ -52,8 +53,8 @@ Step 3: test everything.
 
 The best idea on calibration failed on confirmation and was dropped.
 
-📎 `results/figures/04_search.png`
-📎 `results/figures/05_progress.png`
+📎 `results/figures/05_search.png`
+📎 `results/figures/06_progress.png`
 
 ---
 
@@ -64,7 +65,7 @@ Most of the MAE gain is in 6 context columns (age, ICU unit, length of stay…).
 
 And the simplest edit, recalibrating the output plus 2 neurons, already gives −2.29%.
 
-📎 `results/figures/06_where_the_gain_comes_from.png`
+📎 `results/figures/07_where_the_gain_comes_from.png`
 
 ---
 

@@ -114,15 +114,17 @@ so that `z₂₄₆ = 16 · (z₁₉₈ − t)`. Unit 246 now stays at zero whil
 | 226 | 1.5 | −4 | +1 − 4 = −3: falls |
 | 179 | 2 | +3 | −3 + 3 = 0: flat, switched off |
 
-The result is a small triangle: it adds a little to the prediction (at most about 0.09 in normalized units) while `z₁₉₈` is between 0 and 2, peaks at 1.5, and adds nothing anywhere else. It is the orange curve in the right panel of the figure below.
+The result is a small triangle: it adds a little to the prediction (at most about 0.09 in normalized units) while `z₁₉₈` is between 0 and 2, peaks at 1.5, and adds nothing anywhere else. It is the orange curve in panel ③ of the figure below.
+
+**The other neurons add, they don't modulate.** Unit 198 itself is not touched by this edit. The three idle neurons read the same input as unit 198, compute their own small ramps, and those ramps are added to the final output next to unit 198's own contribution. The net effect is as if unit 198's response curve had been reshaped, but it is built in parallel.
 
 **Why not just scale unit 198?** The diagnosis said unit 198 left predictions too low for `z₁₉₈` between 0 and 2, but too high above 2. Raising its output weight would fix the first range and make the second worse. The bump acts only where the error was. It is as if the agent had added `if 0 < z₁₉₈ < 2: add a little` to the model, written directly into its weights.
 
 **The ramp uses the same trick on a difference.** Units 181 and 150 copy `64 · (input weights of 38 − input weights of 198)`, so they watch `d = z₃₈ − z₁₉₈`. The first switches on at `d = 0` and the second cancels it at `d = 1`, which gives `0.070 · clip(d, 0, 1)`. Normally `z₃₈ < z₁₉₈`, so the ramp only acts in the rare cases where unit 38 overtakes 198.
 
-![Fixing one neuron with three idle ones](results/figures/03_write_the_weights.png)
+![Fixing one neuron with three idle ones](results/figures/03_fix_unit_198.png)
 
-Left: unit 198's error on calibration patients, by the value of its input. Middle: the three idle neurons, each switching on at its own threshold. Right: their sum, the exact correction stored in the V4 weights.
+① Unit 198's error before the fix (V1), by the value of its input. ② The three idle neurons, each switching on at its own threshold. ③ Their sum, the exact correction stored in the weights. ④ The same error with only this correction added: in the 0–2 range it almost disappears, and above 2 it does not change. These are the 128 calibration patients the edit was designed on, so ④ shows that the edit does what it was built to do, not that it generalizes. Generalization is judged on the confirmation patients and the test set below.
 
 The complete final recipe (V4) has six edits, applied in four validated versions:
 
@@ -135,6 +137,8 @@ The complete final recipe (V4) has six edits, applied in four validated versions
 | V3 | Unit 255: bias −0.01 | slides its negative GELU dip, where the error changed sign |
 | V4 | Ramp on z₃₈ − z₁₉₈, built in idle units 181 and 150 | rare reversal of the two positive paths |
 
+![Both programmed functions and the full V4 recipe](results/figures/04_two_programs.png)
+
 In total **965 values in 5 tensors** of the output head change. The exact recipe is [`weight_space/edits/physionet/clinical_v0_relative_tail.json`](weight_space/edits/physionet/clinical_v0_relative_tail.json), and the algebra behind every edit is in [`docs/method.md`](docs/method.md).
 
 ### Step 3 · Test every idea with forward passes
@@ -146,7 +150,7 @@ Every edit was a hypothesis, and most hypotheses failed. The protocol was design
 - **Paired comparisons.** Original and edited models always see the same patients, missing-value masks and noise, so differences come from the weights alone.
 - **Both metrics or nothing.** At the user's request, an edit was kept only if it lowered **both** MAE and MSE on the confirmation patients. Before the test, V4 had to beat V1, V2 and V3 on both metrics, on each seed of the full 2,016-patient confirmation. It did, although only the margin over V1 is clearly outside the noise.
 
-![17 hypotheses: 5 kept, 10 rejected, 2 pending](results/figures/04_search.png)
+![17 hypotheses: 5 kept, 10 rejected, 2 pending](results/figures/05_search.png)
 
 Two cases show why this matters:
 
@@ -157,7 +161,7 @@ Every hypothesis, with its numbers and the reason it was kept or rejected, is li
 
 Seen in order, the search is a staircase: the accepted model only moves when an edit passes, and most iterations leave it where it was.
 
-![The error went down one kept edit at a time](results/figures/05_progress.png)
+![The error went down one kept edit at a time](results/figures/06_progress.png)
 
 ## Results
 
@@ -177,11 +181,11 @@ The exported V4 checkpoint was audited: its state and graph factors match the fr
 
 This is a real improvement, measured carefully, but it is easy to oversell. In particular:
 
-![Most of the gain is recalibration, not better physiology](results/figures/06_where_the_gain_comes_from.png)
+![Most of the gain is recalibration, not better physiology](results/figures/07_where_the_gain_comes_from.png)
 
 - **Most of the MAE gain is in the 6 context columns.** Age, gender, ICU unit, admission time and length of stay improve by 27.7% (MAE) and 11.2% (MSE). The 34 vitals and lab values improve by only **0.29% (MAE) and 0.47% (MSE)**. 90% of the total MAE reduction comes from context columns, while 77% of the MSE reduction comes from physiological ones.
 - **The simplest edit did most of the work.** V1, a recalibration of the output plus two boosted neurons (193 values), already gives −2.29% MAE on test. The programmed functions of V2–V4 improve on V1 by a further 0.29% (MAE) and 0.10% (MSE).
-- **Not every variable improves.** 17 of 40 improve on both metrics. Some sparse lab values get clearly worse: pH (+76% MAE, 706 scored values) and chloride (+40%, 188 values). See the [per-variable figure](results/figures/07_per_variable.png).
+- **Not every variable improves.** 17 of 40 improve on both metrics. Some sparse lab values get clearly worse: pH (+76% MAE, 706 scored values) and chloride (+40%, 188 values). See the [per-variable figure](results/figures/08_per_variable.png).
 - **The test set was scored twice, but never used to build anything.** The agent ran exactly two evaluations on test: V1, when it was meant to be the final result, and V4, after the search went on. Every edit was designed on calibration patients, accepted on confirmation patients, and frozen (hashed, with its pass rule written down) before its test run. No test example or test score went into any edit. What the V1 score could have influenced is only the decision to keep searching, and the reported number is in practice the better of two tested versions. That mainly affects V4's small margin over V1 (0.29% MAE); the gain over the original is well outside the noise. Scoring the frozen V4 on data nobody has evaluated yet would settle it.
 - **One checkpoint, one benchmark.** Two noise seeds of the same checkpoint are not five independently trained models. The paper reports the average over five checkpoints, so this baseline is not the paper's number.
 - **Explainability is functional, not clinical.** We know exactly which function each edit adds to the head. We do not know which clinical concept a neuron stands for, and probably none maps cleanly to one.
@@ -216,7 +220,7 @@ weight_space/             the agent's toolkit: inference harness, diagnostics, e
   edits/physionet/        every PhysioNet recipe, including the final V4
   edits/pilots/           recipes from the earlier METR-LA / AQI-36 pilot
 results/
-  figures/                the six figures on this page (16:9, ready for social media)
+  figures/                the eight figures on this page (16:9 except the per-variable one)
   data/                   every number behind the figures, as CSV/JSON
   evidence/               freeze record, test reports and the verification of the export
 docs/

@@ -2,17 +2,18 @@
 
 ## `figures/`
 
-Rebuild them all with `python scripts/make_figures.py`. Figures 1–6 are 2400×1350 px (16:9), sized for X, LinkedIn and slides. Figure 7 is tall, for the README.
+Rebuild them all with `python scripts/make_figures.py`. Figures 1–7 are 2400×1350 px (16:9), sized for X, LinkedIn and slides. Figure 8 is tall, for the README.
 
 | File | Shows |
 |---|---|
 | `01_headline.png` | the headline numbers |
 | `02_read_the_weights.png` | effective weight of each of the 256 output-head neurons; 176 are idle |
-| `03_write_the_weights.png` | how three idle neurons fix unit 198: its error by input, the three switches, and their sum |
-| `04_search.png` | all 17 hypotheses on the 128-patient screening cohorts: kept, rejected, pending |
-| `05_progress.png` | MAE and MSE reduction at each of the 17 iterations, with the accepted model as a staircase and the final test numbers |
-| `06_where_the_gain_comes_from.png` | gain by variable group and by version (V1 vs V4) |
-| `07_per_variable.png` | MAE and MSE change for each of the 40 variables |
+| `03_fix_unit_198.png` | how three idle neurons fix unit 198: its error by input, the three switches, their sum, and the error after the fix |
+| `04_two_programs.png` | the bump and the ramp, each with its building blocks, plus the full V4 recipe |
+| `05_search.png` | all 17 hypotheses on the 128-patient screening cohorts: kept, rejected, pending |
+| `06_progress.png` | MAE and MSE reduction at each of the 17 iterations, with the accepted model as a staircase and the final test numbers |
+| `07_where_the_gain_comes_from.png` | gain by variable group and by version (V1 vs V4) |
+| `08_per_variable.png` | MAE and MSE change for each of the 40 variables |
 
 ## `data/`
 
@@ -23,7 +24,7 @@ Rebuild them all with `python scripts/make_figures.py`. Figures 1–6 are 2400×
 | `calibration_512_vs_v3.csv` | later candidates on 512 calibration patients vs V3, with 95% intervals |
 | `per_variable_test.csv` | test MAE/MSE per variable, original vs V4 |
 | `per_group_test.json` | test MAE/MSE for physiological vs context variables, with each group's share of the reduction |
-| `unit198_residuals_calibration.csv` | V1's median error by range of unit 198's input, on 128 calibration patients (the diagnosis behind the bump) |
+| `unit198_bump_before_after_calibration.csv` | median and mean error by range of unit 198's input z₁₉₈, for V1 and for V1 plus the bump only, on the 128 calibration patients |
 | `output_head_coefficients.csv` | for each of the 256 head neurons: effective output weight, bias and input norm, original vs V4, and its role in the edit |
 
 ## `evidence/`

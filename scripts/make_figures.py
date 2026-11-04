@@ -224,50 +224,58 @@ def fig_read_weights():
 
 def fig_program_functions():
     head = pd.read_csv(DATA / "output_head_coefficients.csv").set_index("unit")
-    res = pd.read_csv(DATA / "unit198_residuals_calibration.csv")
+    res = pd.read_csv(DATA / "unit198_bump_before_after_calibration.csv")
+    res["hi"] = res.z198_high.replace("inf", np.inf).astype(float)
     a = head["a_v4"]  # exact effective output weights of the reused neurons in V4
     parts = [(246, 0.0, "on at 0", "rises (×1)"),
              (226, 1.5, "on at 1.5", "falls (×4)"),
-             (179, 2.0, "on at 2", "rises (×3), cancelling it")]
+             (179, 2.0, "on at 2", "rises (×3): cancels")]
 
     fig = canvas("Step 2 · Write the weights",
                  "Fixing one neuron with three idle ones",
                  "Unit 198 left predictions too low when its input was between 0 and 2, and too high above 2. "
                  "Scaling it would fix\none range and break the other. So the agent wired three idle neurons to "
-                 "watch unit 198 and correct only that range.")
+                 "read the same input and add a correction only in that range.")
 
-    gs = fig.add_gridspec(1, 3, left=0.06, right=0.97, bottom=0.15, top=0.64, wspace=0.30)
+    gs = fig.add_gridspec(1, 4, left=0.055, right=0.975, bottom=0.15, top=0.62, wspace=0.34)
     xlim = (-0.4, 3.0)
-    heads = ["①  The problem", "②  The pieces", "③  The fix"]
-    subs = ["error of the prediction vs unit 198's input",
-            "three idle neurons copy unit 198's input ×16",
-            "their sum, added to the prediction"]
+    heads = ["①  The problem", "②  The pieces", "③  The fix", "④  The result"]
+    subs = ["V1's error, by unit 198's input", "3 idle neurons read that input ×16",
+            "their sum, added to the output", "the same error, with the fix"]
+    ylab = "median error (normalized)"
 
-    # ① residual error of V1, binned by z198.
-    ax = fig.add_subplot(gs[0])
-    for _, r in res.iterrows():
-        lo, hi = r.z_low, min(r.z_high, xlim[1])
-        ax.bar((lo + hi) / 2, r.median_normalized_error, width=(hi - lo) - 0.05, color=RED)
-    ax.axhline(0, color=INK_2, lw=1)
-    ax.text(1.0, -0.062, "too low", ha="center", fontsize=13.5, color=INK, weight="bold")
-    ax.text(2.5, 0.029, "too high", ha="center", fontsize=13.5, color=INK, weight="bold")
-    style_axis(ax)
-    ax.set_xlim(*xlim)
-    ax.set_ylim(-0.075, 0.045)
-    ax.set_ylabel("median error (normalized)", fontsize=13)
-    ax.set_xlabel("input of unit 198,  z₁₉₈", fontsize=13)
+    def error_bars(ax, col, color, width, offset=0.0, alpha=1.0):
+        for _, r in res.iterrows():
+            lo, hi = r.z198_low, min(r.hi, xlim[1])
+            ax.bar((lo + hi) / 2 + offset * (hi - lo), r[col], width=(hi - lo) * width, color=color, alpha=alpha)
+
+    def finish(ax, ylim, label=None):
+        ax.axhline(0, color=INK_2, lw=1)
+        style_axis(ax)
+        ax.set_xlim(*xlim)
+        ax.set_ylim(*ylim)
+        ax.set_xlabel("input of unit 198,  z₁₉₈", fontsize=12.5)
+        if label:
+            ax.set_ylabel(label, fontsize=12.5)
+
+    # ① V1's residual error, binned by z198.
+    ax1 = fig.add_subplot(gs[0])
+    error_bars(ax1, "median_error_v1", RED, 0.9)
+    ax1.text(1.0, -0.047, "too low", ha="center", fontsize=13, color=INK, weight="bold")
+    ax1.text(2.5, 0.027, "too high", ha="center", fontsize=13, color=INK, weight="bold")
+    finish(ax1, (-0.055, 0.04), ylab)
 
     # ② the three building blocks, one row each.
     sub = gs[1].subgridspec(3, 1, hspace=0.25)
     z = np.linspace(*xlim, 600)
+    rows = []
     for k, (u, t, when, what) in enumerate(parts):
         axk = fig.add_subplot(sub[k])
-        yk = a[u] * gelu(16 * (z - t))
-        axk.plot(z, yk, color=ORANGE, lw=2.2)
+        rows.append(axk)
+        axk.plot(z, a[u] * gelu(16 * (z - t)), color=ORANGE, lw=2.2)
         axk.axvline(t, color=AXIS, lw=1, ls=":")
         axk.axhline(0, color=AXIS, lw=1)
-        lim = 0.12
-        axk.set_ylim(-lim, lim)
+        axk.set_ylim(-0.12, 0.12)
         axk.set_xlim(*xlim)
         axk.set_yticks([])
         axk.tick_params(length=0, labelsize=12.5)
@@ -276,37 +284,124 @@ def fig_program_functions():
             axk.set_xticks([])
             axk.spines["bottom"].set_visible(False)
         else:
-            axk.set_xlabel("input of unit 198,  z₁₉₈", fontsize=13)
+            axk.set_xlabel("input of unit 198,  z₁₉₈", fontsize=12.5)
         x_, ha_, y1, y2 = (0.99, "right", 0.30, 0.08) if k == 0 else (0.01, "left", 0.80, 0.58)
-        axk.text(x_, y1, f"unit {u}", transform=axk.transAxes, fontsize=13, weight="bold", color=INK, ha=ha_)
-        axk.text(x_, y2, f"{when}, {what}", transform=axk.transAxes, fontsize=12, color=INK_2, ha=ha_)
+        axk.text(x_, y1, f"unit {u}", transform=axk.transAxes, fontsize=12.5, weight="bold", color=INK, ha=ha_)
+        axk.text(x_, y2, f"{when}, {what}", transform=axk.transAxes, fontsize=11.5, color=INK_2, ha=ha_)
 
     # ③ the sum.
-    ax = fig.add_subplot(gs[2])
+    ax3 = fig.add_subplot(gs[2])
     bump = sum(a[u] * gelu(16 * (z - t)) for u, t, *_ in parts)
-    ax.axvspan(0, 2, color=ORANGE, alpha=0.08, lw=0)
-    ax.plot(z, bump, color=ORANGE, lw=3.2)
-    ax.axhline(0, color=INK_2, lw=1)
-    ax.text(1.0, 0.108, "adds a little only where\nunit 198 was too low", ha="center", fontsize=12.5, color=INK)
-    ax.text(2.55, 0.018, "nothing\nabove 2", ha="center", fontsize=12.5, color=INK_2)
+    ax3.axvspan(0, 2, color=ORANGE, alpha=0.08, lw=0)
+    ax3.plot(z, bump, color=ORANGE, lw=3.2)
+    ax3.text(1.0, 0.108, "adds a little only\nwhere it was too low", ha="center", fontsize=12, color=INK)
+    ax3.text(2.55, 0.018, "nothing\nabove 2", ha="center", fontsize=12, color=INK_2)
+    finish(ax3, (-0.03, 0.135), "added to the output (normalized)")
+
+    # ④ before vs after, same patients and noise.
+    ax4 = fig.add_subplot(gs[3])
+    error_bars(ax4, "median_error_v1", RED, 0.42, -0.22, alpha=0.35)
+    error_bars(ax4, "median_error_v1_plus_bump", BLUE, 0.42, 0.22)
+    ax4.text(2.5, 0.027, "unchanged", ha="center", fontsize=12, color=INK_2)
+    ax4.text(1.0, -0.047, "almost gone", ha="center", fontsize=13, color=INK, weight="bold")
+    finish(ax4, (-0.055, 0.04))
+    _legend(fig, 0.80, 0.655, [("before (V1)", "#f1b5b4"), ("with the fix", BLUE)])
+
+    for k, axh in enumerate([ax1, rows[0], ax3, ax4]):
+        x0 = axh.get_position().x0
+        fig.text(x0, 0.735, heads[k], fontsize=16.5, weight="bold")
+        fig.text(x0, 0.70, subs[k], fontsize=12.5, color=INK_2)
+
+    footer(fig, "Errors: median over the 128 calibration patients used to design the edit, V1 vs V1 + this fix only, "
+                "same patients and noise. Held-out confirmation is in the search figures.\nEach idle neuron gets unit "
+                "198's input weights ×16 and a shifted bias, so it computes ≈ 16·max(0, z₁₉₈ − t). Unit 198 itself is "
+                "not changed: their output is added next to its own.")
+    save(fig, "03_fix_unit_198.png")
+
+
+# --------------------------------------------------------------------------- 4 · two programs
+
+def fig_two_programs():
+    head = pd.read_csv(DATA / "output_head_coefficients.csv").set_index("unit")
+    a = head["a_v4"]  # exact effective output weights of the reused neurons in V4
+
+    fig = canvas("Step 2 · Write the weights (the full recipe)",
+                 "Building small functions out of idle neurons",
+                 "A very steep GELU behaves like a ReLU. Copying an existing neuron's input weights ×16 or ×64 "
+                 "into an idle neuron,\nwith a new bias and output weight, makes it switch on exactly where "
+                 "the agent wants. Sums of those switches draw shapes.")
+
+    gs = fig.add_gridspec(1, 3, left=0.05, right=0.97, bottom=0.14, top=0.66, wspace=0.28)
+
+    # (a) triangular bump on unit 198 from three reused neurons.
+    ax = fig.add_subplot(gs[0])
+    z = np.linspace(-0.5, 3.0, 800)
+    # Each reused neuron sees 16 * (z198 - t): a 16x copy of unit 198's input row with a shifted bias.
+    parts = [(246, 0.0), (226, 1.5), (179, 2.0)]
+    for u, t in parts:
+        ax.plot(z, a[u] * gelu(16 * (z - t)), color=ORANGE, lw=1.2, alpha=0.45)
+    bump = sum(a[u] * gelu(16 * (z - t)) for u, t in parts)
+    ax.plot(z, bump, color=ORANGE, lw=3)
+    ax.axhline(0, color=AXIS, lw=1)
     style_axis(ax)
-    ax.set_xlim(*xlim)
-    ax.set_ylim(-0.03, 0.135)
-    ax.set_ylabel("added to the prediction (normalized)", fontsize=13)
+    ax.set_ylim(-0.15, 0.16)
     ax.set_xlabel("input of unit 198,  z₁₉₈", fontsize=13)
+    ax.set_ylabel("added to the output (normalized)", fontsize=13)
+    ax.set_title("A bump on unit 198", loc="left", fontsize=17, weight="bold", pad=34)
+    ax.text(0, 1.04, "units 246 + 226 + 179 → peak at 1.5, off after 2", transform=ax.transAxes,
+            fontsize=12.5, color=INK_2)
+    ax.annotate("sum", (1.5, bump[np.argmin(abs(z - 1.5))]), (0.6, 0.13), fontsize=12.5,
+                arrowprops=dict(arrowstyle="-", color=AXIS))
+    ax.text(-0.45, -0.135, "faint lines: the three building blocks", fontsize=11.5, color=MUTED)
 
-    for k, axh in enumerate([fig.axes[0], fig.axes[1], fig.axes[4]]):
-        pos = axh.get_position()
-        fig.text(pos.x0, 0.715, heads[k], fontsize=17, weight="bold")
-        fig.text(pos.x0, 0.675, subs[k], fontsize=13, color=INK_2)
+    # (b) capped ramp on the contrast z38 - z198 from two reused neurons.
+    ax = fig.add_subplot(gs[1])
+    d = np.linspace(-0.6, 1.8, 800)
+    # Units 181 and 150 see 64 * (z38 - z198) and 64 * (z38 - z198 - 1).
+    on = a[181] * gelu(64 * d)
+    off = a[150] * gelu(64 * (d - 1))
+    A = 64 * a[181]
+    ax.plot(d, on, color=ORANGE, lw=1.2, alpha=0.45)
+    ax.plot(d, off, color=ORANGE, lw=1.2, alpha=0.45)
+    ax.plot(d, on + off, color=ORANGE, lw=3)
+    ax.axhline(0, color=AXIS, lw=1)
+    style_axis(ax)
+    ax.set_ylim(-0.12, 0.12)
+    ax.set_xlabel("contrast  d = z₃₈ − z₁₉₈", fontsize=13)
+    ax.set_title("A capped ramp on a contrast", loc="left", fontsize=17, weight="bold", pad=34)
+    ax.text(0, 1.04, f"units 181 + 150 → {A:.3f} · clip(d, 0, 1)", transform=ax.transAxes,
+            fontsize=12.5, color=INK_2)
+    ax.text(-0.55, 0.085, "fires only in the rare case\nwhere unit 38 overtakes 198", fontsize=11.5,
+            color=MUTED)
 
-    footer(fig, "Each idle neuron gets unit 198's input weights ×16 and a shifted bias, so it computes ≈ 16·max(0, z₁₉₈ − t). "
-                "Errors: V1 on 128 calibration patients.\nThe V4 ramp on z₃₈ − z₁₉₈ uses the same trick with units "
-                "181 and 150. Curves are the exact functions stored in the V4 weights.")
-    save(fig, "03_write_the_weights.png")
+    # (c) the full V4 recipe, as a card.
+    card = fig.add_subplot(gs[2])
+    card.axis("off")
+    card.set_title("The full V4 recipe", loc="left", fontsize=17, weight="bold", pad=34)
+    card.text(0, 1.04, "965 values in 5 tensors of the output head", transform=card.transAxes,
+              fontsize=12.5, color=INK_2)
+    steps = [
+        ("V1", "Output gain ×1.005, bias −0.012", "recalibrates level and spread"),
+        ("", "Units 198 and 38: output weight +1%", "two strong positive paths"),
+        ("V2", "Bump on 198 (units 246, 226, 179)", "left panel"),
+        ("", "Unit 47: input ×1.01, output ÷1.01", "same slope, shallower negative dip"),
+        ("V3", "Unit 255: bias −0.01", "slides its negative dip sideways"),
+        ("V4", "Ramp on z₃₈ − z₁₉₈ (units 181, 150)", "middle panel"),
+    ]
+    y = 0.97
+    for tag, what, why in steps:
+        if tag:
+            card.text(0.0, y, tag, fontsize=13.5, weight="bold", color=BLUE, transform=card.transAxes, va="top")
+        card.text(0.12, y, what, fontsize=13.5, color=INK, transform=card.transAxes, va="top")
+        card.text(0.12, y - 0.075, why, fontsize=12, color=MUTED, transform=card.transAxes, va="top")
+        y -= 0.165
+
+    footer(fig, "Curves are the exact functions stored in the V4 weights. Every coefficient was fixed before it "
+                "was evaluated; none was fitted to data.")
+    save(fig, "04_two_programs.png")
 
 
-# --------------------------------------------------------------------------- 4 · search
+# --------------------------------------------------------------------------- 5 · search
 
 def fig_search():
     h = pd.read_csv(DATA / "hypotheses_128.csv")
@@ -360,19 +455,19 @@ def fig_search():
             ax.set_yticks([])
 
     for k, (lab, st) in enumerate([("kept", style["kept"]), ("rejected", style["rejected"]),
-                                   ("pending (promising, never tested)", style["pending"])]):
-        x0 = 0.60 + [0, 0.07, 0.165][k]
-        fig.text(x0 + 0.014, 0.745, lab, fontsize=12.5, color=INK_2, va="center")
-        axl = fig.add_axes([x0 - 0.006, 0.735, 0.012, 0.02])
+                                   ("pending", style["pending"])]):
+        x0 = 0.06 + [0, 0.06, 0.145][k]
+        fig.text(x0 + 0.014, 0.72, lab, fontsize=12.5, color=INK_2, va="center")
+        axl = fig.add_axes([x0 - 0.006, 0.71, 0.012, 0.02])
         axl.scatter([0], [0], **st)
         axl.axis("off")
 
     footer(fig, "Rejected edits are documented with their numbers in docs/experiment-log.md. Values are "
                 "relative to the original model on the same patients and noise.")
-    save(fig, "04_search.png")
+    save(fig, "05_search.png")
 
 
-# --------------------------------------------------------------------------- 5 · progress
+# --------------------------------------------------------------------------- 6 · progress
 
 def fig_progress():
     h = pd.read_csv(DATA / "hypotheses_128.csv")
@@ -454,10 +549,10 @@ def fig_progress():
 
     footer(fig, "Confirmation cohort: 128 patients, seeds 20261103 + 20261104, same patients and noise for every "
                 "model. Test numbers are from the full test split (mean of 2 seeds).")
-    save(fig, "05_progress.png")
+    save(fig, "06_progress.png")
 
 
-# --------------------------------------------------------------------------- 6 · where the gain comes from
+# --------------------------------------------------------------------------- 7 · where the gain comes from
 
 def fig_where():
     g = json.loads((DATA / "per_group_test.json").read_text())["groups"]
@@ -519,19 +614,19 @@ def fig_where():
 
     footer(fig, "Test set scored twice (V1, then V4), never used to build an edit. 17 of 40 variables improve on "
                 "both metrics; some sparse lab values get worse (see per-variable figure).")
-    save(fig, "06_where_the_gain_comes_from.png")
+    save(fig, "07_where_the_gain_comes_from.png")
 
 
 def _legend(fig, x, y, items):
     for k, (lab, c) in enumerate(items):
-        xx = x + k * 0.075
+        xx = x + k * max(0.075, 0.012 + 0.0068 * max(len(l) for l, _ in items))
         fig.patches.append(matplotlib.patches.FancyBboxPatch(
             (xx, y - 0.008), 0.016, 0.016, boxstyle="round,pad=0,rounding_size=0.003",
             transform=fig.transFigure, facecolor=c, edgecolor="none"))
         fig.text(xx + 0.022, y, lab, fontsize=13, va="center", color=INK_2)
 
 
-# --------------------------------------------------------------------------- 7 · per variable
+# --------------------------------------------------------------------------- 8 · per variable
 
 CONTEXT = {"Age", "Gender", "Unit1", "Unit2", "HospAdmTime", "ICULOS"}
 
@@ -576,13 +671,14 @@ def fig_per_variable():
     fig.text(0.05, 0.018, "Bars clipped at ±40%; the true value is printed next to clipped bars. Variables with "
                           "few scored values (pH, Chloride) swing the most. Test set, mean of 2 seeds.",
              fontsize=11.5, color=MUTED)
-    save(fig, "07_per_variable.png")
+    save(fig, "08_per_variable.png")
 
 
 if __name__ == "__main__":
     fig_headline()
     fig_read_weights()
     fig_program_functions()
+    fig_two_programs()
     fig_search()
     fig_progress()
     fig_where()
