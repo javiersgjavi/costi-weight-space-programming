@@ -9,7 +9,7 @@
 | CoSTI, original checkpoint | 0 | 2.4810 | 350.12 |
 | **CoSTI, weight-space edited (V4)** | **965** (0.04%) | **2.4172** (−2.57%) | **347.98** (−0.61%) |
 
-The 95% interval for the per-patient change is [−0.067, −0.061] for MAE and [−4.67, −0.60] for MSE. Both metrics improve on each noise seed separately. Please read the [caveats](#how-to-read-this-result) before quoting these numbers: most of the MAE gain comes from easy context columns, and the test set was used twice.
+The 95% interval for the per-patient change is [−0.067, −0.061] for MAE and [−4.67, −0.60] for MSE. Both metrics improve on each noise seed separately. Please read the [caveats](#how-to-read-this-result) before quoting these numbers: most of the MAE gain comes from easy context columns, and the test set was scored twice (V1, then V4), although never used to build any edit.
 
 ---
 
@@ -162,7 +162,7 @@ This is a real improvement, measured carefully, but it is easy to oversell. In p
 - **Most of the MAE gain is in the 6 context columns.** Age, gender, ICU unit, admission time and length of stay improve by 27.7% (MAE) and 11.2% (MSE). The 34 vitals and lab values improve by only **0.29% (MAE) and 0.47% (MSE)**. 90% of the total MAE reduction comes from context columns, while 77% of the MSE reduction comes from physiological ones.
 - **The simplest edit did most of the work.** V1, a recalibration of the output plus two boosted neurons (193 values), already gives −2.29% MAE on test. The programmed functions of V2–V4 improve on V1 by a further 0.29% (MAE) and 0.10% (MSE).
 - **Not every variable improves.** 17 of 40 improve on both metrics. Some sparse lab values get clearly worse: pH (+76% MAE, 706 scored values) and chloride (+40%, 188 values). See the [per-variable figure](results/figures/07_per_variable.png).
-- **The test set was used twice.** V1 was evaluated on test before V4 was built, so V4's test number is not a pristine hold-out. No test data was used to design any edit, but a fresh external evaluation would be the proper confirmation.
+- **The test set was scored twice, but never used to build anything.** The agent ran exactly two evaluations on test: V1, when it was meant to be the final result, and V4, after the search went on. Every edit was designed on calibration patients, accepted on confirmation patients, and frozen (hashed, with its pass rule written down) before its test run. No test example or test score went into any edit. What the V1 score could have influenced is only the decision to keep searching, and the reported number is in practice the better of two tested versions. That mainly affects V4's small margin over V1 (0.29% MAE); the gain over the original is well outside the noise. Scoring the frozen V4 on data nobody has evaluated yet would settle it.
 - **One checkpoint, one benchmark.** Two noise seeds of the same checkpoint are not five independently trained models. The paper reports the average over five checkpoints, so this baseline is not the paper's number.
 - **Explainability is functional, not clinical.** We know exactly which function each edit adds to the head. We do not know which clinical concept a neuron stands for, and probably none maps cleanly to one.
 - **This is an imputation benchmark.** Nothing here shows clinical usefulness.

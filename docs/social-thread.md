@@ -69,9 +69,9 @@ And the simplest edit, recalibrating the output plus 2 neurons, already gives âˆ
 ---
 
 **7/8**
-What failed: edits to the deeper blocks (Mamba memory, attention, the variable graph) never improved both metrics. A local fix in step 1 of denoising can spread through step 2.
+What failed: edits to the deeper blocks (Mamba memory, attention, the variable graph) never improved both metrics. A local fix in denoising step 1 can spread to step 2.
 
-The test set was used twice, and this is one checkpoint. It needs external validation.
+Test set scored twice (V1, then V4), never used to design edits. One checkpoint: needs external validation.
 
 ---
 

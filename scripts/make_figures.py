@@ -513,8 +513,8 @@ def fig_where():
                        "V2–V4 programmed functions add the last 0.29%.", ha="center", fontsize=12.5,
             color=INK_2)
 
-    footer(fig, "Test set reused: V1 was tested before V4 was built. 17 of 40 variables improve on both "
-                "metrics; some sparse lab values get worse (see per-variable figure).")
+    footer(fig, "Test set scored twice (V1, then V4), never used to build an edit. 17 of 40 variables improve on "
+                "both metrics; some sparse lab values get worse (see per-variable figure).")
     save(fig, "06_where_the_gain_comes_from.png")
 
 

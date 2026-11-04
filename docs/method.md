@@ -165,7 +165,7 @@ The algebra tells us exactly *what function* each edit adds to the head. It does
 - **Paired randomness.** Original and edited models use identical missing masks, per-patient seeds and noise. The original CoSTI mask generator, scaler (including a quirk of its implementation) and interpolation are reproduced exactly.
 - **Freeze before evaluation.** Each candidate's recipe hash, parent and decision rule were written down before its first accuracy measurement ([example](../results/evidence/v4_freeze_before_test.json)).
 - **Acceptance rule.** Both MAE and MSE must go down relative to the parent version. A MAE-only gain never counts. This was the user's explicit choice when the first METR-LA test showed MAE down and MSE up.
-- **Test history.** V1 was evaluated on the full test set first. V4 is the second, and last, candidate evaluated there. No test example or test result was used to build any edit.
+- **Test history.** V1 was evaluated on the full test set first. V4 is the second, and last, candidate evaluated there. No test example or test result was used to build any edit. The cost of the second evaluation is selection, not leakage: the reported V4 is the better of two tested versions, so its margin over V1 is less certain than its margin over the original.
 
 ## 5. What made this hard
 
