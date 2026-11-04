@@ -21,9 +21,9 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    parent = Path("weight_space/edits/clinical_v0_affine_tail_readout.json")
+    parent = Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json")
     checkpoint = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
-    output = Path("weight_space/edits/clinical_v0_local_positive_repair.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_local_positive_repair.json")
     audit_path = Path("artifacts/audit/clinical_local_positive_repair_construction.json")
     if output.exists() or audit_path.exists():
         raise FileExistsError("Hypotheses are immutable")

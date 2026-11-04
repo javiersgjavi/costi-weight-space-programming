@@ -1,6 +1,7 @@
 """Checks against the repository's independent reference equations."""
 
 import ast
+import importlib.util
 from pathlib import Path
 import types
 
@@ -25,7 +26,7 @@ def source_function(path, name, namespace):
 def test_scan_matches_upstream_reference(seed):
     torch.manual_seed(seed)
     upstream = source_function(
-        "src/nn/blocks/bimamba/ops/selective_scan_interface.py", "selective_scan_ref",
+        "costi/src/nn/blocks/bimamba/ops/selective_scan_interface.py", "selective_scan_ref",
         {"torch": torch, "F": F, "rearrange": rearrange, "repeat": repeat})
     u, delta, z = [torch.randn(3, 8, 13) for _ in range(3)]
     A = -torch.rand(8, 4)
@@ -40,13 +41,13 @@ def test_scan_matches_upstream_reference(seed):
 def test_inner_matches_upstream_reference():
     torch.manual_seed(17)
     scan = source_function(
-        "src/nn/blocks/bimamba/ops/selective_scan_interface.py", "selective_scan_ref",
+        "costi/src/nn/blocks/bimamba/ops/selective_scan_interface.py", "selective_scan_ref",
         {"torch": torch, "F": F, "rearrange": rearrange, "repeat": repeat})
     def conv(x, w, b, activation):
         return F.silu(F.conv1d(x, w[:, None, :], b, padding=w.shape[-1]-1,
                               groups=x.shape[1])[..., :x.shape[-1]])
     upstream = source_function(
-        "src/nn/blocks/bimamba/ops/selective_scan_interface.py", "mamba_inner_ref",
+        "costi/src/nn/blocks/bimamba/ops/selective_scan_interface.py", "mamba_inner_ref",
         {"torch": torch, "F": F, "rearrange": rearrange,
          "causal_conv1d_fn": conv, "selective_scan_fn": scan})
     xz, w, b = torch.randn(3, 16, 13), torch.randn(8, 1, 4), torch.randn(8)
@@ -60,8 +61,9 @@ def test_inner_matches_upstream_reference():
 
 @pytest.mark.parametrize("p,p_noise,seed", [(0., .25, 42), (.0015, .05, 9101112)])
 def test_missing_masks_match_tsl(p, p_noise, seed):
-    source = Path("/home/javier/miniconda3/envs/conda/lib/python3.12/site-packages/tsl/ops/imputation.py")
-    if not source.exists():
+    spec = importlib.util.find_spec("tsl")
+    source = Path(spec.origin).parent / "ops" / "imputation.py" if spec and spec.origin else None
+    if source is None or not source.exists():
         pytest.skip("TSL source not present")
     reference = source_function(source, "sample_mask", {"np": np})
     expected = reference((2000, 12, 1), p=p, p_noise=p_noise, min_seq=12,
@@ -174,7 +176,7 @@ def test_zero_graph_edit_removes_unpersisted_random_dependency():
     from .data import load_data
     torch.set_num_threads(4)
     path = next(Path("../weights/ctimba_metr-la_point/version_0").glob("*.ckpt"))
-    edit = json.loads(Path("weight_space/edits/metr_point_v0_random_graph_zero.json").read_text())
+    edit = json.loads(Path("weight_space/edits/pilots/metr_point_v0_random_graph_zero.json").read_text())
     data = load_data("metr-la_point")
     ids = data.indices("calibration", 1)
     batch = data.batch(ids)

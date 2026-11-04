@@ -221,7 +221,7 @@ def main():
     lines += ["", "Checkpoint: " + str(export.resolve()), "SHA256: " + manifest["export_sha256"],
               "Resultados y evidencia: " + str(final_path.resolve()),
               "Detalle por variable: " + str(variable_path.resolve()), "",
-              "Ejemplo de carga y evaluación local, desde /home/javier/Projects/CoSTI-weight-space:",
+              "Ejemplo de carga y evaluación local, desde <HOME>/Projects/CoSTI-weight-space:",
               ".venv/bin/python -m weight_space.run --dataset mimic-iii-challenge_point --replicate 0 --split calibration --limit 1 --samples 3 --seed 73 --chunk 3 --batch 1 --device cpu --weights artifacts/edited_weights/clinical_v1 --output artifacts/reproduction/clinical_export_smoke", ""]
     text_path.write_text("\n".join(lines))
     audit = {"time_unix": time.time(), "verification_passed": True,

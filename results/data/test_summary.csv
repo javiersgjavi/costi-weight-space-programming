@@ -1,0 +1,4 @@
+model,changed_values,mae,mse,mae_change_vs_original_pct,mse_change_vs_original_pct,mae_delta_ci95_low,mae_delta_ci95_high,mse_delta_ci95_low,mse_delta_ci95_high,improved_patients_mae,improved_patients_mse,source
+original,0,2.4809595154478252,350.120367634481,0.0,0.0,,,,,,,results/evidence/v4_verification.json
+V1,193,2.4241035118046135,348.3097500304002,-2.29169413241912,-0.5171414666087171,,,,,,,results/evidence/v4_vs_v1_test_report.json
+V4,965,2.417163301798656,347.97797933873596,-2.5714330786914874,-0.6119005044521231,-0.06681236071679501,-0.06082727079410419,-4.672208458605959,-0.5962786646266782,3229,2332,results/evidence/v4_verification.json

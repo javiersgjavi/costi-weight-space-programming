@@ -13,6 +13,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
+from . import COSTI_ROOT
 from .checkpoints import sha256
 from .data import load_data
 from .run import Inference, metrics
@@ -121,7 +122,7 @@ def main():
     torch.backends.cudnn.allow_tf32 = False
     source_files = [Path(__file__).with_name(name) for name in (
         "paired_head.py", "run.py", "data.py", "checkpoints.py", "reference_mamba.py", "cuda_scan.py")]
-    source_files += sorted(Path("src/nn").rglob("*.py"))
+    source_files += sorted((COSTI_ROOT / "src/nn").rglob("*.py"))
     hashes = {str(path): sha256(path) for path in source_files}
     checkpoints = list((args.weights / ("ctimba_" + args.dataset) /
                         f"version_{args.replicate}").glob("*.ckpt"))

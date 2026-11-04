@@ -16,7 +16,7 @@ def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
     parent_freeze_path = Path("artifacts/clinical_candidate_freeze_v4_relative_tail.json")
-    output = Path("weight_space/edits/clinical_v0_graph_redirect_half.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_graph_redirect_half.json")
     audit_path = Path("artifacts/audit/clinical_graph_redirect_half_construction.json")
     freeze_path = Path("artifacts/clinical_candidate_freeze_v15_graph_redirect.json")
     plan_path = Path("artifacts/plans/clinical_graph_redirect_half_calibration512.json")

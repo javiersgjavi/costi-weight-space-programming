@@ -51,8 +51,8 @@ def main():
     output = Path("artifacts/audit/clinical_source_forward_semantics.json")
     if output.exists():
         raise FileExistsError(output)
-    files = ["src/engines/ct_engine.py", "src/schedulers/karras.py",
-             "src/nn/utils.py", "src/data/data_utils.py"]
+    files = ["costi/src/engines/ct_engine.py", "costi/src/schedulers/karras.py",
+             "costi/src/nn/utils.py", "costi/src/data/data_utils.py"]
     namespace = {"torch": torch, "np": np, "pd": pd}
     rescale = extract(files[2], "rescale_vector", namespace)
     namespace["rescale_vector"] = rescale
@@ -76,7 +76,7 @@ def main():
     torch.testing.assert_close(source_batch["x_interpolated"], batch["x_interpolated"], rtol=0, atol=0)
     torch.testing.assert_close(source_batch["eval_mask"].bool(), batch["eval_mask"], rtol=0, atol=0)
     checkpoint = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
-    recipe = json.loads(Path("weight_space/edits/clinical_v0_affine_tail_readout.json").read_text())
+    recipe = json.loads(Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json").read_text())
     n, sigmas, seed = 3, [80, 20.92], 73
     noise = torch.stack([torch.randn((n, len(sigmas), *batch["x"].shape[1:]),
                          generator=torch.Generator().manual_seed(seed + int(i) * 1009)) for i in ids])

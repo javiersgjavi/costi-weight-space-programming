@@ -18,12 +18,12 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    recipe_path = Path("weight_space/edits/clinical_v0_reverse_memory_finite_gain.json")
+    recipe_path = Path("weight_space/edits/physionet/clinical_v0_reverse_memory_finite_gain.json")
     audit_path = Path("artifacts/audit/clinical_reverse_memory_finite_gain_construction.json")
     if recipe_path.exists() or audit_path.exists():
         raise FileExistsError("Construction records are immutable")
     source = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
-    parent_path = Path("weight_space/edits/clinical_v0_affine_tail_readout.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json")
     diagnostic_path = Path("artifacts/audit/clinical_v1_conditioning_memory_cal32.json")
     parent = json.loads(parent_path.read_text())
     diagnostic = json.loads(diagnostic_path.read_text())

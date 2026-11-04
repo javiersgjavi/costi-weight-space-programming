@@ -17,11 +17,11 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    parent_path = Path("weight_space/edits/clinical_v0_composed_gate255_translate.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_composed_gate255_translate.json")
     parent_freeze_path = Path("artifacts/clinical_candidate_freeze_v3_gate255.json")
     diagnostic_path = Path("artifacts/audit/clinical_gate255_head_cal512_median100_v0.npz")
     evidence_path = Path("artifacts/audit/clinical_gate212_near_zero_cal512.json")
-    output = Path("weight_space/edits/clinical_v0_gate212_shoulder.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_gate212_shoulder.json")
     audit_path = Path("artifacts/audit/clinical_gate212_shoulder_construction.json")
     freeze_path = Path("artifacts/clinical_candidate_freeze_v7_gate212.json")
     plan_path = Path("artifacts/plans/clinical_gate212_shoulder_calibration512.json")

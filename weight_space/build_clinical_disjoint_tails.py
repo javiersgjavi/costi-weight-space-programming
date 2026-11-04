@@ -16,13 +16,13 @@ from .run import Inference
 @torch.inference_mode()
 def main():
     torch.set_num_threads(4)
-    base_path = Path("weight_space/edits/clinical_v0_composed_gate255_translate.json")
-    relative_path = Path("weight_space/edits/clinical_v0_relative_tail.json")
-    gate_path = Path("weight_space/edits/clinical_v0_gate167_tail.json")
+    base_path = Path("weight_space/edits/physionet/clinical_v0_composed_gate255_translate.json")
+    relative_path = Path("weight_space/edits/physionet/clinical_v0_relative_tail.json")
+    gate_path = Path("weight_space/edits/physionet/clinical_v0_gate167_tail.json")
     reports = [Path(f"artifacts/clinical_{name}_confirmation128_report.json")
                for name in ("relative_tail", "gate167_tail")]
     overlap_path = Path("artifacts/audit/clinical_tail_correction_support_overlap.json")
-    output = Path("weight_space/edits/clinical_v0_disjoint_tails.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_disjoint_tails.json")
     audit_path = Path("artifacts/audit/clinical_disjoint_tails_construction.json")
     plan_path = Path("artifacts/plans/clinical_disjoint_tails_calibration.json")
     if any(p.exists() for p in (output, audit_path, plan_path)):

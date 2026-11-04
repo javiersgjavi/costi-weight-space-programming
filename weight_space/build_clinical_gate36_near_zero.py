@@ -21,11 +21,11 @@ def read(path):
 @torch.inference_mode()
 def main():
     torch.set_num_threads(4)
-    parent_path = Path("weight_space/edits/clinical_v0_relative_tail.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_relative_tail.json")
     parent_freeze = read("artifacts/clinical_candidate_freeze_v4_relative_tail.json")
     diagnostic = Path("artifacts/audit/clinical_relative_tail_head_both_steps_cal512.npz")
     evidence_path = Path("artifacts/audit/clinical_gate36_near_zero_regions_cal512.json")
-    output = Path("weight_space/edits/clinical_v0_gate36_near_zero.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_gate36_near_zero.json")
     audit_path = Path("artifacts/audit/clinical_gate36_near_zero_construction.json")
     freeze_path = Path("artifacts/clinical_candidate_freeze_v13_gate36.json")
     plan_path = Path("artifacts/plans/clinical_gate36_near_zero_calibration512.json")

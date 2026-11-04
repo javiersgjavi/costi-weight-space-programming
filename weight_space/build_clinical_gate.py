@@ -15,12 +15,12 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    output = Path("weight_space/edits/clinical_v0_head47_sharp101.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_head47_sharp101.json")
     audit_path = Path("artifacts/audit/clinical_head47_sharp101_construction.json")
     if output.exists() or audit_path.exists():
         raise FileExistsError("Preserve existing candidates")
     source = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
-    parent = json.loads(Path("weight_space/edits/clinical_v0_affine_tail_readout.json").read_text())
+    parent = json.loads(Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json").read_text())
     with np.load("artifacts/audit/clinical_targeted_head_cal128_median100_v0.npz") as d:
         h, coefficient = d["hidden"][:, 47], float(d["effective"][47])
         active = h < -1e-3

@@ -1,0 +1,19 @@
+order,hypothesis,recipe,status,version,where,calibration_mae_reduction_pct,calibration_mse_reduction_pct,confirmation_mae_reduction_pct,confirmation_mse_reduction_pct
+0,Original checkpoint,,baseline,,,0.0,0.0,0.0,0.0
+1,Halve the random-graph branch,pilots/random_graph_half.json,rejected,,graph,-0.7338629323176749,-0.08291791703398665,,
+2,Output gain and bias,physionet/clinical_v0_head_affine.json,kept,,head readout,2.0150795419522027,0.3444415480783336,1.9631377922228577,0.6645910361944507
+3,Boost units 198 and 38 by 1%,physionet/clinical_v0_affine_tail_readout.json,kept,V1,head,2.3865575440586095,0.550086294452079,2.2121708655405192,0.8980858663008129
+4,Bounded negative tail on unit 20,physionet/clinical_v0_bounded_negative_tail.json,rejected,,head,2.395735268183108,0.5598847558441533,2.143326262854095,0.897054801819186
+5,Mid-range bump on unit 198 (alone),physionet/clinical_v0_local_positive_repair.json,rejected,,head,2.5318256830106467,0.9831990457135897,2.130798548034263,0.9630723565081767
+6,Longer memory in the backward Mamba branch,physionet/clinical_v0_reverse_memory_finite_gain.json,rejected,,temporal memory,0.7256935938851794,-1.231235667067776,,
+7,Attention prior towards observed positions,physionet/clinical_v0_mask_key_component.json,rejected,,attention,2.380690815137998,0.5148838162387981,,
+8,Sharpen unit 47 (alone),physionet/clinical_v0_head47_sharp101.json,rejected,,head,2.572962405633772,0.5557139036189707,2.395768104123197,0.8819127213932298
+9,Mid-range bump on 198 + sharpen unit 47,physionet/clinical_v0_midrange_gate47.json,kept,V2,head,2.718677295337424,0.9900242162025785,2.316021765191134,0.9481522986128921
+10,Shift unit 255 bias by -0.01,physionet/clinical_v0_composed_gate255_translate.json,kept,V3,head,2.846568023775653,1.0018992537193516,2.390200219329508,0.9519408340852853
+11,Constant prior on the mask query,physionet/clinical_v0_constant_mask_query_prior.json,rejected,,attention,2.4288796075854213,0.5918339849542376,2.2428541507513167,0.780515321400943
+12,Contrast ramp between units 38 and 198,physionet/clinical_v0_relative_tail.json,kept,V4,head,2.846731549035819,1.0022747757192807,2.398608960595483,1.012931299855513
+13,Tail correction on unit 167,physionet/clinical_v0_gate167_tail.json,rejected,V5,head,3.033586073367711,1.119798021864693,1.8936559739367032,0.9291826917837254
+14,Shoulder correction on unit 212,physionet/clinical_v0_gate212_shoulder.json,rejected,V7,head,,,2.395962031387844,0.9519479699462874
+15,Mid-range correction on unit 50,physionet/clinical_v0_gate50_midrange.json,pending,V9,head,,,2.4053492602507887,1.0217846752003767
+16,Inactive-tail correction on unit 145,physionet/clinical_v0_gate145_inactive_tail.json,pending,V10,head,,,2.411369155376808,1.01729803060302
+17,Lobe correction on unit 67,physionet/clinical_v0_gate67_shoulder.json,rejected,V12,head,,,2.4079776651652174,1.004712918476336

@@ -16,9 +16,9 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    parent_path = Path("weight_space/edits/clinical_v0_midrange_gate47.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_midrange_gate47.json")
     diagnostic = Path("artifacts/audit/clinical_composed_head_cal128_median100_v0.npz")
-    output = Path("weight_space/edits/clinical_v0_composed_gate255_translate.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_composed_gate255_translate.json")
     audit_path = Path("artifacts/audit/clinical_composed_gate255_translate_construction.json")
     plan_path = Path("artifacts/plans/clinical_composed_gate255_translate_calibration128.json")
     if any(p.exists() for p in (output, audit_path, plan_path)):

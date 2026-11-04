@@ -18,8 +18,8 @@ def main():
     output = Path("artifacts/audit/clinical_constant_query_prior_input_probe_cal512.json")
     if output.exists():
         raise FileExistsError(output)
-    parent_path = Path("weight_space/edits/clinical_v0_affine_tail_readout.json")
-    recipe_path = Path("weight_space/edits/clinical_v0_constant_mask_query_prior.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json")
+    recipe_path = Path("weight_space/edits/physionet/clinical_v0_constant_mask_query_prior.json")
     source = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
     parent, candidate = [Inference(source, 0, json.loads(path.read_text())) for path in (parent_path, recipe_path)]
     data = load_data("mimic-iii-challenge_point")

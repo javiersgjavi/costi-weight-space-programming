@@ -20,7 +20,7 @@ def read(path):
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    output = Path("weight_space/edits/clinical_v0_gate50_gate212_composed.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_gate50_gate212_composed.json")
     audit_path = Path("artifacts/audit/clinical_gate50_gate212_composed_construction.json")
     freeze_path = Path("artifacts/clinical_candidate_freeze_v14_gate50_gate212.json")
     plan_path = Path("artifacts/plans/clinical_gate50_gate212_composed_calibration512.json")

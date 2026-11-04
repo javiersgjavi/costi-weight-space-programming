@@ -14,7 +14,7 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    directory = Path("weight_space/edits")
+    directory = Path("weight_space/edits/physionet")
     paths = [directory / (name + ".json") for name in (
         "clinical_v0_affine_tail_readout", "clinical_v0_local_positive_repair", "clinical_v0_head47_sharp101")]
     base, local, gate = [json.loads(p.read_text()) for p in paths]

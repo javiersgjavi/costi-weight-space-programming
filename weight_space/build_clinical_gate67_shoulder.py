@@ -21,11 +21,11 @@ def read(path):
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    parent_path = Path("weight_space/edits/clinical_v0_relative_tail.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_relative_tail.json")
     parent_freeze = read("artifacts/clinical_candidate_freeze_v4_relative_tail.json")
     diagnostic = Path("artifacts/audit/clinical_relative_tail_head_both_steps_cal512.npz")
     evidence_path = Path("artifacts/audit/clinical_gate67_gate90_regions_cal512.json")
-    output = Path("weight_space/edits/clinical_v0_gate67_shoulder.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_gate67_shoulder.json")
     audit_path = Path("artifacts/audit/clinical_gate67_shoulder_construction.json")
     freeze_path = Path("artifacts/clinical_candidate_freeze_v12_gate67.json")
     plan_path = Path("artifacts/plans/clinical_gate67_shoulder_calibration512.json")

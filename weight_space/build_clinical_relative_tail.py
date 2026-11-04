@@ -16,11 +16,11 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    parent_path = Path("weight_space/edits/clinical_v0_composed_gate255_translate.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_composed_gate255_translate.json")
     diagnostic_path = Path("artifacts/audit/clinical_gate255_head_cal512_median100_v0.npz")
     evidence_path = Path("artifacts/audit/clinical_gate255_positive_contrast_cal512.json")
     steps_path = Path("artifacts/audit/clinical_gate255_contrast_steps_cal_enriched.json")
-    output = Path("weight_space/edits/clinical_v0_relative_tail.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_relative_tail.json")
     audit_path = Path("artifacts/audit/clinical_relative_tail_construction.json")
     plan_path = Path("artifacts/plans/clinical_relative_tail_calibration.json")
     if any(path.exists() for path in (output, audit_path, plan_path)):

@@ -20,8 +20,8 @@ def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
     checkpoint = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
-    parent = Path("weight_space/edits/clinical_v0_affine_tail_readout.json")
-    output = Path("weight_space/edits/clinical_v0_bounded_negative_tail.json")
+    parent = Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_bounded_negative_tail.json")
     audit_path = Path("artifacts/audit/clinical_bounded_negative_tail_construction.json")
     if output.exists() or audit_path.exists():
         raise FileExistsError("The explicit construction is immutable")

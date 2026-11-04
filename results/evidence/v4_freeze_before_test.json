@@ -1,0 +1,33 @@
+{
+  "source_checkpoint": "<HOME>/Projects/weights/ctimba_mimic-iii-challenge_point/version_0/epoch=49-val_loss=612.00507.ckpt",
+  "source_sha256": "a012e3bcb5ade901bfa51405f30c4c0ef3b336a07da9203f6930e23ebaa7f1c2",
+  "source_sha256_files": {
+    "weight_space/paired_head.py": "12cdc1fac9ce9ddfa17d9d98ea5f1fdc0c81c9f7c2535518fe0587ba9496ca35",
+    "weight_space/run.py": "4bc4f8571984e4e4a585ff2eff7537c58822631d60f99d31390edd464b8ece7a",
+    "weight_space/data.py": "bd42f9b19b278467fedf75bfe357dc5e7dd91f97dcd2b6e74f2a595378274e14",
+    "weight_space/checkpoints.py": "6423ac999f2bba31a444141420f31a9bf4e0da3e3568ef114c66eab7b852bc25",
+    "weight_space/reference_mamba.py": "d0d79a89178d84ff5af0c8ec7c7e6a6d5b4a61ca62e0056ab8e2373d629ab36d",
+    "weight_space/cuda_scan.py": "c43b7d96cad2220802b161f7eda6d794dd08679a37bcac0e540806e5976d4d73",
+    "src/nn/blocks/basics.py": "fe07267d5d7b778c07d307399cb2f79b497a8c0a57d728ad612fc1ae484e6420",
+    "src/nn/blocks/bimamba/modules/hydra.py": "d793ddee7f7a94b15ed22da9bdea54003d7bc4bfc1798bbe7adc1a4ccb218691",
+    "src/nn/blocks/bimamba/modules/mamba_simple.py": "16ad62257cc2daf4f0007db6cb5e78c7c74f40e39545c545cdb75f808f4ff32e",
+    "src/nn/blocks/bimamba/ops/ops.py": "085757e3833b675a5c5f08868f2a6d7bb0b67364a7a38bd7f3eafe7270911658",
+    "src/nn/blocks/bimamba/ops/selective_scan_interface.py": "5a33efe24a736fe8be2312a3ab50dce5a7a44b00fee3580708f172cbea40c804",
+    "src/nn/blocks/diff_blocks.py": "4fd3aedc56d74af0dbf913ecdaa2a3bc7c10f1c1135a06001ff5fe18085bebf7",
+    "src/nn/blocks/encoders_blocks.py": "8c3f12bc410e59f4f1e84268dca4783c9dc3641d23b649f3c96f7de170686cd0",
+    "src/nn/blocks/gnn.py": "146379ae3ec0bef59f949d0be591547f9bf5755ccc5ae29c11502fdfdea93d2c",
+    "src/nn/unet.py": "79321fbd2f94f28ded60aa5dbc6f9e78715f83cbe56272fa0f286d288a5cd6f3",
+    "src/nn/utils.py": "43cf01ff511f704d3a390283cc98d01e18943c412ac98823ebb659ba75e894ef"
+  },
+  "test_history": "V1 alone has already been evaluated on both complete test seeds. Any later candidate test is benchmark reuse; do not claim an untouched holdout.",
+  "time_unix": 1793731865.0044549,
+  "candidate": "clinical_v0_relative_tail",
+  "recipe": "weight_space/edits/clinical_v0_relative_tail.json",
+  "recipe_sha256": "3415dba55842fb889b7e16021f2275f6bede2a85a2462448edc253ed9279341e",
+  "edited_state_sha256": "85b68ba4776e1831ea288721a5708580e8b23bb033c38edccf34c7423491e6a8",
+  "reference_recipe": "weight_space/edits/clinical_v0_composed_gate255_translate.json",
+  "reference_recipe_sha256": "24055b0b3821a01acdfa01076fc81a77af90aa110cebdbe8390c7619a3892d85",
+  "calibration_report": "artifacts/clinical_relative_tail_calibration512_report.json",
+  "calibration_report_sha256": "49f6e8779e84b9f72a8d3671e3c71ab43765a7e5ca4dfd5a20b7d86b0e875bf9",
+  "selection": "Fixed coefficients before any candidate forward accuracy result. Primary 512-patient calibration improves both mean metrics but both patient intervals include zero. Advance unchanged to the existing independent 128-patient confirmation cohort on both fixed seeds; no fitting or automatic promotion. Separate 128 calibration measurement is for the common progress plot."
+}

@@ -13,13 +13,13 @@ from .run import Inference
 def main():
     torch.set_num_threads(4)
     torch.set_grad_enabled(False)
-    output = Path("weight_space/edits/clinical_v0_mask_key_component.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_mask_key_component.json")
     audit = Path("artifacts/audit/clinical_mask_key_component_construction.json")
     if output.exists() or audit.exists():
         raise FileExistsError("Preserve previous constructions")
     diagnostic_path = Path("artifacts/audit/clinical_v1_mask_signal_cal32.json")
     diagnostic = json.loads(diagnostic_path.read_text())
-    parent_path = Path("weight_space/edits/clinical_v0_affine_tail_readout.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json")
     recipe = json.loads(parent_path.read_text())
     source = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
     runner = Inference(source, 0, recipe)

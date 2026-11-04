@@ -18,7 +18,7 @@ def main():
     if output.exists():
         raise FileExistsError(output)
     source = next(Path("../weights/ctimba_mimic-iii-challenge_point/version_0").glob("*.ckpt"))
-    recipe = json.loads(Path("weight_space/edits/clinical_v0_affine_tail_readout.json").read_text())
+    recipe = json.loads(Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json").read_text())
     runner = Inference(source, 0, recipe)
     data = load_data("mimic-iii-challenge_point")
     ids = data.indices("calibration", 32)

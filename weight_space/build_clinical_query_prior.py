@@ -16,8 +16,8 @@ from .run import Inference
 @torch.inference_mode()
 def main():
     torch.set_num_threads(4)
-    parent_path = Path("weight_space/edits/clinical_v0_affine_tail_readout.json")
-    output = Path("weight_space/edits/clinical_v0_constant_mask_query_prior.json")
+    parent_path = Path("weight_space/edits/physionet/clinical_v0_affine_tail_readout.json")
+    output = Path("weight_space/edits/physionet/clinical_v0_constant_mask_query_prior.json")
     audit_path = Path("artifacts/audit/clinical_constant_mask_query_prior_construction.json")
     plan_path = Path("artifacts/plans/clinical_constant_mask_query_prior_calibration128.json")
     if any(p.exists() for p in (output, audit_path, plan_path)):
