@@ -21,6 +21,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib import font_manager  # noqa: E402
+import matplotlib.lines  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "results" / "data"
@@ -116,8 +117,31 @@ def fig_headline():
 
     fig = canvas("Weight-space programming · CoSTI · PhysioNet 2019",
                  "965 weights, edited by hand. No training.",
-                 "An AI agent read the weights of a trained imputation model, found where its output "
-                 "was off,\nand rewrote them directly. No gradients, no optimizer, no new data.")
+                 "An AI agent read the weights of a published deep model for clinical time series, found where "
+                 "its output was off,\nand rewrote them directly. No gradients, no optimizer, no new data.")
+
+    # The model, as a strip of facts, so the reader sees what was edited.
+    card = matplotlib.patches.FancyBboxPatch(
+        (0.05, 0.535), 0.90, 0.155, boxstyle="round,pad=0,rounding_size=0.012",
+        transform=fig.transFigure, facecolor="none", edgecolor=GRID, linewidth=1.5)
+    fig.patches.append(card)
+    fig.text(0.07, 0.668, "THE MODEL", fontsize=12, color=MUTED, weight="bold", va="center")
+    fig.text(0.07, 0.627, "CoSTI", fontsize=26, weight="bold", va="center")
+    fig.text(0.07, 0.567, "Consistency model for\ntime-series imputation", fontsize=14.5, color=BLUE, weight="bold",
+             va="center", linespacing=1.25)
+    facts = [
+        (f"{counts['registered_parameters'] / 1e6:.1f} M", "trained parameters"),
+        ("Mamba · attention · graph", "bidirectional Mamba, self-attention,\nlearned graph between variables"),
+        ("40 × 48 h", "ICU variables per\npatient window"),
+        ("2 × 100", "denoising steps ×\nsamples per patient"),
+    ]
+    xs = [0.335, 0.47, 0.70, 0.825]
+    for x, (big, small) in zip(xs, facts):
+        fig.text(x, 0.625, big, fontsize=24 if len(big) < 10 else 19, weight="bold", va="center")
+        fig.text(x, 0.565, small, fontsize=12, color=INK_2, va="center", linespacing=1.3)
+    for x in xs:
+        fig.add_artist(matplotlib.lines.Line2D([x - 0.012, x - 0.012], [0.555, 0.67], color=GRID, lw=1.2,
+                                               transform=fig.transFigure))
 
     tiles = [
         ("Mean absolute error", f"−{abs(v4.mae_change_vs_original_pct):.2f}%",
@@ -125,24 +149,24 @@ def fig_headline():
         ("Mean squared error", f"−{abs(v4.mse_change_vs_original_pct):.2f}%",
          f"{o.mse:.2f}  →  {v4.mse:.2f}"),
         ("Weights changed", f"{counts['percent_registered_parameters_changed']:.2f}%",
-         f"{counts['changed_parameters']:,} of {counts['registered_parameters']:,}"),
+         f"{counts['changed_parameters']:,} of {counts['registered_parameters']:,} parameters"),
     ]
     for i, (label, value, detail) in enumerate(tiles):
         x = 0.05 + i * 0.31
         fig.patches.append(matplotlib.patches.FancyBboxPatch(
-            (x, 0.30), 0.28, 0.36, boxstyle="round,pad=0,rounding_size=0.012",
+            (x, 0.2), 0.28, 0.30, boxstyle="round,pad=0,rounding_size=0.012",
             transform=fig.transFigure, facecolor="#f3f2ee", edgecolor="none"))
-        fig.text(x + 0.02, 0.61, label, fontsize=17, color=INK_2, va="center")
-        fig.text(x + 0.02, 0.49, value, fontsize=64, weight="bold",
+        fig.text(x + 0.02, 0.455, label, fontsize=17, color=INK_2, va="center")
+        fig.text(x + 0.02, 0.355, value, fontsize=58, weight="bold",
                  color=BLUE if i < 2 else INK, va="center")
-        fig.text(x + 0.02, 0.365, detail, fontsize=17, color=INK_2, va="center")
+        fig.text(x + 0.02, 0.245, detail, fontsize=17, color=INK_2, va="center")
 
-    fig.text(0.05, 0.20,
+    fig.text(0.05, 0.135,
              "Test set: 4,033 ICU patients from PhysioNet Challenge 2019, values hidden at random and imputed "
-             "(100 samples × 2 noise seeds).", fontsize=14, color=INK_2)
-    fig.text(0.05, 0.155,
-             "Baseline: our own run of the released CoSTI checkpoint under the same protocol. Lower is better.",
-             fontsize=14, color=INK_2)
+             "(100 samples × 2 noise seeds). Lower is better.", fontsize=13.5, color=INK_2)
+    fig.text(0.05, 0.095,
+             "Baseline: our own run of the released CoSTI checkpoint (Knowledge-Based Systems, 2025) under the "
+             "same protocol.", fontsize=13.5, color=INK_2)
     footer(fig, "Agent: Astra 6 Max working in Codex for 13 hours, directed by Javier Solís-García. "
                 "Method after Takehi et al., "
                 "“Sparks of Weight-Space Programming” (MIT CSAIL, 2026).")
